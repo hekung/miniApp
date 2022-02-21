@@ -1,6 +1,6 @@
 /* pages/home/home.wxss */
 .container {
-  font-size: 30rpx;
+  /* font-size: 30rpx; */
 }
 .container .routes {
   display: flex;

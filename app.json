@@ -4,6 +4,10 @@
     "pages/wode/wode",
     "pages/buy/buy",
     "pages/house/house",
+    "pages/house/analysis/analysis",
+    "pages/house/changePrice/changePrice",
+    "pages/house/records/records",
+    "pages/house/rentHandle/rentHandle",
     "pages/management/management",
     "pages/repair/repair",
     "pages/stock/stock"
@@ -15,22 +19,20 @@
     "navigationBarTextStyle": "black"
   },
   "tabBar": {
+    "custom": true,
     "color": "#8a8a8a",
     "selectedColor": "#e1251b",
-    "list": [
-      {
-        "pagePath": "pages/home/home",
-        "text": "首 页",
-        "iconPath": "assets/img/home.png",
-        "selectedIconPath": "assets/img/home_h.png"
-      },
-      {
-        "pagePath": "pages/wode/wode",
-        "text": "我 的",
-        "iconPath": "assets/img/wode.png",
-        "selectedIconPath": "assets/img/wode_h.png"
-      }
-    ]
+    "list": [{
+      "pagePath": "pages/home/home",
+      "iconPath": "/assets/img/home.png",
+      "selectedIconPath": "/assets/img/home_h.png",
+      "text": "首页"
+    }, {
+      "pagePath": "pages/wode/wode",
+      "iconPath": "/assets/img/wode.png",
+      "selectedIconPath": "/assets/img/wode_h.png",
+      "text": "我的"
+    }]
   },
   "style": "v2",
   "sitemapLocation": "sitemap.json"

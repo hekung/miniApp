@@ -1,2 +1,5 @@
-<!--pages/wode/wode.wxml-->
-<text>pages/wode/wode.wxml</text>
+<!-- pages/wode/wode.wxml -->
+<view class="" hover-class="none" hover-stop-propagation="false">
+    dsaddsdsa
+    <!-- <custom-tab-bar></custom-tab-bar> -->
+</view>

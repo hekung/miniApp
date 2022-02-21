@@ -8,5 +8,133 @@
   padding: 200rpx 0;
   box-sizing: border-box;
   color: #666;
+  font-size: 24rpx;
+}
+
+#pullrefresh {
+  padding-top: 0;
+}
+
+view,
+button,
+checkbox,
+checkbox-group,
+editor,
+form,
+input,
+label,
+picker,
+picker-view,
+picker-view-column,
+radio,
+radio-group,
+slider,
+switch,
+textarea,
+audio,
+camera,
+image,
+live-player,
+live-pusher,
+video,
+navigator {
+  box-sizing: border-box;
+  font-family: PingFangSC-Regular, PingFang SC;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0 none;
+}
+
+page {
+  background-color: #fff;
+  color: #333;
   font-size: 28rpx;
+  box-sizing: border-box;
+}
+
+page::before {
+  /* 顶部分割线 */
+  content: '';
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 1px;
+  background-color: #f6f8fc;
+  z-index: 9999;
+}
+
+page::after {
+  /* 底部分割线 */
+  content: '';
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background-color: #f6f8fc;
+  z-index: 9999;
+}
+
+image {
+  width: 100%;
+  height: 100%;
+}
+
+button::after {
+  border: none;
+}
+
+input,
+input:focus {
+  outline: none;
+  border: none;
+  list-style: none;
+}
+
+.hover-default {
+  opacity: 0.8;
+}
+
+.dn {
+  display: none;
+}
+
+.db {
+  display: block;
+}
+
+.w100 {
+  width: 100%;
+}
+
+.h100 {
+  height: 100%;
+}
+
+.dib {
+  display: inline-block;
+}
+
+.mr-20 {
+  margin-right: 20rpx;
+}
+
+.arrow-r {
+  width: 20rpx;
+  height: 20rpx;
+  border-top: 2rpx solid #000;
+  border-right: 2rpx solid #000;
+  transform: rotate(45deg);
+  position: absolute;
+  right: 0px;
+}
+
+.arrow-l {
+  width: 20rpx;
+  height: 20rpx;
+  border-top: 2rpx solid #000;
+  border-left: 2rpx solid #000;
+  transform: rotate(-45deg);
 }

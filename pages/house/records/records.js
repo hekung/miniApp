@@ -1,4 +1,4 @@
-// pages/wode/w.js
+// pages/house/records/records.js
 Page({
 
   /**
