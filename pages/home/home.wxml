@@ -1,0 +1,10 @@
+<view class="container">
+    <view class="routes">
+        <navigator wx:for="{{routes}}" class="route-item" url="{{item.url}}" hover-class="navigator-hover" open-type="navigate">
+            <image src="{{item.src}}" mode="scaleToFill|aspectFit|aspectFill|widthFix" class="icon"></image>
+            <text class="item-title" selectable="false" space="false" decode="false">
+                {{item.text}}
+            </text>
+        </navigator>
+    </view>
+</view>

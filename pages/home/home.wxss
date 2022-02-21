@@ -1,0 +1,21 @@
+/* pages/home/home.wxss */
+.container {
+  font-size: 30rpx;
+}
+.container .routes {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 40rpx 80rpx;
+}
+.container .routes .route-item {
+  width: 100rpx;
+  margin: 30rpx;
+  text-align: center;
+}
+.container .routes .route-item .icon {
+  width: 80rpx;
+  height: 80rpx;
+}
