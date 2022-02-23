@@ -1,11 +1,10 @@
 <view class="container">
-    <view class="routes" wx:if="{{!activeName}}">
-        <view wx:for="{{activeRoutesList}}" wx:key="url" class="route-item" url="{{item.url}}" hover-class="navigator-hover" open-type="navigate" data-item="{{item}}" bindtap="tapBlock">
+    <view class="routes">
+        <navigator wx:for="{{routes}}" wx:key="url" class="route-item" url="{{item.url}}" hover-class="navigator-hover" open-type="navigate">
             <image src="{{item.src}}" mode="scaleToFill|aspectFit|aspectFill|widthFix" class="icon"></image>
             <text class="item-title" selectable="false" space="false" decode="false">
                 {{item.text}}
             </text>
-        </view>
+        </navigator>
     </view>
-    <!-- <custom-tab-bar></custom-tab-bar> -->
 </view>

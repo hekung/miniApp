@@ -3,14 +3,29 @@
     "pages/home/home",
     "pages/wode/wode",
     "pages/buy/buy",
+    "pages/buy/buyRecords/buyRecords",
+    "pages/buy/review/review",
+    "pages/buy/executeBuy/executeBuy",
     "pages/house/house",
     "pages/house/analysis/analysis",
     "pages/house/changePrice/changePrice",
     "pages/house/records/records",
     "pages/house/rentHandle/rentHandle",
     "pages/management/management",
+    "pages/management/employManage/employManage",
+    "pages/management/notifyFunction/notifyFunction",
     "pages/repair/repair",
-    "pages/stock/stock"
+    "pages/repair/makeRepair/makeRepair",
+    "pages/repair/repairRecords/repairRecords",
+    "pages/repair/executeTask/executeTask",
+    "pages/repair/executeWaterElec/executeWaterElec",
+    "pages/repair/distributeTask/distributeTask",
+    "pages/repair/distributeWaterElec/distributeWaterElec",
+    "pages/stock/stock",
+    "pages/stock/stockQuery/stockQuery",
+    "pages/stock/stockImport/stockImport",
+    "pages/stock/stockOutport/stockOutport",
+    "pages/stock/stockTask/stockTask"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -19,17 +34,16 @@
     "navigationBarTextStyle": "black"
   },
   "tabBar": {
-    "custom": true,
     "color": "#8a8a8a",
     "selectedColor": "#e1251b",
     "list": [{
       "pagePath": "pages/home/home",
-      "iconPath": "/assets/img/home.png",
+      "iconPath": "assets/img/home.png",
       "selectedIconPath": "/assets/img/home_h.png",
       "text": "首页"
     }, {
       "pagePath": "pages/wode/wode",
-      "iconPath": "/assets/img/wode.png",
+      "iconPath": "assets/img/wode.png",
       "selectedIconPath": "/assets/img/wode_h.png",
       "text": "我的"
     }]

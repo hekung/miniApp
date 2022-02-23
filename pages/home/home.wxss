@@ -12,7 +12,8 @@
 }
 .container .routes .route-item {
   width: 100rpx;
-  margin: 30rpx;
+  margin: 40rpx;
+  height: 160rpx;
   text-align: center;
 }
 .container .routes .route-item .icon {

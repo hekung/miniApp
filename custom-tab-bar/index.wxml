@@ -1,0 +1,9 @@
+<cover-view class="tab-bar" style="height: {{isIphoneX ? '168rpx' : '100rpx'}};padding-bottom: {{isIphoneX ? '68rpx' : '0rpx'}};">
+    <cover-view class="tab-bar-border"></cover-view>
+    <cover-view wx:for="{{list}}" wx:key="index" class="tab-bar-item" data-path="{{item.pagePath}}" data-index="{{index}}" bindtap="switchTab">
+        <cover-image src="{{selected === index ? item.selectedIconPath : item.iconPath}}" class="im"></cover-image>
+        <cover-view class="vi" style="color: {{selected === index ? selectedColor : color}}">
+            {{item.text}}
+        </cover-view>
+    </cover-view>
+</cover-view>

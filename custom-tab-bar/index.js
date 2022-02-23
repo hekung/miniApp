@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2022-02-21 20:06:18
- * @LastEditTime: 2022-02-21 21:04:53
+ * @LastEditTime: 2022-02-22 18:26:33
  * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AEa
  * @FilePath: \miniprogram-1\custom-tab-bar\custom-tab-bar.js
@@ -22,17 +22,16 @@ Component({
   data: {
     isIphoneX: app.globalData.isIphoneX,
     userInfo: app.globalData.userInfo,
-    activeIndex: 0,
     selected: 0,
     color: "#7A7E83",
     selectedColor: "#e1251b",
     list: [{
-      pagePath: "/pages/home/home",
+      pagePath: "/index/index",
       iconPath: "/assets/img/home.png",
       selectedIconPath: "/assets/img/home_h.png",
       text: "首页"
     }, {
-      pagePath: "/pages/wode/wode",
+      pagePath: "/index/wode",
       iconPath: "/assets/img/wode.png",
       selectedIconPath: "/assets/img/wode_h.png",
       text: "我的"
@@ -42,8 +41,8 @@ Component({
     attached: function() {
       // 在组件实例进入页面节点树时执行
        // 获取设备信息
-       app.watch('isIphoneX',this.watchDevice)
-       app.watch('userInfo',this.watchUser)
+      //  app.watch('isIphoneX',this.watchDevice)
+      //  app.watch('userInfo',this.watchUser)
     },
     detached: function() {
       // 在组件实例被从页面节点树移除时执行
@@ -63,16 +62,14 @@ Component({
         isIphoneX: val
       })
     },
-    toggleHome(e){
-      let activeIndex = e.currentTarget.dataset.index
-      this.setData({
-        activeIndex
-      })
-    },
     switchTab(e) {
+      debugger
       const data = e.currentTarget.dataset
       const url = data.path
       wx.switchTab({url})
+      // this.setData({
+      //   selected: data.index
+      // })
       this.setData({
         selected: data.index
       })

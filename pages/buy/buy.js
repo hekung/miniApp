@@ -1,11 +1,35 @@
-// pages/buy/buy.js
+/*
+ * @Author: your name
+ * @Date: 2022-02-21 11:31:25
+ * @LastEditTime: 2022-02-23 20:24:49
+ * @LastEditors: Please set LastEditors
+ * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @FilePath: \miniprogram-1\pages\house\house.js
+ */
+// pages/house/house.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    routes:[
+      {
+        url: '/pages/buy/review/review',
+        src:'/assets/img/buy/review.png',
+        text:'审批采购'
+      },
+      {
+        url:'/pages/buy/buyRecords/buyRecords',
+        src:'/assets/img/buy/records.png',
+        text:'采购记录'
+      },
+      {
+        url:'/pages/buy/executeBuy/executeBuy',
+        src:'/assets/img/buy/exeBuy.png',
+        text:'执行采购'
+      }
+    ]
   },
 
   /**
@@ -14,7 +38,6 @@ Page({
   onLoad: function (options) {
 
   },
-
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

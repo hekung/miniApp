@@ -1,2 +1,10 @@
-<!--pages/house/house.wxml-->
-<text>pages/house/house.wxml</text>
+<view class="container">
+    <view class="routes">
+        <view wx:for="{{routes}}" wx:key="url" class="route-item" url="{{item.url}}" hover-class="navigator-hover" open-type="navigate" data-item="{{item}}" bindtap="tapBlock">
+            <image src="{{item.src}}" mode="scaleToFill|aspectFit|aspectFill|widthFix" class="icon"></image>
+            <text class="item-title" selectable="false" space="false" decode="false">
+                {{item.text}}
+            </text>
+        </view>
+    </view>
+</view>
