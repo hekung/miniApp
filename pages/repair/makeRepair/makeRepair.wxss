@@ -1,1 +1,38 @@
 /* pages/repair/makeRepair/makeRepair.wxss */
+.page {
+    padding-bottom: 100rpx;
+}
+
+.rooms {
+    margin: 20rpx;
+    border-radius: 16rpx;
+    background-color: #fff;
+}
+
+.box-card {
+    width: 100%;
+    padding: 20rpx;
+    background-color: #fafafa;
+}
+
+.clearfix {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 60rpx;
+    align-items: center;
+    line-height: 60rpx;
+}
+
+.floor-card {
+    border: 1px dashed #f5f5f5;
+    border-radius: 12rpx;
+    padding: 20rpx;
+}
+
+.btn-row {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    height: 100rpx;
+}

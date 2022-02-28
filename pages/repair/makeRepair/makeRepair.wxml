@@ -1,2 +1,64 @@
-<!--pages/repair/makeRepair/makeRepair.wxml-->
-<text>pages/repair/makeRepair/makeRepair.wxml</text>
+<view class="page">
+    <!-- <van-cell-group inset>
+        <van-cell title="单元格" value="内容" />
+        <van-radio-group value="{{  scopeType }}" bind:change="onChangeScopeType" direction="horizontal">
+            <van-radio name="1">公共区域</van-radio>
+            <van-radio name="2">室内</van-radio>
+        </van-radio-group>
+    </van-cell-group> -->
+    <view class="con">
+        <van-cell-group inset title="选择维修范围类型">
+            <van-cell>
+                <view slot="title">
+                    <van-radio-group value="{{  scopeType }}" bind:change="onChangeScopeType" direction="horizontal">
+                        <van-radio name="1">公共区域</van-radio>
+                        <van-radio name="2">室内</van-radio>
+                    </van-radio-group>
+                </view>
+            </van-cell>
+        </van-cell-group>
+        <van-cell-group inset title="选择地区范围">
+            <van-cell title="省市区" value="{{selectedOptions}}" data-type="{{1}}" bind:click="clickToPick" is-link></van-cell>
+            <van-popup show="{{ showPicker }}" bind:close="onClosePick" position="bottom">
+                <van-picker columns="{{ columns }}" bind:change="onChangePickVal" />
+            </van-popup>
+            <van-cell title="小区" value="{{selectedCommunity}}" data-type="{{2}}" bind:click="clickToPick" is-link></van-cell>
+        </van-cell-group>
+        <van-cell-group inset title="选择房间">
+            <view class="box-card" wx:for="{{houses}}" wx:for-item="item" wx:key="buildNo">
+                <view class="card-header clearfix">
+                    <view>
+                        <text>栋：</text>
+                        <text>{{item.buildNo}}</text>
+                    </view>
+                    <van-checkbox value="{{ item.selectAll }}" data-buildNo="{{item}}" bind:change="houseChangeSelectAll">
+                        选择整栋
+                    </van-checkbox>
+                </view>
+                <view class="rooms">
+                    <view class="floor-card" wx:for="{{item.layerList}}" wx:for-item="layer" wx:key="layerNo">
+                        <view class="card-header clearfix">
+                            <view>
+                                <text>层：</text>
+                                <text>{{layer.layerNo}}</text>
+                            </view>
+                            <van-checkbox value="{{ layer.selectAll }}" data-buildNo="{{item}}" data-layerNo="{{layer}}" bind:change="floorChangeSelectAll">
+                                选择整层
+                            </van-checkbox>
+                        </view>
+                        <view>
+                            <van-checkbox-group direction="horizontal" value="{{ checkedRooms }}" bind:change="roomChangeSelect">
+                                <van-checkbox wx:for="{{layer.roomList}}" wx:for-item="room" wx:key="roomNo" name="{{room.roomNo}}" data-buildNo="{{item}}" data-layerNo="{{layer}}">
+                                    {{ room.roomNo }}
+                                </van-checkbox>
+                            </van-checkbox-group>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </van-cell-group>
+    </view>
+    <view class="btn-row">
+        <van-button type="primary" round block size="normal">下一步</van-button>
+    </view>
+</view>

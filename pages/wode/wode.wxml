@@ -1,5 +1,21 @@
-<!-- pages/wode/wode.wxml -->
-<view class="" hover-class="none" hover-stop-propagation="false">
-    dsaddsdsa
-    <!-- <custom-tab-bar></custom-tab-bar> -->
+<view class="body-my">
+    <view class="main" style="padding-top:{{statusBarHeight}}px">
+        <view class="main-top">
+            <view class="main-top-info">
+                <view class="person-info">
+                    <view class="header">
+                        <open-data type="userAvatarUrl" class="image"></open-data>
+                    </view>
+                    <view class="name {{userInfo.mobile?'has-btn':''}}">
+                        <open-data type="userNickName" class="text click-getinfo"></open-data>
+                        <!-- <view class="click-get-tel"
+                                wx:if="{{!userInfo.mobile}}">点击授权手机号</view> -->
+                        <button class="click-get-tel" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" wx:if="{{!userInfo.mobile}}">
+                            手机号一键登录
+                        </button>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
 </view>

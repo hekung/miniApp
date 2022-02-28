@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/repair/makeRepair/makeRepair",
     "pages/home/home",
     "pages/wode/wode",
     "pages/buy/buy",
@@ -15,7 +16,6 @@
     "pages/management/employManage/employManage",
     "pages/management/notifyFunction/notifyFunction",
     "pages/repair/repair",
-    "pages/repair/makeRepair/makeRepair",
     "pages/repair/repairRecords/repairRecords",
     "pages/repair/executeTask/executeTask",
     "pages/repair/executeWaterElec/executeWaterElec",
@@ -36,17 +36,20 @@
   "tabBar": {
     "color": "#8a8a8a",
     "selectedColor": "#e1251b",
-    "list": [{
-      "pagePath": "pages/home/home",
-      "iconPath": "assets/img/home.png",
-      "selectedIconPath": "/assets/img/home_h.png",
-      "text": "首页"
-    }, {
-      "pagePath": "pages/wode/wode",
-      "iconPath": "assets/img/wode.png",
-      "selectedIconPath": "/assets/img/wode_h.png",
-      "text": "我的"
-    }]
+    "list": [
+      {
+        "pagePath": "pages/home/home",
+        "iconPath": "assets/img/home.png",
+        "selectedIconPath": "/assets/img/home_h.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/wode/wode",
+        "iconPath": "assets/img/wode.png",
+        "selectedIconPath": "/assets/img/wode_h.png",
+        "text": "我的"
+      }
+    ]
   },
   "sitemapLocation": "sitemap.json",
   "usingComponents": {
@@ -58,6 +61,11 @@
     "van-datetime-picker": "@vant/weapp/datetime-picker/index",
     "van-popup": "@vant/weapp/popup/index",
     "van-grid": "@vant/weapp/grid/index",
-    "van-grid-item": "@vant/weapp/grid-item/index"
+    "van-grid-item": "@vant/weapp/grid-item/index",
+    "van-radio": "@vant/weapp/radio/index",
+    "van-radio-group": "@vant/weapp/radio-group/index",
+    "van-picker": "@vant/weapp/picker/index",
+    "van-checkbox": "@vant/weapp/checkbox/index",
+    "van-checkbox-group": "@vant/weapp/checkbox-group/index"
   }
 }

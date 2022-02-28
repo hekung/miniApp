@@ -1,18 +1,15 @@
 {
-  "name": "miniprogram-1",
+  "name": "miniapp",
   "version": "1.0.0",
   "description": "",
   "main": ".eslintrc.js",
   "scripts": {
-    "test": "test"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/hekung/miniApp.git"
   },
-  "keywords": [
-    "123"
-  ],
   "author": "",
   "license": "ISC",
   "bugs": {
@@ -20,7 +17,6 @@
   },
   "homepage": "https://github.com/hekung/miniApp#readme",
   "dependencies": {
-    "@vant/weapp": "^1.10.2",
-    "weui-miniprogram": "^1.2.3"
+    "@vant/weapp": "^1.10.2"
   }
 }
