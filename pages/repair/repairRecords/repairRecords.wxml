@@ -1,2 +1,36 @@
-<!--pages/repair/repairRecords/repairRecords.wxml-->
-<text>pages/repair/repairRecords/repairRecords.wxml</text>
+<view class="page" hover-class="none" hover-stop-propagation="false">
+    <van-tabs active="{{ active }}" type="card" bind:change="onChange">
+        <van-tab title="我的" name="a"></van-tab>
+        <van-tab title="所有" name="b"></van-tab>
+    </van-tabs>
+    <view class="searchs">
+        <van-cell-group>
+            <van-cell title="任务状态">
+                <view>
+                    <van-radio-group value="{{  scopeType }}" bind:change="onChangeScopeType" direction="horizontal">
+                        <van-radio name="{{1}}">公共区域</van-radio>
+                        <van-radio name="{{2}}">室内</van-radio>
+                    </van-radio-group>
+                </view>
+            </van-cell>
+            <van-cell title="省市区" value="{{selectedOptions}}" data-type="{{1}}" bind:click="clickToPick" is-link></van-cell>
+            <van-popup show="{{ showPicker }}" bind:close="onClosePick" position="bottom">
+                <van-picker columns="{{ columns }}" bind:change="onChangePickVal" />
+            </van-popup>
+            <van-cell title="小区" value="{{selectedCommunity}}" data-type="{{2}}" bind:click="clickToPick" is-link></van-cell>
+            <van-cell title="负责人" value="{{selectedCommunity}}" data-type="{{2}}" bind:click="clickToPick" is-link></van-cell>
+            <view class="btns" hover-class="none" hover-stop-propagation="false">
+                <van-button type="danger">查询</van-button>
+                <van-button type="default">重置</van-button>
+            </view>
+        </van-cell-group>
+    </view>
+    <view class="results">
+        <view class="head" hover-class="none" hover-stop-propagation="false"></view>
+        <scroll-view scroll-y style="width: 100%; height: 300px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+            <view wx:for="{{arrData}}" wx:key="index" style="display: flex; height: 100px;">
+                
+            </view>
+        </scroll-view>
+    </view>
+</view>
