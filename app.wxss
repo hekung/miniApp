@@ -114,7 +114,16 @@ input:focus {
   border: none;
   list-style: none;
 }
-
+.picker {
+  height: 100%;
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .hover-default {
   opacity: 0.8;
 }

@@ -1,5 +1,6 @@
 {
 	"pages": [
+    "pages/repair/repairRecordOne/repairRecordOne",
 		"pages/repair/repairRecords/repairRecords",
 		"pages/home/home",
 		"pages/wode/wode",
@@ -17,6 +18,8 @@
 		"pages/management/notifyFunction/notifyFunction",
 		"pages/repair/repair",
 		"pages/repair/makeRepair/makeRepair",
+    "pages/repair/repairInfo/repairInfo",
+
 		"pages/repair/executeTask/executeTask",
 		"pages/repair/executeWaterElec/executeWaterElec",
 		"pages/repair/distributeTask/distributeTask",
@@ -25,8 +28,7 @@
 		"pages/stock/stockQuery/stockQuery",
 		"pages/stock/stockImport/stockImport",
 		"pages/stock/stockOutport/stockOutport",
-		"pages/stock/stockTask/stockTask",
-		"pages/test/test"
+		"pages/stock/stockTask/stockTask"
 	],
 	"window": {
 		"backgroundTextStyle": "light",
@@ -70,6 +72,9 @@
 		"van-checkbox-group": "@vant/weapp/checkbox-group/index",
 		"van-tag": "@vant/weapp/tag/index",
 		"van-field": "@vant/weapp/field/index",
-		"van-uploader": "@vant/weapp/uploader/index"
+		"van-uploader": "@vant/weapp/uploader/index",
+    "van-row": "@vant/weapp/row/index",
+    "van-col": "@vant/weapp/col/index",
+		"cus-table": "cus-table/table"
 	}
 }

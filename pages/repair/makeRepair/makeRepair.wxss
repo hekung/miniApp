@@ -57,12 +57,7 @@
 .other .input {
   flex: 1;
 }
-.picker {
-  height: 100%;
-  position: absolute;
-  width: 100%;
-  left: 0;
-}
+
 .up {
   width: 100%;
 }

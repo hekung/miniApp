@@ -1,83 +1,39 @@
-<view class="mainPage">
-  <view class="hearderView">
-    <van-icon class="arrow" bindtap="goHome" name="notes-o" size="20" />
-    <text class="tipText" style="font-size: 12px;width: 85%;">滑动查看完整课表，长按可以编辑保存。</text>
-  </view>
-  <scroll-view scroll-x="true" scroll-y="true" style="height: {{validHeight-50}}px;">
-    <view class="table">
-      <view class="tr h">
-        <view class="th h1"></view>
-        <view class="th" wx:for="{{[0,1,2,3,4,5,6]}}" wx:key="weekIndex" wx:for-item="weekItem">
-          {{m1.getWeekday(weekItem)}}
-        </view>
-      </view>
-      <block wx:for="{{kebiao.detail}}" wx:key="index" wx:for-item="item">
-        <view class="tr">
-          <view class="td c1">
-            <text>第</text>
-            <text>{{item.no+1}}</text>
-            <text>节</text>
-          </view>
-          <view class="td c" wx:for="{{item.ke}}" wx:key="index2" wx:for-item="item2" bindlongpress="longpress" data-no="{{item.no}}" data-day="{{index}}">
-            <text>{{item2.name}}</text>
-            <text>{{item2.time}}</text>
-            <text>{{item2.classroom}}</text>
-            <text>{{item2.teacher}}</text>
-          </view>
-        </view>
-      </block>
-    </view>
-  </scroll-view>
-  <view class="botView" style="width: 100%;height: {{botHeight}}px;"></view>
-</view>
-<van-popup show="{{ show }}" position="bottom" custom-style="height: 230px;" bind:close="onClose">
-  <view class="popView">
-    <view class="popHeader">
-      <van-icon class="arrow" bindtap="onClose" name="close" size="20" color="Red" />
-      <text class="tipText">{{m1.getWeekday(currentKe.day)}} 第{{currentKe.no+1}}节</text>
-      <van-icon class="arrow" bindtap="confirmEdit" name="passed" size="20" color="#1989fa" />
-    </view>
-    <view class="kebiaoLine">
-      <text class="label">
-        <text class="kebiaoNo" space="ensp">{{item.no}}</text>
-        课程名
-      </text>
-      <input bindinput="inputText" id="name" value="{{currentKe.ke.name}}"></input>
-    </view>
-    <view class="kebiaoLine">
-      <text class="label">时间</text>
-      <input bindinput="inputText" id="time" value="{{currentKe.ke.time}}"></input>
-    </view>
-    <view class="kebiaoLine">
-      <text class="label">教室</text>
-      <input bindinput="inputText" id="classroom" value="{{currentKe.ke.classroom}}"></input>
-    </view>
-    <view class="kebiaoLine">
-      <text class="label">老师</text>
-      <input bindinput="inputText" id="teacher" value="{{currentKe.ke.teacher}}"></input>
-    </view>
-  </view>
-</van-popup>
-<wxs module="m1">
-  function getWeekday(index) {
-    switch (index) {
-      case 0:
-        return "周一"
-      case 1:
-        return "周二"
-      case 2:
-        return "周三"
-      case 3:
-        return "周四"
-      case 4:
-        return "周五"
-      case 5:
-        return "周六"
-      case 6:
-        return "周日"
-      default:
-        return ""
-    }
+<wxs module="refresh">
+
+module.exports = {
+  onPulling: function(evt, instance) {
+    var p = Math.min(evt.detail.dy / 80, 1)
+    console.log(p)
+    var view = instance.selectComponent('.refresh-container')
+    view.setStyle({
+      opacity: p,
+      transform: "scale(" + p + ")"
+    })
   }
-  module.exports.getWeekday = getWeekday
+}
+
 </wxs>
+自定义交互动画：
+<scroll-view scroll-y style="width: 100%; height: 400px;overflow-y:hidden;" refresher-enabled="{{true}}" refresher-threshold="{{80}}" refresher-default-style="none" refresher-background="lightgreen" bindrefresherpulling="{{refresh.onPulling}}">
+  <view slot="refresher" class="refresh-container" style="display: block; width: 100%; height: 80px; background: blue; display: flex; align-items: center;">
+    <view class="view1" style="position: absolute; text-align: center; width: 100%;">下拉刷新</view>
+  </view>
+  <view wx:for="{{arr}}" style="display: flex; height: 100px;">
+    <image src="https://images.unsplash.com/photo-1565699894576-1710004524ba?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1832&q=80"></image>
+    <image src="https://images.unsplash.com/photo-1566402441483-c959946717ed?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1600&q=80"></image>
+    <image src="https://images.unsplash.com/photo-1566378955258-7633cb5c823e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"></image>
+    <image src="https://images.unsplash.com/photo-1566404394190-cda8c6209208?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=630&q=80"></image>
+    <image src="https://images.unsplash.com/photo-1566490595448-be523b4d2914?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=958&q=80"></image>
+  </view>
+  "pageOrientation": "auto"
+</scroll-view>
+默认交互动画：
+<scroll-view scroll-y style="width: 100%; height: 400px;" refresher-enabled="{{true}}" refresher-threshold="{{100}}" refresher-default-style="white" refresher-background="lightgreen" refresher-triggered="{{triggered}}" bindrefresherpulling="onPulling" bindrefresherrefresh="onRefresh" bindrefresherrestore="onRestore" bindrefresherabort="onAbort">
+  <view wx:for="{{arr}}" style="display: flex; height: 100px;">
+    <image src="https://images.unsplash.com/photo-1565699894576-1710004524ba?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1832&q=80"></image>
+    <image src="https://images.unsplash.com/photo-1566402441483-c959946717ed?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1600&q=80"></image>
+    <image src="https://images.unsplash.com/photo-1566378955258-7633cb5c823e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"></image>
+    <image src="https://images.unsplash.com/photo-1566404394190-cda8c6209208?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=630&q=80"></image>
+    <image src="https://images.unsplash.com/photo-1566490595448-be523b4d2914?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=958&q=80"></image>
+  </view>
+</scroll-view>
