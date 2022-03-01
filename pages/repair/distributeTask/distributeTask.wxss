@@ -1,1 +1,41 @@
-/* pages/repair/distributeTask/distributeTask.wxss */
+/* pages/repair/repairRecords/repairRecords.wxss */
+.page {
+  height: 100%;
+}
+.header-row {
+  padding: 20rpx;
+  margin: 20rpx;
+  background-color: #fff;
+  border-radius: 20rpx;
+}
+.searchs {
+  padding-bottom: 100rpx;
+}
+label {
+  width: 160rpx;
+  width: 160rpx;
+  display: inline-block;
+  font-size: 22rpx;
+  font-weight: 600;
+}
+.item {
+  font-size: 22rpx;
+}
+.img {
+  width: 120rpx;
+  height: 120rpx;
+  margin-right: 20rpx;
+}
+.btns {
+  display: flex;
+  justify-content: space-around;
+  background-color: #fff;
+  padding: 20rpx 40rpx;
+}
+.results {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100rpx;
+}

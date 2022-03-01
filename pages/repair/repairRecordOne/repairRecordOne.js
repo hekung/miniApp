@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2022-02-28 20:15:19
- * @LastEditTime: 2022-02-28 20:52:11
+ * @LastEditTime: 2022-03-01 15:04:43
  * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: \miniprogram-1\pages\repair\repairRecordOne\repairRecordOne.js
@@ -40,12 +40,12 @@ Page({
       '维修中止',
     ],
     tableData: [
-      {id:1,no: '233',rate: '中',items:'dqw.dwq',scope:'是被',community:'dwq',createTime:'dasdadsadd'},
-      {id:2,no: '233',rate: '中',items:'dqw.dwq',scope:'是被',community:'dwq',createTime:'dasdadsadd'},
-      {id:3,no: '233',rate: '中',items:'dqw.dwq',scope:'是被',community:'dwq',createTime:'dasdadsadd'},
-      {id:4,no: '233',rate: '中',items:'dqw.dwq',scope:'是被',community:'dwq',createTime:'dasdadsadd'},
-      {id:5,no: '233',rate: '中',items:'dqw.dwq',scope:'是被',community:'dwq',createTime:'dasdadsadd'},
-      {id:6,no: '233',rate: '中',items:'dqw.dwq',scope:'是被',community:'dwq',createTime:'dasdadsadd'},
+      {id:1,no: '233',rate: '中',items:'dqw.dwq',scope:'是被',community:'dwq',createTime:'dasdadsadd',linkUrl: '/pages/repair/repairInfo/repairInfo?id='+ 1},
+      {id:2,no: '233',rate: '中',items:'dqw.dwq',scope:'是被',community:'dwq',createTime:'dasdadsadd',linkUrl: '/pages/repair/repairInfo/repairInfo?id='+ 1},
+      {id:3,no: '233',rate: '中',items:'dqw.dwq',scope:'是被',community:'dwq',createTime:'dasdadsadd',linkUrl: '/pages/repair/repairInfo/repairInfo?id='+ 1},
+      {id:4,no: '233',rate: '中',items:'dqw.dwq',scope:'是被',community:'dwq',createTime:'dasdadsadd',linkUrl: '/pages/repair/repairInfo/repairInfo?id='+ 1},
+      {id:5,no: '233',rate: '中',items:'dqw.dwq',scope:'是被',community:'dwq',createTime:'dasdadsadd',linkUrl: '/pages/repair/repairInfo/repairInfo?id='+ 1},
+      {id:6,no: '233',rate: '中',items:'dqw.dwq',scope:'是被',community:'dwq',createTime:'dasdadsadd',linkUrl: '/pages/repair/repairInfo/repairInfo?id='+ 1},
     ],
 
     columns:[

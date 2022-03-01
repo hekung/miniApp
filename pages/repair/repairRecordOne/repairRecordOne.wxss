@@ -5,6 +5,7 @@
 }
 label {
   width: 160rpx;
+  width: 160rpx;
   display: inline-block;
   font-size: 22rpx;
   font-weight: 600;

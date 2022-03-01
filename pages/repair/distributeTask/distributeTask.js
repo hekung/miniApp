@@ -1,66 +1,110 @@
-// pages/repair/distributeTask/distributeTask.js
+/*
+ * @Author: your name
+ * @Date: 2022-02-23 19:55:12
+ * @LastEditTime: 2022-03-01 17:19:04
+ * @LastEditors: Please set LastEditors
+ * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @FilePath: \miniprogram-1\pages\repair\repairRecords\repairRecords.js
+ */
+const app = getApp()
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-
+    active: 'a',
+    scopeType: 1,
+    taskList:[{
+      id:'',
+      no: 'dwq',
+      status:'dwq',
+      childNo:'',
+      rate: 'dqw',
+      item:'dq',
+      scope:'dq',
+      community: 'dwwq',
+      createTime:'qwdwq',
+      creator:'dwqdq',
+      remark:'d',
+      imgs:[
+        "https://images.unsplash.com/photo-1565699894576-1710004524ba?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1832&q=80",
+        "https://images.unsplash.com/photo-1565699894576-1710004524ba?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1832&q=80",
+        "https://images.unsplash.com/photo-1565699894576-1710004524ba?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1832&q=80"
+      ]
+    }],
+    columns:[],
+    rangeList:[
+      '低',
+      '中',
+      '高'
+    ],
+    rate:'',
+    responser:"",
+    currentPage: 1
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-
+  searchList(){},
+  onChangeTab(e){
+    this.setData({
+     active: e.detail.name
+    })
+    this.searchList()
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
+  clickToPick(){
+    this.setData({
+      showPicker: true,
+      pickType:1,
+      columns: this.data.rangeList 
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
+  onClosePick(){
+    this.setData({
+      showPicker: false
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
+  onChangePickVal(e){
+    if(this.data.pickType == 1){
+      this.setData({
+        rate: e.detail.value
+      })
+    }else {
+      this.setData({
+        responser: e.detail.value
+      })
+    }
   },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
+  
+  onReachBottom(){
+    this.setData({
+      currentPage: this.data.currentPage+1
+    })
+    const tasks =  this.data.taskList.concat([this.data.taskList[0]])
+    this.setData({
+      taskList: tasks
+    })
   },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
+  toDis(){
+    this.setData({
+      showPicker:true,
+      pickType: 2
+    })
+    this.setData({
+      columns: [
+        'a',
+        'b',
+        'c'
+      ]
+    })
   },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
+  confirmDis(){
+    this.setData({
+      showPicker:false
+    })
+    wx.showToast({
+      title: '提交派单',
+      icon: 'success'
+    })
   },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+  goback(){
+    wx.navigateBack({
+      delta: 1
+    });
+      
   }
 })

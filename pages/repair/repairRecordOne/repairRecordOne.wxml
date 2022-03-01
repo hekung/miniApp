@@ -49,6 +49,6 @@
         </van-cell>
     </van-cell-group>
     <view class="results">
-        <cus-table columns="{{columns}}" contentArray="{{tableData}}"></cus-table>
+        <cus-table columns="{{columns}}" contentArray="{{tableData}}" hasLink="{{true}}"></cus-table>
     </view>
 </view>

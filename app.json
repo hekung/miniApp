@@ -1,8 +1,6 @@
 {
 	"pages": [
-    "pages/repair/repairRecordOne/repairRecordOne",
-		"pages/repair/repairRecords/repairRecords",
-		"pages/home/home",
+    "pages/home/home",
 		"pages/wode/wode",
 		"pages/buy/buy",
 		"pages/buy/buyRecords/buyRecords",
@@ -17,6 +15,8 @@
 		"pages/management/employManage/employManage",
 		"pages/management/notifyFunction/notifyFunction",
 		"pages/repair/repair",
+    "pages/repair/repairRecordOne/repairRecordOne",
+		"pages/repair/repairRecords/repairRecords",
 		"pages/repair/makeRepair/makeRepair",
     "pages/repair/repairInfo/repairInfo",
 

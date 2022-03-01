@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2022-02-21 11:31:25
- * @LastEditTime: 2022-02-23 19:35:20
+ * @LastEditTime: 2022-03-01 17:50:19
  * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: \miniprogram-1\pages\house\house.js
@@ -22,7 +22,7 @@ Page({
       {
         url:'/pages/house/rentHandle/rentHandle',
         src:'/assets/img/house/handle.png',
-        text:'租赁处理'
+        text:'租客信息'
       },
       {
         url:'/pages/house/changePrice/changePrice',

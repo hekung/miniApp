@@ -1,0 +1,63 @@
+<view class="page">
+    <view class="header-row">
+        <van-row>
+            <van-col span="12">
+                <label>单号</label>
+                <text class="item">{{info.no}}</text>
+            </van-col>
+            <van-col span="12">
+                <label>状态</label>
+                <text class="item">{{info.status}}</text>
+            </van-col>
+            <van-col span="12">
+                <label>子单号</label>
+                <text class="item">{{info.childNo}}</text>
+            </van-col>
+            <van-col span="12">
+                <label>等级</label>
+                <text class="item">{{info.rate}}</text>
+            </van-col>
+            <van-col span="12">
+                <label>报修事项</label>
+                <text class="item">{{info.item}}</text>
+            </van-col>
+            <van-col span="12">
+                <label>范围类型</label>
+                <text class="item">{{info.scope}}</text>
+            </van-col>
+            <van-col span="12">
+                <label>小区</label>
+                <text class="item">{{info.community}}</text>
+            </van-col>
+            <van-col span="12">
+                <label>发起时间</label>
+                <text class="item">{{info.createTime}}</text>
+            </van-col>
+            <van-col span="12">
+                <label>责任人</label>
+                <text class="item">{{info.creator}}</text>
+            </van-col>
+            <van-col span="12">
+                <label>备注</label>
+                <text class="item">{{info.remark}}</text>
+            </van-col>
+            <van-col span="24">
+                <label>图片</label>
+                <view class="imgs" hover-class="none" hover-stop-propagation="false">
+                    <image class="img" wx:for="{{info.imgs}}" src="{{item}}" wx:key="index" alt=""></image>
+                </view>
+            </van-col>
+            <van-col span="24">
+                <label>关联项目</label>
+                <view class="" hover-class="none" hover-stop-propagation="false"></view>
+            </van-col>
+        </van-row>
+        <view class="btns" hover-class="none" hover-stop-propagation="false">
+            <van-button type="primary" size="normal" round>确认完成</van-button>
+            <van-button type="danger" size="normal" round>中止任务</van-button>
+        </view>
+    </view>
+    <view class="results">
+        <van-button type="primary" round block size="normal" bind:click="goback">返回</van-button>
+    </view>
+</view>

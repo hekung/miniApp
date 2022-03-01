@@ -72,7 +72,7 @@ page {
   color: #666;
   font-size: 28rpx;
   box-sizing: border-box;
-  height: 100%;
+  height: 101%;
 }
 
 page::before {
