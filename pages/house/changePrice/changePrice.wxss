@@ -1,1 +1,7 @@
 /* pages/house/changePrice/changePrice.wxss */
+.btns {
+  padding: 40rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

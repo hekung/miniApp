@@ -1,2 +1,44 @@
-<!--pages/house/changePrice/changePrice.wxml-->
-<text>pages/house/changePrice/changePrice.wxml</text>
+<view class="page" hover-class="none" hover-stop-propagation="false">
+    <van-tabs active="{{ active }}" type="card" bind:change="onChangeTab">
+        <van-tab title="批量调价" name="a"></van-tab>
+        <van-tab title="单体调价" name="b"></van-tab>
+    </van-tabs>
+    <view class="searchs">
+        <van-popup show="{{ showPicker }}" bind:close="onClosePick" position="bottom">
+            <van-picker show-toolbar bind:cancel="onCancelPick" bind:confirm="onConfirmPick" columns="{{ pickList }}" bind:change="onChangePickVal" />
+        </van-popup>
+        <van-cell-group wx:if="{{active=='a'}}">
+            <van-cell title="省市区" value="{{form1.selectedOptions}}" data-type="{{1}}" bind:click="clickToPick" is-link></van-cell>
+            <van-cell title="小区" value="{{form1.selectedCommunity}}" data-type="{{2}}" bind:click="clickToPick" is-link></van-cell>
+            <van-cell title="栋号" value="{{form1.buildNo}}" data-type="{{3}}" bind:click="clickToPick" is-link></van-cell>
+            <van-cell title="层号" value="{{form1.layerNo}}" data-type="{{4}}" bind:click="clickToPick" is-link></van-cell>
+            <van-cell title="调价范围">
+                <view>
+                    <van-radio-group value="{{  form1.scope }}" bind:change="onChangeScopeType" direction="horizontal">
+                        <van-radio name="{{1}}">小区</van-radio>
+                        <van-radio name="{{2}}">小区/栋</van-radio>
+                        <van-radio name="{{3}}">小区/栋/层</van-radio>
+                    </van-radio-group>
+                </view>
+            </van-cell>
+            <van-field value="{{ form1.ratio }}" clearable label="调价比例%" placeholder="请输入数字" type="number"></van-field>
+            <view class="btns" hover-class="none" hover-stop-propagation="false">
+                <van-button type="danger" size="small" round>调价</van-button>
+            </view>
+        </van-cell-group>
+        <block wx:else>
+            <van-cell-group>
+                <van-cell title="省市区" value="{{form2.selectedOptions}}" data-type="{{5}}" bind:click="clickToPick" is-link></van-cell>
+                <!-- <van-popup show="{{ showPicker }}" bind:close="onClosePick" position="bottom">
+                    <van-picker show-toolbar bind:cancel="onCancelPick" bind:confirm="onConfirmPick" columns="{{ pickList }}" bind:change="onChangePickVal" />
+                </van-popup> -->
+                <van-cell title="小区" value="{{form2.selectedCommunity}}" data-type="{{6}}" bind:click="clickToPick" is-link></van-cell>
+                <van-cell title="栋号" value="{{form2.buildNo}}" data-type="{{7}}" bind:click="clickToPick" is-link></van-cell>
+                <van-cell title="层号" value="{{form2.layerNo}}" data-type="{{8}}" bind:click="clickToPick" is-link></van-cell>
+            </van-cell-group>
+            <view class="results">
+                <cus-table columns="{{columns}}" contentArray="{{tableData}}" hasLink="{{true}}"></cus-table>
+            </view>
+        </block>
+    </view>
+</view>

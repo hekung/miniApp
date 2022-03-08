@@ -1,0 +1,13 @@
+/* pages/house/rentHandle/addRenter/addRenter.wxss */
+.btns {
+  display: flex;
+  justify-content: space-around;
+  padding: 20rpx 40rpx;
+}
+.items {
+  padding: 20rpx;
+  background-color: #fff;
+}
+.up {
+  width: 100%;
+}

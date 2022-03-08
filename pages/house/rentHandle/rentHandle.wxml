@@ -1,2 +1,28 @@
-<!--pages/house/rentHandle/rentHandle.wxml-->
-<text>pages/house/rentHandle/rentHandle.wxml</text>
+<view class="page" hover-class="none" hover-stop-propagation="false">
+    <view class="searchs">
+        <van-cell-group>
+            <van-cell title="任务状态">
+                <view>
+                    <van-radio-group value="{{  scopeType }}" bind:change="onChangeScopeType" direction="horizontal">
+                        <van-radio name="{{1}}">公共区域</van-radio>
+                        <van-radio name="{{2}}">室内</van-radio>
+                    </van-radio-group>
+                </view>
+            </van-cell>
+            <van-cell title="省市区" value="{{selectedOptions}}" data-type="{{1}}" bind:click="clickToPick" is-link></van-cell>
+            <van-popup show="{{ showPicker }}" bind:close="onClosePick" position="bottom">
+                <van-picker show-toolbar bind:cancel="onCancelPick" bind:confirm="onConfirmPick" columns="{{ pickList }}" bind:change="onChangePickVal" />
+            </van-popup>
+            <van-cell title="小区" value="{{selectedCommunity}}" data-type="{{2}}" bind:click="clickToPick" is-link></van-cell>
+            <van-cell title="负责人" value="{{selectedResponser}}" data-type="{{3}}" bind:click="clickToPick" is-link></van-cell>
+            <view class="btns" hover-class="none" hover-stop-propagation="false">
+                <van-button type="danger" size="small" round>查询</van-button>
+                <van-button type="primary" size="small" bind:click="goAdd" round>新增</van-button>
+                <van-button type="default" size="small" round>重置</van-button>
+            </view>
+        </van-cell-group>
+    </view>
+    <view class="results">
+        <cus-table columns="{{columns}}" contentArray="{{tableData}}" hasLink="{{true}}"></cus-table>
+    </view>
+</view>

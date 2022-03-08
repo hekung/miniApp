@@ -1,25 +1,28 @@
 {
 	"pages": [
-    "pages/home/home",
+		"pages/home/home",
+		"pages/house/house",
+		"pages/house/rentHandle/addRenter/addRenter",
+
 		"pages/wode/wode",
 		"pages/buy/buy",
 		"pages/buy/buyRecords/buyRecords",
 		"pages/buy/review/review",
 		"pages/buy/executeBuy/executeBuy",
-		"pages/house/house",
+
 		"pages/house/analysis/analysis",
 		"pages/house/changePrice/changePrice",
 		"pages/house/records/records",
 		"pages/house/rentHandle/rentHandle",
+
 		"pages/management/management",
 		"pages/management/employManage/employManage",
 		"pages/management/notifyFunction/notifyFunction",
 		"pages/repair/repair",
-    "pages/repair/repairRecordOne/repairRecordOne",
+		"pages/repair/repairRecordOne/repairRecordOne",
 		"pages/repair/repairRecords/repairRecords",
 		"pages/repair/makeRepair/makeRepair",
-    "pages/repair/repairInfo/repairInfo",
-
+		"pages/repair/repairInfo/repairInfo",
 		"pages/repair/executeTask/executeTask",
 		"pages/repair/executeWaterElec/executeWaterElec",
 		"pages/repair/distributeTask/distributeTask",
@@ -73,8 +76,8 @@
 		"van-tag": "@vant/weapp/tag/index",
 		"van-field": "@vant/weapp/field/index",
 		"van-uploader": "@vant/weapp/uploader/index",
-    "van-row": "@vant/weapp/row/index",
-    "van-col": "@vant/weapp/col/index",
+		"van-row": "@vant/weapp/row/index",
+		"van-col": "@vant/weapp/col/index",
 		"cus-table": "cus-table/table"
 	}
 }
