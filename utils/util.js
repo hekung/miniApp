@@ -28,7 +28,7 @@ const formatTime = date => {
 
 const baseUrl = 'http://119.91.25.208'// 'http://192.168.3.36:8084' //  "https://www.diqifan.com" // 
 
-const get = async (url, header) => {
+const get = async (url, params, header) => {
   const cookie = wx.getStorageSync('cookie')
   if (cookie) {
     if (header) {
@@ -38,10 +38,15 @@ const get = async (url, header) => {
     }
 
   }
+  if (!header) {
+    header = {}
+  }
   header.Authorization = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6ImFkbWluIiwidHlwZSI6NiwidXNlcklkIjoidzIzNDM1MzUzNSIsImlhdCI6MTY0NzYwNjExOCwiZXhwIjoxNjQ4MjEwOTE4fQ.nmmNtzDhnVXod5k7kYiw20UnLovE9G20FZWt8YY5IMk'
   const result = await new Promise((resolve, reject) => {
     wx.request({
-      url: baseUrl + url, header, success(res) {
+      url: baseUrl + url, header,
+      data: params,
+      success(res) {
         // if (res.header['Set-Cookie']) {
         //   wx.setStorageSync('cookie', res.header['Set-Cookie']); //保存Cookie到Storage
         // }
@@ -60,6 +65,9 @@ const post = async (url, params, header) => {
       header = { Cookie: cookie }
     }
   }
+  if (!header) {
+    header = {}
+  }
   header.Authorization = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6ImFkbWluIiwidHlwZSI6NiwidXNlcklkIjoidzIzNDM1MzUzNSIsImlhdCI6MTY0NzYwNjExOCwiZXhwIjoxNjQ4MjEwOTE4fQ.nmmNtzDhnVXod5k7kYiw20UnLovE9G20FZWt8YY5IMk'
   const result = await new Promise((resolve, reject) => {
     if (!header) {
@@ -76,7 +84,7 @@ const post = async (url, params, header) => {
   })
   return result
 }
-const postForm = async (url, params) => {
+const postForm = async (url, params = {}) => {
   let formData = new FormData();
   for (const key in params) {
     formData.append(key, params[key])
