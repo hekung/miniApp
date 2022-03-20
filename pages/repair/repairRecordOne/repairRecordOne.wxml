@@ -1,0 +1,54 @@
+<view class="page">
+    <van-cell-group inset class="header-row">
+        <van-row>
+            <van-col span="12">
+                <label>单号</label>
+                <text class="item">{{info.no}}</text>
+            </van-col>
+            <van-col span="12">
+                <label>等级</label>
+                <text class="item">{{info.rate}}</text>
+            </van-col>
+            <van-col span="12">
+                <label>报修事项</label>
+                <text class="item">{{info.item}}</text>
+            </van-col>
+            <van-col span="12">
+                <label>范围类型</label>
+                <text class="item">{{info.scope}}</text>
+            </van-col>
+            <van-col span="12">
+                <label>小区</label>
+                <text class="item">{{info.community}}</text>
+            </van-col>
+            <van-col span="12">
+                <label>发起时间</label>
+                <text class="item">{{info.createTime}}</text>
+            </van-col>
+            <van-col span="12">
+                <label>发起人</label>
+                <text class="item">{{info.creator}}</text>
+            </van-col>
+            <van-col span="12">
+                <label>备注</label>
+                <text class="item">{{info.remark}}</text>
+            </van-col>
+            <van-col span="24">
+                <label>图片</label>
+                <view class="imgs" hover-class="none" hover-stop-propagation="false">
+                    <image class="img" wx:for="{{info.imgs}}" src="{{item}}" wx:key="index" alt=""></image>
+                </view>
+            </van-col>
+        </van-row>
+        <van-cell title="维修状态" is-link>
+            <picker bindchange="bindStatusPickerChange" value="{{rangeList[info.status]}}" range="{{rangeList}}">
+                <view class="picker">
+                    <text>{{rangeList[info.status]}}</text>
+                </view>
+            </picker>
+        </van-cell>
+    </van-cell-group>
+    <view class="results">
+        <cus-table columns="{{columns}}" contentArray="{{tableData}}" hasLink="{{true}}"></cus-table>
+    </view>
+</view>

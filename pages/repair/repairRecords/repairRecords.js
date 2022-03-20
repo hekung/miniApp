@@ -1,66 +1,118 @@
-// pages/repair/repairRecords/repairRecords.js
+/*
+ * @Author: your name
+ * @Date: 2022-02-23 19:55:12
+ * @LastEditTime: 2022-03-01 18:23:01
+ * @LastEditors: Please set LastEditors
+ * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @FilePath: \miniprogram-1\pages\repair\repairRecords\repairRecords.js
+ */
+const app = getApp()
+const citys = {
+  浙江: ['杭州', '宁波', '温州', '嘉兴', '湖州'],
+  福建: ['福州', '厦门', '莆田', '三明', '泉州'],
+};
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-
+    active: 'a',
+    scopeType: 1,
+    selectedOptions:[],
+    selectedCommunity:'',
+    selectedResponser:'',
+    pickerType:1,
+    tableData: [
+      {id:1,no: '233',rate: '中',items:'dqw.dwq',scope:'是被',community:'dwq',createTime:'dasdadsadd',linkUrl:'/pages/repair/repairRecordOne/repairRecordOne?id='+ 1},
+      {id:2,no: '233',rate: '中',items:'dqw.dwq',scope:'是被',community:'dwq',createTime:'dasdadsadd',linkUrl:'/pages/repair/repairRecordOne/repairRecordOne?id='+ 2},
+      {id:3,no: '233',rate: '中',items:'dqw.dwq',scope:'是被',community:'dwq',createTime:'dasdadsadd',linkUrl:'/pages/repair/repairRecordOne/repairRecordOne?id='+ 3},
+      {id:4,no: '233',rate: '中',items:'dqw.dwq',scope:'是被',community:'dwq',createTime:'dasdadsadd',linkUrl:'/pages/repair/repairRecordOne/repairRecordOne?id='+ 4},
+      {id:5,no: '233',rate: '中',items:'dqw.dwq',scope:'是被',community:'dwq',createTime:'dasdadsadd',linkUrl:'/pages/repair/repairRecordOne/repairRecordOne?id='+ 5},
+      {id:6,no: '233',rate: '中',items:'dqw.dwq',scope:'是被',community:'dwq',createTime:'dasdadsadd',linkUrl:'/pages/repair/repairRecordOne/repairRecordOne?id='+ 5},
+    ],
+    columns:[
+      {title: '单号',attr: 'no'},
+      {title: '等级',attr: 'rate'},
+      {title: '报修事项',attr: 'items'},
+      {title: '范围类型',attr: 'scope'},
+      {title: '小区',attr: 'community'},
+      {title: '发起时间',attr: 'createTime'},
+    ],
+    pickList:[],
+    disList: [
+      {
+        values: Object.keys(citys),
+        className: 'column1',
+      },
+      {
+        values: citys['浙江'],
+        className: 'column2',
+        defaultIndex: 2,
+      },
+    ],
+    communityList:['1','2','23'],
+    responsorList:['A','B']
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-
+  searchList(){},
+  onChangeTab(e){
+    this.setData({
+     active: e.detail.name
+    })
+    this.searchList()
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
+  clickToPick(e){
+    const pickerType = e.currentTarget.dataset.type
+    this.setData({
+      pickerType,
+      showPicker: true
+    })
+    if(this.data.pickerType == 1){
+      this.setData({
+        pickList: this.data.disList 
+      })
+    }else if(this.data.pickerType == 2){
+      this.setData({
+        pickList: this.data.communityList 
+      })
+    }else {
+      this.setData({
+        pickList: this.data.responsorList 
+      })
+    }
   },
+  onChangePickVal(e){
+    if(this.data.pickerType == 1){
+      const { picker, value, index } = e.detail;
+      picker.setColumnValues(1, citys[value[0]]);
+    }else if(this.data.pickerType == 2){
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
+    }else {
 
+    }
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
+  onClosePick(){
+    this.setData({
+      showPicker:false
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
+  onConfirmPick(){
+    this.setData({
+      showPicker:false
+    })
   },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+  onCancelPick(){
+    this.setData({
+      showPicker:false
+    })
+    if(this.data.pickType == 0){
+      this.setData({
+        selectedOptions:[]
+      })
+    }else  if(this.data.pickType == 1){
+      this.setData({
+        selectedCommunity: ''
+      })
+    }else {
+      this.setData({
+        selectedResponser: ''
+      })
+    }
   }
 })

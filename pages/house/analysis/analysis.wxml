@@ -1,7 +1,63 @@
-<view>
- <van-button type="default">默认按钮</van-button>
-<van-button type="primary">主要按钮</van-button>
-<van-button type="info">信息按钮</van-button>
-<van-button type="warning">警告按钮</van-button>
-<van-button type="danger">危险按钮</van-button>
+<view class="page" hover-class="none" hover-stop-propagation="false">
+    <van-tabs active="{{ active }}" type="card" bind:change="onChange">
+        <van-tab title="房屋查询" name="a">
+            <view class="searchs">
+                <!-- <view class="title" hover-class="none" hover-stop-propagation="false">可租房查询</view> -->
+                <van-cell-group title="可租房查询">
+                    <picker mode="date" value="{{form1.startDate}}" start="2000-01-01" end="2999-12-31" bindchange="bindStartDateChange">
+                        <van-cell title="起租日" value="{{form1.startDate}}" is-link />
+                    </picker>
+                    <picker mode="date" value="{{form1.endDate}}" start="2000-01-01" end="2999-12-31" bindchange="bindEndDateChange">
+                        <van-cell title="结租日" value="{{form1.endDate}}" is-link />
+                    </picker>
+                    <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
+                        <van-cell title="地址" value="{{multiArray[0][multiIndex[0]]}}，{{multiArray[1][multiIndex[1]]}}，{{multiArray[2][multiIndex[2]]}}" is-link />
+                    </picker>
+                    <view class="btns" hover-class="none" hover-stop-propagation="false">
+                        <van-button type="danger">查询</van-button>
+                        <van-button type="default">重置</van-button>
+                    </view>
+                </van-cell-group>
+            </view>
+            <view class="results">
+                <van-cell-group title="查询结果">
+                    <van-grid>
+                        <van-grid-item text="文字" />
+                        <van-grid-item text="文字" />
+                        <van-grid-item text="文字" />
+                        <van-grid-item text="文字" />
+                        <van-grid-item text="文字" />
+                        <van-grid-item text="文字" />
+                        <van-grid-item text="文字" />
+                        <van-grid-item text="文字" />
+                        <van-grid-item text="文字" />
+                        <van-grid-item text="文字" />
+                        <van-grid-item text="文字" />
+                        <van-grid-item text="文字" />
+                        <van-grid-item text="文字" />
+                        <van-grid-item text="文字" />
+                        <van-grid-item text="文字" />
+                        <van-grid-item text="文字" />
+                        <van-grid-item text="文字" />
+                        <van-grid-item text="文字" />
+                        <van-grid-item text="文字" />
+                        <van-grid-item text="文字" />
+                        <van-grid-item text="文字" />
+                        <van-grid-item text="文字" />
+                        <van-grid-item text="文字" />
+                        <van-grid-item text="文字" />
+                        <van-grid-item text="文字" />
+                        <van-grid-item text="文字" />
+                        <van-grid-item text="文字" />
+                        <van-grid-item text="文字" />
+                        <van-grid-item text="文字" />
+                        <van-grid-item text="文字" />
+                        <van-grid-item text="文字" />
+                        <van-grid-item text="文字" />
+                    </van-grid>
+                </van-cell-group>
+            </view>
+        </van-tab>
+        <van-tab title="房屋分析" name="b"></van-tab>
+    </van-tabs>
 </view>

@@ -13,6 +13,7 @@ Page({
     selectedOptions: [],
     showPicker: false,
     pickerType: 1,
+    contentType: 1,
     disList: [
       {
         values: Object.keys(citys),
@@ -87,6 +88,24 @@ Page({
           }
         ]
       }
+    ],
+    form2:{
+      tags:[
+       {name:'灯泡',check: false},
+       {name: '水龙头',check: false},
+       {name: '马桶',check: false},
+       {name:'墙面深水',check: false},
+       {name:'管道漏水',check: false}    
+      ],
+      isOtherItem: false,
+      messageItem:'',
+      rate:''
+    },
+    fileList:[],
+    rangeList:[
+      '低',
+      '中',
+      '高'
     ]
   },
 
@@ -166,6 +185,48 @@ Page({
     let allchecked = this.houses.every((e) => e.selectAll === true)
     this.radio = allchecked
   },
+  tapToNext(){
+    this.setData({
+      contentType:2
+    })
+  },
+  clickTag(e){
+    const itemName = e.currentTarget.dataset.item 
+    const index = this.data.form2.tags.findIndex(e=> e.name === itemName)
+    const item = this.data.form2.tags[index]
+    item.check = !item.check
+    const key = `form2.tags[${index}]`
+    this.setData({
+      [key]: item
+    })
+  },
+  onChangeIsOtherItem(e){
+    this.setData({
+      'form2.isOtherItem': e.detail
+    })
+  },
+  bindRatePickerChange(e){
+    this.setData({
+      'form2.rate': e.detail.value
+    })
+  },
+  afterRead(event) {
+    const { file } = event.detail;
+    // 当设置 mutiple 为 true 时, file 为数组格式，否则为对象格式
+    wx.uploadFile({
+      url: 'http://119.91.25.208/api/propertyResources/uploadResource', // 仅为示例，非真实的接口地址
+      filePath: file.url,
+      name: 'file',
+      formData: { user: 'test' },
+      success(res) {
+        // 上传完成需要更新 fileList
+        const { fileList = [] } = this.data;
+        fileList.push({ ...file, url: res.data });
+        this.setData({ fileList });
+      },
+    });
+  },
+  submit(){},
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

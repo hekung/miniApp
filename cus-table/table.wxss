@@ -1,0 +1,52 @@
+/*表格*/
+.table-wrap {
+  /*margin-left: 1.6%;*/
+  /*margin: 14rpx;*/
+  /* top: 20rpx; */
+  /*overflow-y: scroll;*/
+  /*overflow-x: hidden;*/
+  overflow: hidden;
+  white-space: nowrap;
+}
+/* 表格代码   */
+.table {
+  background-color: white;
+  border: 1px solid #dadada;
+  border-right: 0;
+  border-bottom: 0;
+  font-size: 22rpx;
+  padding: 20rpx;
+  overflow-x: auto;
+}
+.tr {
+  line-height: 60rpx;
+  height: 60rpx;
+}
+.th {
+  display: inline-block;
+  padding: 3px;
+  border-bottom: 1px solid #dadada;
+  border-right: 1px solid #dadada;
+  text-align: center;
+  width: 200rpx;
+  /*font-weight: 800;*/
+  background-color: rgba(139, 182, 155, 0.12);
+  font-size: 22rpx;
+  color: rgba(23, 21, 23, 0.73);
+}
+.td {
+  display: inline-block;
+  padding: 3px;
+  border-bottom: 1px solid #dadada;
+  border-right: 1px solid #dadada;
+  text-align: center;
+  width: 200rpx;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  font-size: 22rpx;
+  color: #666666;
+}
+
+.left {
+  text-align: left;
+}
