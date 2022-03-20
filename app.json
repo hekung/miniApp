@@ -75,6 +75,7 @@
 		"van-uploader": "@vant/weapp/uploader/index",
 		"van-row": "@vant/weapp/row/index",
 		"van-col": "@vant/weapp/col/index",
-		"cus-table": "cus-table/table"
+		"cus-table": "cus-table/table",
+		"region-selector": "region-selector/region-selector"
 	}
 }
