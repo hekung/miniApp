@@ -15,17 +15,17 @@ App({
     wx.setStorageSync('logs', logs)
 
     // 登录
-    wx.login({
-      success: res => {
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
-      }
-    })
+    // wx.login({
+    //   success: res => {
+    //     // 发送 res.code 到后台换取 openId, sessionKey, unionId
+    //   }
+    // })
 
     // 设备
     wx.getSystemInfo({
       success: res => {
         let modelmes = res.model;
-        if (modelmes.includes('iPhone X') || modelmes.includes('iPhone 1') || modelmes.includes  ('unknown')) {
+        if (modelmes.includes('iPhone X') || modelmes.includes('iPhone 1') || modelmes.includes('unknown')) {
           this.setData({
             isIphoneX: true
           })
@@ -33,9 +33,9 @@ App({
       }
     })
   },
-  watch:function( prop,method){
+  watch: function (prop, method) {
     var obj = this.globalData;
-    Object.defineProperty(obj,prop, {
+    Object.defineProperty(obj, prop, {
       configurable: true,
       enumerable: true,
       set: function (value) {
@@ -43,8 +43,8 @@ App({
         console.log('是否会被执行')
         method(value);
       },
-      get:function(){
-      // 可以在这里打印一些东西，然后在其他界面调用getApp().globalData.name的时候，这里就会执行。
+      get: function () {
+        // 可以在这里打印一些东西，然后在其他界面调用getApp().globalData.name的时候，这里就会执行。
         return this.globalData.userInfo
       }
     })

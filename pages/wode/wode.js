@@ -1,7 +1,7 @@
 // pages/my/my.js
 // const { getUserInfo } = require('../../utils/api.js')
-// const { baseUrl, getFromStorage } = require('../../utils/util.js')
-// const { checkUserLogin, onLogin, catchPhoneNumber } = require('../../utils/login.js')
+const { getFromStorage, postForm } = require('../../utils/util.js')
+const { onLogin, catchPhoneNumber } = require('../../utils/login.js')
 const app = getApp()
 Page({
   /**
@@ -21,7 +21,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: async function (options) {
-    this.catchWXinfo()
+    // this.catchWXinfo()
   },
   catchWXinfo() {
     if (app.globalData.userInfo) {
@@ -51,27 +51,36 @@ Page({
       })
     }
   },
-  bindGetUserInfo: function (e) {
-    app.globalData.userInfo = e.detail.userInfo
-    this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
+  getUserProfile(e) {
+    // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认
+    // 开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
+    wx.getUserProfile({
+      desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+      success: (res) => {
+        const { userInfo, rawData, signature, encryptedData, iv
+        } = res
+        // this.setData({
+        //   userInfo: res.userInfo,
+        //   hasUserInfo: true
+        // })
+
+      }
     })
   },
   getPhoneNumber: async function (e) {
     let that = this;
-    console.log(e.detail);
+    console.log('手机号信息：', e);
     if (e.detail.errMsg == "getPhoneNumber:ok") {
-      const skey = await getFromStorage('skey')
-      if (skey) {
-        this.queryPhone({ ...e, skey })
-      } else {
-        let loginStatus = await onLogin()
-        if (loginStatus) {
-          skey = await getFromStorage('skey')
-          this.queryPhone({ ...e, skey })
-        }
-      }
+      // const skey = await getFromStorage('skey')
+      // if (skey) {
+      //   this.queryPhone({ ...e, skey })
+      // } else {
+      //   let loginStatus = await onLogin()
+      //   if (loginStatus) {
+      //     skey = await getFromStorage('skey')
+      //     this.queryPhone({ ...e, skey })
+      //   }
+      // }
     }
     // 这里要先获取登陆时保存的seeion_key
     // if (e.detail.errMsg == "getPhoneNumber:ok") {

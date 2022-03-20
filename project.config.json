@@ -9,7 +9,7 @@
     ]
   },
   "setting": {
-    "urlCheck": true,
+    "urlCheck": false,
     "es6": true,
     "enhance": true,
     "postcss": true,
@@ -28,6 +28,7 @@
     "compileHotReLoad": true,
     "useMultiFrameRuntime": true,
     "useApiHook": true,
+    "useApiHostProcess": true,
     "babelSetting": {
       "ignore": [],
       "disablePlugins": [],
@@ -47,12 +48,11 @@
     "minifyWXML": true,
     "showES6CompileOption": false,
     "useCompilerPlugins": false,
-    "ignoreUploadUnusedFiles": true,
-    "useApiHostProcess": true
+    "ignoreUploadUnusedFiles": true
   },
   "compileType": "miniprogram",
-  "libVersion": "2.5.0",
-  "appid": "wx17c651c218566199",
+  "libVersion": "2.23.0",
+  "appid": "wxd74ea2ab9ad015b8",
   "projectname": "miniprogram-1",
   "debugOptions": {
     "hidedInDevtools": []

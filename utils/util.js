@@ -8,6 +8,7 @@
 
 //   return `${[year, month, day].map(formatNumber).join('/')} ${[hour, minute, second].map(formatNumber).join(':')}`
 // }
+const FormData = require('./formData.js')
 
 const formatNumber = n => {
   n = n.toString()
@@ -25,7 +26,7 @@ const formatTime = date => {
   return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':')
 }
 
-const baseUrl = 'https://testlocal.diqifan.com'// 'http://192.168.3.36:8084' //  "https://www.diqifan.com" // 
+const baseUrl = 'http://119.91.25.208'// 'http://192.168.3.36:8084' //  "https://www.diqifan.com" // 
 
 const get = async (url, header) => {
   const cookie = wx.getStorageSync('cookie')
@@ -37,12 +38,13 @@ const get = async (url, header) => {
     }
 
   }
+  header.Authorization = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6ImFkbWluIiwidHlwZSI6NiwidXNlcklkIjoidzIzNDM1MzUzNSIsImlhdCI6MTY0NzYwNjExOCwiZXhwIjoxNjQ4MjEwOTE4fQ.nmmNtzDhnVXod5k7kYiw20UnLovE9G20FZWt8YY5IMk'
   const result = await new Promise((resolve, reject) => {
     wx.request({
-      url, header, success(res) {
-        if (res.header['Set-Cookie']) {
-          wx.setStorageSync('cookie', res.header['Set-Cookie']); //保存Cookie到Storage
-        }
+      url: baseUrl + url, header, success(res) {
+        // if (res.header['Set-Cookie']) {
+        //   wx.setStorageSync('cookie', res.header['Set-Cookie']); //保存Cookie到Storage
+        // }
         resolve(res.data)
       }
     })
@@ -58,12 +60,13 @@ const post = async (url, params, header) => {
       header = { Cookie: cookie }
     }
   }
+  header.Authorization = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6ImFkbWluIiwidHlwZSI6NiwidXNlcklkIjoidzIzNDM1MzUzNSIsImlhdCI6MTY0NzYwNjExOCwiZXhwIjoxNjQ4MjEwOTE4fQ.nmmNtzDhnVXod5k7kYiw20UnLovE9G20FZWt8YY5IMk'
   const result = await new Promise((resolve, reject) => {
     if (!header) {
       header = {}
     }
     wx.request({
-      url, method: 'POST', header, data: params, success(res) {
+      url: baseUrl + url, method: 'POST', header, data: params, success(res) {
         if (res.header['Set-Cookie']) {
           wx.setStorageSync('cookie', res.header['Set-Cookie']); //保存Cookie到Storage
         }
@@ -73,10 +76,41 @@ const post = async (url, params, header) => {
   })
   return result
 }
+const postForm = async (url, params) => {
+  let formData = new FormData();
+  for (const key in params) {
+    formData.append(key, params[key])
+  }
+  debugger
+  const result = await new Promise((resolve, reject) => {
+    const token = getFromStorage('token')
+    let data = formData.getData();
+    wx.request({
+      url: baseUrl + url,
+      method: 'POST',
+      header: {
+        'content-type': data.contentType,
+        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6ImFkbWluIiwidHlwZSI6NiwidXNlcklkIjoidzIzNDM1MzUzNSIsImlhdCI6MTY0NzYwNjExOCwiZXhwIjoxNjQ4MjEwOTE4fQ.nmmNtzDhnVXod5k7kYiw20UnLovE9G20FZWt8YY5IMk'
+      },
+      data: data.buffer,
+      success: function (res) {
+        resolve(res.data)
+      },
+      fail: function (error) {
+        reject(error)
+      }
+    });
+  })
+  return result
+}
 const requestDelete = async (url, params, header) => {
+  if (!header) {
+    header = {}
+  }
+  header.Authorization = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6ImFkbWluIiwidHlwZSI6NiwidXNlcklkIjoidzIzNDM1MzUzNSIsImlhdCI6MTY0NzYwNjExOCwiZXhwIjoxNjQ4MjEwOTE4fQ.nmmNtzDhnVXod5k7kYiw20UnLovE9G20FZWt8YY5IMk'
   const result = await new Promise((resolve, reject) => {
     wx.request({
-      url, method: 'DELETE', header, data: params, success(res) {
+      url: baseUrl + url, method: 'DELETE', header, data: params, success(res) {
         resolve(res.data)
       }
     })
@@ -107,6 +141,7 @@ module.exports = {
   baseUrl,
   get,
   post,
+  postForm,
   requestDelete,
   getFromStorage,
   throttle
