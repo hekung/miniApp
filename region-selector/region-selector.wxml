@@ -1,1 +1,1 @@
-<van-picker show-toolbar bind:cancel="onCancelPick" bind:confirm="onConfirmPick" columns="{{ pickList }}" bind:change="onChangePickVal" />
+<van-picker show-toolbar bind:cancel="cancelPick" bind:confirm="confirmPick" columns="{{ pickList }}" bind:change="onChangePickVal" />

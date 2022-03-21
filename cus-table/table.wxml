@@ -3,13 +3,15 @@
         <view class="table">
             <view class="tr">
                 <block wx:for="{{columns}}" wx:key="attr">
-                    <view class="th left">{{item.title}}</view>
+                    <view class="th left" style="width: {{item.width}}">{{item.title}}</view>
                 </block>
                 <!-- <view class="th th2 left">数量</view> -->
             </view>
             <view class="tr" wx:for="{{contentArray}}" wx:for-item="row" wx:key="index" data-url="{{row.linkUrl}}" bindtap="clickRow">
                 <block wx:for="{{columns}}" wx:for-item="column" wx:for-index="idx" wx:key="idx">
-                    <view class="td left">{{row[column['attr']]}}</view>
+                    <view class="td left" style="width: {{column.width}}">
+                        {{row[column['attr']]}}
+                    </view>
                 </block>
                 <!-- <view class="td td2 left"><text class="item_value_font_color">{{item.feedMateriel1}}</text></view> -->
             </view>

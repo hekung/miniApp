@@ -14,6 +14,7 @@
 		"pages/house/rentHandle/rentHandle",
 		"pages/management/management",
 		"pages/management/employManage/employManage",
+		"pages/management/employManage/addEmployee/addEmployee",
 		"pages/management/notifyFunction/notifyFunction",
 		"pages/repair/repair",
 		"pages/repair/repairRecordOne/repairRecordOne",

@@ -6,64 +6,82 @@
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: \miniprogram-1\pages\repair\repairRecords\repairRecords.js
  */
-const { queryEmplyeeList, queryRoleList, queryProvinceList, queryCityList, queryCountryList } = require('../../../utils/api')
+const { queryEmplyeeList, queryRoleList, queryCommunityList } = require('../../../utils/api')
 // const app = getApp()
-const citys = {
-  浙江: ['杭州', '宁波', '温州', '嘉兴', '湖州'],
-  福建: ['福州', '厦门', '莆田', '三明', '泉州'],
-};
 Page({
   data: {
-    provinceList: [],
-    cityList: [],
-    countryList: [],
     pickerType: 1,
     roleList: [],
     roleName: '',
-    selectedOptions: [],
+    selectedOptions: {
+      province: {
+        name: '',
+        code: '',
+      },
+      city: {
+        name: '',
+        code: ''
+      },
+      country: {
+        name: '',
+        code: ''
+      }
+    },
+    selectDisplace: '',// 区域中文
+    selectedCommunity: '', // 小区中文
     search_communityId_eq: '', // 小区选择
     search_roleId_eq: '',// 角色 选择
     search_status_eq: '',// 状态 （0：离职；1：在职）
     search_userName_like: '',//员工名搜索
     search_phoneNumber_like: '',// 手机号搜索
-    tableData: [
-      { id: 1, no: '233', rate: '中', items: 'dqw.dwq', scope: '是被', community: 'dwq', createTime: 'dasdadsadd', linkUrl: '/pages/repair/repairRecordOne/repairRecordOne?id=' + 1 },
-      { id: 2, no: '233', rate: '中', items: 'dqw.dwq', scope: '是被', community: 'dwq', createTime: 'dasdadsadd', linkUrl: '/pages/repair/repairRecordOne/repairRecordOne?id=' + 2 },
-      { id: 3, no: '233', rate: '中', items: 'dqw.dwq', scope: '是被', community: 'dwq', createTime: 'dasdadsadd', linkUrl: '/pages/repair/repairRecordOne/repairRecordOne?id=' + 3 },
-      { id: 4, no: '233', rate: '中', items: 'dqw.dwq', scope: '是被', community: 'dwq', createTime: 'dasdadsadd', linkUrl: '/pages/repair/repairRecordOne/repairRecordOne?id=' + 4 },
-      { id: 5, no: '233', rate: '中', items: 'dqw.dwq', scope: '是被', community: 'dwq', createTime: 'dasdadsadd', linkUrl: '/pages/repair/repairRecordOne/repairRecordOne?id=' + 5 },
-      { id: 6, no: '233', rate: '中', items: 'dqw.dwq', scope: '是被', community: 'dwq', createTime: 'dasdadsadd', linkUrl: '/pages/repair/repairRecordOne/repairRecordOne?id=' + 5 },
-    ],
+    tableData: [],
     columns: [
-      { title: '单号', attr: 'no' },
-      { title: '等级', attr: 'rate' },
-      { title: '报修事项', attr: 'items' },
-      { title: '范围类型', attr: 'scope' },
-      { title: '小区', attr: 'community' },
-      { title: '发起时间', attr: 'createTime' },
+      { title: '姓名', attr: 'userName', width: '160rpx' },
+      { title: '角色', attr: 'roleName', width: '200rpx' },
+      { title: '手机号', attr: 'phoneNumber', width: '200rpx' },
+      { title: '状态', attr: 'statusName', width: '160rpx' },
     ],
     pickList: [],
-    disList: [
-      {
-        values: Object.keys(citys),
-        className: 'column1',
-      },
-      {
-        values: citys['浙江'],
-        className: 'column2',
-        defaultIndex: 2,
-      },
-    ],
-    communityList: ['1', '2', '23'],
+    communityList: [],
+    communityNameList: [],
     responsorList: ['A', 'B']
   },
   async searchList() {
+    const { search_communityId_eq, search_roleId_eq, search_status_eq, search_phoneNumber_like, search_userName_like } = this.data
     const res = await queryEmplyeeList({
-
+      search_communityId_eq,
+      search_roleId_eq,
+      search_status_eq,
+      search_phoneNumber_like,
+      search_userName_like,
+      search_provinceCode_eq: this.data.selectedOptions.province.code,
+      search_cityCode_eq: this.data.selectedOptions.city.code,
+      search_countryCode_eq: this.data.selectedOptions.country.code
     })
+    if (res.state == 200) {
+      res.data.forEach(e => {
+        e.statusName = e.status == 1 ? '在职' : '离职'
+      });
+      this.setData({
+        tableData: res.data
+      })
+    }
   },
   onChangeStatusType(e) {
-    console.log(e);
+    this.setData({
+      search_status_eq: e.detail
+    })
+  },
+  onInput(e) {
+    if (e.currentTarget.dataset.type === 'userName') {
+      this.setData({
+        search_userName_like: e.detail
+      })
+    } else {
+      this.setData({
+        search_phoneNumber_like: e.detail
+      })
+    }
   },
   clickToPick(e) {
     const pickerType = e.currentTarget.dataset.type
@@ -71,75 +89,20 @@ Page({
       pickerType,
       showPicker: true
     })
-    if (this.data.pickerType == 1) {
+    if (this.data.pickerType == 2) {
       this.setData({
-        pickList: this.data.disList
+        pickList: this.data.communityNameList
       })
-    } else if (this.data.pickerType == 2) {
-      this.setData({
-        pickList: this.data.communityList
-      })
-    } else {
+    } else if (this.data.pickerType == 3) {
       this.setData({
         pickList: this.data.roleList.map(e => e.roleName)
       })
     }
   },
   async onChangePickVal(e) {
-    if (this.data.pickerType == 1) {
-      debugger
-      const { picker, value, index } = e.detail;
-      if (index == 0) {
-        const provinceName = e.detail.value[0]
-        const provinceCode = this.data.provinceList.find(e => e.name == provinceName).code
-        const res = await queryCityList(provinceCode)
-        if (res.state == 200) {
-          // this.roleList = res.data
-          const disList = this.data.disList
-          if (res.data && res.data.length) {
-            disList[1] = {
-              values: res.data.map(e => e.name)
-            }
-          } else {
-            disList[1] = {
-              values: []
-            }
-          }
-          this.setData({
-            cityList: res.data || [],
-            disList,
-            pickList: disList
-          })
-        }
-      } else if (index == 1) {
-        const cityName = e.detail.value[1]
-        const cityCode = this.data.cityList.find(e => e.name == cityName).code
-        const res = await queryCountryList(cityCode)
-        if (res.state == 200) {
-          // this.roleList = res.data
-          const disList = this.data.disList
-          if (res.data.length) {
-            disList[2] = {
-              values: res.data.map(e => e.name)
-            }
-          } else {
-            disList[2] = {
-              values: []
-            }
-          }
+    if (this.data.pickerType == 2) {
 
-          this.setData({
-            countryList: res.data || [],
-            disList,
-            pickList: disList
-          })
-        }
-      }
-      // picker.setColumnValues(1, citys[value[0]]);
-
-    } else if (this.data.pickerType == 2) {
-
-    } else {
+    } else if (this.data.pickerType == 3) {
 
     }
   },
@@ -149,14 +112,21 @@ Page({
     })
   },
   onConfirmPick(e) {
-    // console.log(e);
     this.setData({
       showPicker: false
     })
-    if (this.data.pickType == 1) {
-
-    } else if (this.data.pickType == 2) {
-
+    if (this.data.pickerType == 1) {
+      const values = e.detail._values
+      this.setData({
+        selectedOptions: values,
+        selectDisplace: values.province.name + values.city.name + values.country.name
+      })
+      this.queryCommunitys(values)
+    } else if (this.data.pickerType == 2) {
+      this.setData({
+        selectedCommunity: e.detail.value,
+        search_communityId_eq: this.data.communityList.find(el => el.name === e.detail.value).id
+      })
     } else {
       const roleItem = this.data.roleList[e.detail.index]
       this.setData({
@@ -169,24 +139,39 @@ Page({
     this.setData({
       showPicker: false
     })
-    if (this.data.pickType == 0) {
-      this.setData({
-        selectedOptions: []
-      })
-    } else if (this.data.pickType == 1) {
-      this.setData({
-        search_communityId_eq: ''
-      })
-    } else {
-      this.setData({
-        search_roleId_eq: ''
-      })
-    }
+    // if (this.data.pickType == 0) {
+    //   this.setData({
+    //     selectedOptions: []
+    //   })
+    // } else if (this.data.pickType == 1) {
+    //   this.setData({
+    //     search_communityId_eq: ''
+    //   })
+    // } else {
+    //   this.setData({
+    //     search_roleId_eq: ''
+    //   })
+    // }
   },
   goAdd() {
     wx.navigateTo({
-      url: '/pages/house/rentHandle/addRenter/addRenter'
+      url: '/pages/management/employManage/addEmployee/addEmployee'
     });
+  },
+  async queryCommunitys(values) {
+    const params = {
+      provinceCode: values.province.code,
+      cityCode: values.city.code,
+      countryCode: values.country.code
+    }
+    const res = await queryCommunityList(params)
+    if (res.state == 200) {
+      // this.communityList = res.data
+      this.setData({
+        communityList: res.data,
+        communityNameList: res.data.map(e => e.name)
+      })
+    }
   },
   async getRoles() {
     const res = await queryRoleList()
@@ -200,29 +185,19 @@ Page({
   reset() {
     this.setData({
       selectedOptions: [],
+      selectDisplace: '',
+      selectedCommunity: '', // 小区中文
+      roleName: '',
       search_communityId_eq: '', // 小区选择
       search_roleId_eq: '',// 角色 选择
       search_status_eq: '',// 状态 （0：离职；1：在职）
       search_userName_like: '',//员工名搜索
       search_phoneNumber_like: '',// 手机号搜索
     })
+    this.searchList()
   },
-  onLoad() {
+  onShow() {
     this.searchList()
     this.getRoles()
-    queryProvinceList().then(res => {
-      if (res.state == 200) {
-        // this.roleList = res.data
-        this.setData({
-          provinceList: res.data,
-          provinceNameList: res.data.map(e => e.name),
-          disList: [
-            {
-              values: res.data.map(e => e.name)
-            }
-          ]
-        })
-      }
-    })
   }
 })

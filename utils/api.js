@@ -25,6 +25,16 @@ export const queryCountryList = async (code) => {
     const url = `/api/propertyRegion/county/${code}`
     return await get(url)
 }
+// 获取小区列表
+export const queryCommunityList = async (params) => {
+    const url = '/api/propertyCommunity/queryList'
+    return await get(url, params)
+}
+// 创建员工
+export const createEmployee = async (params) => {
+    const url = '/api/propertyEmployee/createEntity'
+    return await post(url, params)
+}
 //上传文件
 // const upload = async (files) => {
 //     const skey = getFromStorage('skey')

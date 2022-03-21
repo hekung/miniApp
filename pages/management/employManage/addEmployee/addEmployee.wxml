@@ -1,0 +1,86 @@
+<view class="page" hover-class="none" hover-stop-propagation="false">
+    <van-popup show="{{ showPicker }}" bind:close="onClosePick" position="bottom">
+        <region-selector wx:if="{{pickerType==1||pickerType==3}}" bind:confirmPick="onConfirmPick"></region-selector>
+        <van-picker wx:else show-toolbar bind:confirm="onConfirmPick" columns="{{ pickList }}" />
+    </van-popup>
+    <view class="searchs">
+        <van-cell-group wx:if="{{step==0}}" title="服务绑定">
+            <!-- <picker mode="date" value="{{startDate}}" start="2000-01-01" end="2999-12-31" bindchange="bindStartDateChange">
+                <van-cell title="起始日期" value="{{startDate}}" is-link />
+            </picker>
+            <picker mode="date" value="{{endDate}}" start="2000-01-01" end="2999-12-31" bindchange="bindEndDateChange">
+                <van-cell title="结束日期" value="{{endDate}}" is-link />
+            </picker> -->
+            <van-cell title="省市区" value="{{selectDisplace}}" data-type="{{1}}" bind:click="clickToPick" is-link></van-cell>
+            <van-cell-group inset title="小区" border>
+                <view style="margin: 20rpx 0;">
+                    <van-checkbox value="{{ isAllComChecked }}" bind:change="onAllComChange">
+                        全选
+                    </van-checkbox>
+                </view>
+                <van-checkbox-group value="{{ communityIds }}" direction="horizontal" bind:change="onChangeCommunityIds">
+                    <van-checkbox wx:for="{{communityList}}" wx:key="id" name="{{item.id}}">
+                        {{item.name}}
+                    </van-checkbox>
+                </van-checkbox-group>
+            </van-cell-group>
+            <view class="btns" hover-class="none" hover-stop-propagation="false">
+                <van-button type="danger" size="small" round bind:click="goNext">下一步</van-button>
+            </view>
+        </van-cell-group>
+        <block wx:elif="{{step==1}}">
+            <van-cell-group title="员工基本信息">
+                <van-field value="{{ userName }}" data-type="userName" bind:input="onInput" center clearable label="姓名" placeholder="请输入"></van-field>
+                <van-cell title="性别">
+                    <view>
+                        <van-radio-group value="{{  sex }}" bind:change="onChangeSexType" direction="horizontal">
+                            <van-radio name="{{0}}">男</van-radio>
+                            <van-radio name="{{1}}">女</van-radio>
+                        </van-radio-group>
+                    </view>
+                </van-cell>
+                <van-cell title="角色" value="{{roleName}}" data-type="{{2}}" bind:click="clickToPick" is-link></van-cell>
+                <van-field value="{{ phoneNumber }}" data-type="phoneNumber" bind:input="onInput" center clearable label="手机号" placeholder="请输入" type="number"></van-field>
+                <van-field value="{{  wechatNo }}" data-type="wechatNo" bind:input="onInput" center clearable label="微信号" placeholder="请输入"></van-field>
+                <picker mode="date" value="{{birthTime}}" start="1900-01-01" end="2030-12-31" bindchange="bindbirthTimeChange">
+                    <van-cell title="出生日期" value="{{birthTime}}" is-link />
+                </picker>
+                <van-cell title="证件类型">
+                    <view>
+                        <van-radio-group value="{{ idType }}" bind:change="onChangeIdType" direction="horizontal">
+                            <van-radio name="{{1}}">身份证</van-radio>
+                            <van-radio name="{{0}}">护照</van-radio>
+                        </van-radio-group>
+                    </view>
+                </van-cell>
+                <van-field value="{{  idNumber }}" data-type="idNumber" bind:input="onInput" clearable label="证件号码" placeholder="请输入" type="number"></van-field>
+                <van-cell title="省市区" value="{{selectDisplace2}}" data-type="{{3}}" bind:click="clickToPick" is-link></van-cell>
+                <van-field value="{{ address }}" clearable label="详细地址" placeholder="请输入"></van-field>
+            </van-cell-group>
+            <van-cell-group inset title="上传证件图片">
+                <view class="items" hover-class="none" hover-stop-propagation="false">
+                    <van-uploader deletable="{{ true }}" bind:delete="deleteImg" bind:after-read="afterReadImg" max-count="3" file-list="{{ imgUrls }}" class="up">
+                        <van-cell title="点击上传" is-link />
+                    </van-uploader>
+                </view>
+            </van-cell-group>
+            <van-cell-group inset title="上传合同">
+                <view class="items" hover-class="none" hover-stop-propagation="false">
+                    <!-- <van-uploader deletable="{{ true }}" bind:delete="deleteImg" bind:after-read="afterReadImg" max-count="3" file-list="{{ imgUrls }}" class="up">
+                        <van-cell title="点击上传" is-link />
+                    </van-uploader> -->
+                    <van-uploader accept="file" deletable="{{ true }}" bind:delete="deleteCon" bind:after-read="afterRead" max-count="1" file-list="{{contractUrl}}">
+                        <van-button plain icon="plus" type="primary">上传合同</van-button>
+                    </van-uploader>
+                </view>
+            </van-cell-group>
+            <view class="btns" hover-class="none" hover-stop-propagation="false">
+                <van-button plain type="danger" size="small" round bind:click="goLast">
+                    返回上一步
+                </van-button>
+                <van-button type="primary" size="small" round bind:click="save">保存</van-button>
+                <van-button plain size="small" round bind:click="cancelCreate">取消</van-button>
+            </view>
+        </block>
+    </view>
+</view>
