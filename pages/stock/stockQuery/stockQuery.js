@@ -15,9 +15,9 @@ Page({
     name: '',
     tableData: [],
     columns: [
-      { title: '仓库', attr: 'name', width: '160rpx' },
+      { title: '仓库', attr: 'warehouse', width: '160rpx' },
       { title: '类型', attr: 'typeName', width: '200rpx' },
-      { title: '产品', attr: 'product', width: '200rpx' },
+      { title: '产品', attr: 'name', width: '200rpx' },
       { title: '规格', attr: 'specification', width: '160rpx' },
       { title: '可用量', attr: 'availableNum', width: '160rpx' },
     ],
@@ -35,7 +35,7 @@ Page({
         res.data = []
       }
       res.data.forEach(e => {
-        e.typeNam = e.type == 1 ? '生活类' : '工程类'
+        e.typeName = e.type == 1 ? '生活类' : '工程类'
         e.linkUrl = `/pages/stock/stockQuery/stockDetail/stockDetail?inventoryId=${e.inventoryId}&warehouseId=${e.warehouseId}`
 
       });

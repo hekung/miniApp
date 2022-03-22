@@ -72,6 +72,23 @@ export const queryProductStockDetail = async (params) => {
     const url = '/api/propertyInventory/queryDetail'
     return await get(url, params)
 }
+//---------------------------------------------------------房屋管理
+// 获取小区下 栋列表
+export const queryBuildList = async (id) => {
+    const url = '/api/propertyRoom/queryBuildInfo'
+    return await get(url, { communityId: id })
+}
+
+// 获取可租房间列表
+export const queryRoomList = async (params) => {
+    const url = '/api/propertyRoom/canRentList'
+    return await get(url, params)
+}
+// 房屋分析
+export const queryRommsStatus = async (params) => {
+    const url = '/api/propertyRoom/queryRoomStatus'
+    return await get(url, params)
+}
 //
 //上传文件
 // const upload = async (files) => {
