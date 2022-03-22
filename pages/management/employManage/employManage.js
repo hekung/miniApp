@@ -61,6 +61,7 @@ Page({
     if (res.state == 200) {
       res.data.forEach(e => {
         e.statusName = e.status == 1 ? '在职' : '离职'
+        e.linkUrl = '/pages/management/employManage/employeeInfo/employeeInfo?id=' + e.id
       });
       this.setData({
         tableData: res.data

@@ -1,2 +1,19 @@
-<!--pages/stock/stockQuery/stockQuery.wxml-->
-<text>pages/stock/stockQuery/stockQuery.wxml</text>
+<view class="page" hover-class="none" hover-stop-propagation="false">
+    <view class="searchs">
+        <van-cell-group>
+            <!-- <van-cell title="省市区" value="{{selectDisplace}}" data-type="{{1}}" bind:click="clickToPick" is-link></van-cell> -->
+            <van-popup show="{{ showPicker }}" bind:close="onClosePick" position="bottom">
+                <van-picker show-toolbar bind:confirm="onConfirmPick" columns="{{  storeNameList }}" bind:change="onChangePickVal" />
+            </van-popup>
+            <van-cell title="仓库" value="{{selectedStore}}" bind:click="clickToPick" is-link></van-cell>
+            <van-field model:value="{{  name }}" bind:input="onInput" label="产品名" placeholder="请输入产品名" border />
+            <view class="btns" hover-class="none" hover-stop-propagation="false">
+                <van-button type="danger" size="small" bind:click="searchList" round>查询</van-button>
+                <van-button type="default" size="small" bind:click="reset" round>重置</van-button>
+            </view>
+        </van-cell-group>
+    </view>
+    <view class="results">
+        <cus-table columns="{{columns}}" contentArray="{{tableData}}" hasLink="{{true}}"></cus-table>
+    </view>
+</view>

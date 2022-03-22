@@ -1,5 +1,6 @@
 const { baseUrl, get, post, requestDelete, getFromStorage } = require('./util')
 // const cityData = require('./city.data-3')
+//-------------------------------------------------员工管理
 // 获取员工列表
 export const queryEmplyeeList = async (params) => {
     const url = '/api/propertyEmployee/no-page'
@@ -35,6 +36,43 @@ export const createEmployee = async (params) => {
     const url = '/api/propertyEmployee/createEntity'
     return await post(url, params)
 }
+// 查询员工详情】
+export const queryEmpInfo = async (id) => {
+    const url = `/api/propertyEmployee/queryInfo/${id}`
+    return await get(url)
+}
+// 员工删除
+export const delEmpInfo = async (id) => {
+    const url = `/api/propertyEmployee/deleteInfo/${id}`
+    return await get(url)
+}
+// 离职员工
+export const departureEmpInfo = async (id) => {
+    const url = '/api/propertyEmployee/departureEmployee'
+    return await get(url, { id })
+}
+//----------------------------------------------------------库存管理
+//获取房东下的仓库列表
+export const queryWarehouseList = async () => {
+    const url = '/api/propertyWarehouse/queryWarehouseList'
+    return await get(url)
+}
+// 查询库存
+export const queryStockList = async (params) => {
+    const url = '/api/propertyInventory/queryList'
+    return await get(url, params)
+}
+// 查询产品历史进出库记录
+export const queryProductRecords = async (params) => {
+    const url = '/api/propertyPutWarehouseRecord/queryRecords'
+    return await get(url, params)
+}
+// 查询仓库产品信息
+export const queryProductStockDetail = async (params) => {
+    const url = '/api/propertyInventory/queryDetail'
+    return await get(url, params)
+}
+//
 //上传文件
 // const upload = async (files) => {
 //     const skey = getFromStorage('skey')

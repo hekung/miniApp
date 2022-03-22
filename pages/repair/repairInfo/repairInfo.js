@@ -7,30 +7,31 @@
  * @FilePath: \miniprogram-1\pages\repair\repairRecordOne\repairRecordOne.js
  */
 // pages/repair/repairRecordOne/repairRecordOne.js
+const { queryInfo } = require('../../../utils/api')
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    info:{
+    info: {
       no: 'dwq',
-      status:'dwq',
-      childNo:'',
+      status: 'dwq',
+      childNo: '',
       rate: 'dqw',
-      item:'dq',
-      scope:'dq',
+      item: 'dq',
+      scope: 'dq',
       community: 'dwwq',
-      createTime:'qwdwq',
-      creator:'dwqdq',
-      remark:'d',
-      imgs:[
+      createTime: 'qwdwq',
+      creator: 'dwqdq',
+      remark: 'd',
+      imgs: [
         "https://images.unsplash.com/photo-1565699894576-1710004524ba?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1832&q=80",
         "https://images.unsplash.com/photo-1565699894576-1710004524ba?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1832&q=80",
         "https://images.unsplash.com/photo-1565699894576-1710004524ba?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1832&q=80"
       ]
     },
-    rangeList:[
+    rangeList: [
       '全部',
       '发起报修',
       '已派单',
@@ -41,23 +42,23 @@ Page({
       '维修中止',
     ],
     tableData: [
-      {id:1,no: '233',rate: '中',items:'dqw.dwq',scope:'是被',community:'dwq',createTime:'dasdadsadd',linkUrl: '/pages/repair/repairInfo/repairInfo?id='+ 1},
-      {id:2,no: '233',rate: '中',items:'dqw.dwq',scope:'是被',community:'dwq',createTime:'dasdadsadd',linkUrl: '/pages/repair/repairInfo/repairInfo?id='+ 1},
-      {id:3,no: '233',rate: '中',items:'dqw.dwq',scope:'是被',community:'dwq',createTime:'dasdadsadd',linkUrl: '/pages/repair/repairInfo/repairInfo?id='+ 1},
-      {id:4,no: '233',rate: '中',items:'dqw.dwq',scope:'是被',community:'dwq',createTime:'dasdadsadd',linkUrl: '/pages/repair/repairInfo/repairInfo?id='+ 1},
-      {id:5,no: '233',rate: '中',items:'dqw.dwq',scope:'是被',community:'dwq',createTime:'dasdadsadd',linkUrl: '/pages/repair/repairInfo/repairInfo?id='+ 1},
-      {id:6,no: '233',rate: '中',items:'dqw.dwq',scope:'是被',community:'dwq',createTime:'dasdadsadd',linkUrl: '/pages/repair/repairInfo/repairInfo?id='+ 1},
+      { id: 1, no: '233', rate: '中', items: 'dqw.dwq', scope: '是被', community: 'dwq', createTime: 'dasdadsadd', linkUrl: '/pages/repair/repairInfo/repairInfo?id=' + 1 },
+      { id: 2, no: '233', rate: '中', items: 'dqw.dwq', scope: '是被', community: 'dwq', createTime: 'dasdadsadd', linkUrl: '/pages/repair/repairInfo/repairInfo?id=' + 1 },
+      { id: 3, no: '233', rate: '中', items: 'dqw.dwq', scope: '是被', community: 'dwq', createTime: 'dasdadsadd', linkUrl: '/pages/repair/repairInfo/repairInfo?id=' + 1 },
+      { id: 4, no: '233', rate: '中', items: 'dqw.dwq', scope: '是被', community: 'dwq', createTime: 'dasdadsadd', linkUrl: '/pages/repair/repairInfo/repairInfo?id=' + 1 },
+      { id: 5, no: '233', rate: '中', items: 'dqw.dwq', scope: '是被', community: 'dwq', createTime: 'dasdadsadd', linkUrl: '/pages/repair/repairInfo/repairInfo?id=' + 1 },
+      { id: 6, no: '233', rate: '中', items: 'dqw.dwq', scope: '是被', community: 'dwq', createTime: 'dasdadsadd', linkUrl: '/pages/repair/repairInfo/repairInfo?id=' + 1 },
     ],
 
-    columns:[
-      {title: '子单号',attr: 'no'},
-      {title: '位置',attr: 'rate'},
-      {title: '状态',attr: 'items'},
-      {title: '负责人',attr: 'scope'},
-      {title: '操作',attr: 'community'},
+    columns: [
+      { title: '子单号', attr: 'no' },
+      { title: '位置', attr: 'rate' },
+      { title: '状态', attr: 'items' },
+      { title: '负责人', attr: 'scope' },
+      { title: '操作', attr: 'community' },
     ],
   },
-  goback(){
+  goback() {
     wx.navigateBack({
       delta: 1
     });
