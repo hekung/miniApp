@@ -36,7 +36,7 @@
                 <picker mode="date" value="{{form2.startDate}}" fields="month" start="2000-01" end="2099-12" bindchange="bindStartDateChange">
                     <van-cell title="起始月" value="{{form2.startDate}}" is-link />
                 </picker>
-                <picker mode="date" value="{{form2.endDate}}" fields="month" start="{{form1.startDate}}" end="2099-12" bindchange="bindEndDateChange">
+                <picker mode="date" value="{{form2.endDate}}" fields="month" start="{{form2.startDate}}" end="2099-12" bindchange="bindEndDateChange">
                     <van-cell title="结束月" value="{{form2.endDate}}" is-link />
                 </picker>
                 <van-cell title="省市区" value="{{selectDisplace}}" data-type="{{1}}" bind:click="clickToPick" is-link></van-cell>

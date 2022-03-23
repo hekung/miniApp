@@ -89,7 +89,26 @@ export const queryRommsStatus = async (params) => {
     const url = '/api/propertyRoom/queryRoomStatus'
     return await get(url, params)
 }
-//
+// 查询租户列表
+export const queryRenterList = async (comId) => {
+    const url = '/api/propertyLeaseRecord/queryInRentList?communityIds=' + comId
+    return await post(url)
+}
+//查询租客详情
+export const queryRenterInfo = async (id) => {
+    const url = `/api/propertyTenant/queryInfo/${id}`
+    return await get(url)
+}
+// 获取栋下 层号列表
+export const queryLayerList = async (params) => {
+    const url = '/api/propertyRoom/queryLayerInfo'
+    return await get(url, params)
+}
+// 获取层下房间列表
+export const queryRooms = async (params) => {
+    const url = '/api/propertyRoom/queryRooms'
+    return await get(url, params)
+}
 //上传文件
 // const upload = async (files) => {
 //     const skey = getFromStorage('skey')

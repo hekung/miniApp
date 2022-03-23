@@ -1,4 +1,8 @@
 <view class="page" hover-class="none" hover-stop-propagation="false">
+    <van-popup show="{{ showPicker }}" bind:close="onClosePick" position="bottom">
+        <region-selector wx:if="{{pickerType==1 ||  pickerType==6}}" bind:cancelPick="onCancelPick" bind:confirmPick="onConfirmPick"></region-selector>
+        <van-picker wx:else show-toolbar bind:cancel="onCancelPick" bind:confirm="onConfirmPick" columns="{{ pickList }}" />
+    </van-popup>
     <view class="searchs">
         <van-cell-group wx:if="{{step==0}}">
             <picker mode="date" value="{{startDate}}" start="2000-01-01" end="2999-12-31" bindchange="bindStartDateChange">
@@ -7,14 +11,12 @@
             <picker mode="date" value="{{endDate}}" start="2000-01-01" end="2999-12-31" bindchange="bindEndDateChange">
                 <van-cell title="结束日期" value="{{endDate}}" is-link />
             </picker>
-            <van-cell title="省市区" value="{{selectedOptions}}" data-type="{{1}}" bind:click="clickToPick" is-link></van-cell>
-            <van-popup show="{{ showPicker }}" bind:close="onClosePick" position="bottom">
-                <van-picker show-toolbar bind:cancel="onCancelPick" bind:confirm="onConfirmPick" columns="{{ pickList }}" bind:change="onChangePickVal" />
-            </van-popup>
+            <!-- <van-cell title="省市区" value="{{selectedOptions}}" data-type="{{1}}" bind:click="clickToPick" is-link></van-cell> -->
+            <van-cell title="省市区" value="{{selectDisplace}}" data-type="{{1}}" bind:click="clickToPick" is-link></van-cell>
             <van-cell title="小区" value="{{selectedCommunity}}" data-type="{{2}}" bind:click="clickToPick" is-link></van-cell>
             <van-cell title="栋号" value="{{buildNo}}" data-type="{{3}}" bind:click="clickToPick" is-link></van-cell>
             <van-cell title="层号" value="{{layerNo}}" data-type="{{4}}" bind:click="clickToPick" is-link></van-cell>
-            <van-cell title="户号" value="{{buildNo}}" data-type="{{5}}" bind:click="clickToPick" is-link></van-cell>
+            <van-cell title="户号" value="{{roomNo}}" data-type="{{5}}" bind:click="clickToPick" is-link></van-cell>
             <view class="btns" hover-class="none" hover-stop-propagation="false">
                 <van-button type="danger" size="small" round bind:click="goNext">下一步</van-button>
             </view>
@@ -25,32 +27,32 @@
                 <van-cell title="性别">
                     <view>
                         <van-radio-group value="{{  sex }}" bind:change="onChangeSexType" direction="horizontal">
-                            <van-radio name="{{1}}">男</van-radio>
-                            <van-radio name="{{2}}">女</van-radio>
+                            <van-radio name="{{0}}">男</van-radio>
+                            <van-radio name="{{1}}">女</van-radio>
                         </van-radio-group>
                     </view>
                 </van-cell>
-                <van-field value="{{ appId }}" center clearable label="小程序ID" placeholder="请输入"></van-field>
-                <van-field value="{{ phone }}" center clearable label="手机号" placeholder="请输入" type="number"></van-field>
-                <van-field value="{{ wechat }}" center clearable label="微信号" placeholder="请输入"></van-field>
-                <picker mode="date" value="{{birthDate}}" start="1900-01-01" end="2030-12-31" bindchange="bindBirthDateChange">
-                    <van-cell title="出生日期" value="{{birthDate}}" is-link />
+                <van-field mode:value="{{  appletOpenId }}" data-type="appletOpenId" bind:input="bindInput" clearable label="小程序ID" placeholder="请输入"></van-field>
+                <van-field value="{{  phoneNumber }}" data-type="phoneNumber" bind:input="bindInput" clearable label="手机号" placeholder="请输入" type="number"></van-field>
+                <van-field value="{{ wechatNo }}" data-type="wechatNo" bind:input="bindInput" clearable label="微信号" placeholder="请输入"></van-field>
+                <picker mode="date" value="{{birthTime}}" start="2000-01-01" end="2099-12-31" bindchange="bindbirthTimeChange">
+                    <van-cell title="出生日期" value="{{birthTime}}" is-link />
                 </picker>
                 <van-cell title="证件类型">
                     <view>
-                        <van-radio-group value="{{  passType }}" bind:change="onChangeSexType" direction="horizontal">
+                        <van-radio-group value="{{  idType }}" bind:change="onChangeIdType" direction="horizontal">
                             <van-radio name="{{1}}">身份证</van-radio>
-                            <van-radio name="{{2}}">护照</van-radio>
+                            <van-radio name="{{0}}">护照</van-radio>
                         </van-radio-group>
                     </view>
                 </van-cell>
-                <van-field value="{{ passNumber }}" clearable label="证件号码" placeholder="请输入" type="number"></van-field>
-                <van-cell title="证件地址" value="{{passPlaces}}" data-type="{{6}}" bind:click="clickToPick" is-link></van-cell>
-                <van-field value="{{ address }}" clearable label="详细地址" placeholder="请输入"></van-field>
+                <van-field value="{{ idNumber }}" data-type="idNumber" bind:input="bindInput" clearable label="证件号码" placeholder="请输入" type="number"></van-field>
+                <van-cell title="省市区" value="{{selectDisplace2}}" data-type="{{6}}" bind:click="clickToPick" is-link></van-cell>
+                <van-field value="{{ address }}" data-type="address" bind:input="bindInput" clearable label="详细地址" placeholder="请输入"></van-field>
             </van-cell-group>
             <van-cell-group inset title="上传证件图片">
                 <view class="items" hover-class="none" hover-stop-propagation="false">
-                    <van-uploader deletable="{{ true }}" bind:after-read="afterReadImg" max-count="3" file-list="{{ imgUrls }}" class="up">
+                    <van-uploader deletable="{{ true }}" bind:after-read="afterReadImg" max-count="3" file-list="{{  imageUrls }}" class="up">
                         <van-cell title="点击上传" is-link />
                     </van-uploader>
                 </view>

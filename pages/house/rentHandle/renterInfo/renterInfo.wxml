@@ -1,0 +1,114 @@
+<view class="page">
+    <view class="header-row">
+        <van-cell-group title="租赁信息" inset>
+            <van-row>
+                <van-col span="24">
+                    <view class="item-container">
+                        <label>小区地址</label>
+                        <view class="item">
+                            {{info.leaseRecord.communityName+' '+ info.leaseRecord.address}}
+                        </view>
+                    </view>
+                </van-col>
+                <van-col span="24">
+                    <view class="item-container">
+                        <label>租赁房间</label>
+                        <!-- <view class="item {{info.status==1?'green':'red'}}">
+                            {{info.status==1?'在职':'离职'}}
+                        </view> -->
+                        <view class="item">
+                            {{info.leaseRecord.buildNo+'栋'+ info.leaseRecord.layerNo+'层'+ info.leaseRecord.roomNo}}
+                        </view>
+                    </view>
+                </van-col>
+                <van-col span="24">
+                    <view class="item-container">
+                        <label>租赁期</label>
+                        <view class="item">
+                            {{info.leaseRecord.beginTime+'---'+ info.leaseRecord.realEndTime}}
+                        </view>
+                    </view>
+                </van-col>
+                <van-col span="24">
+                    <view class="item-container">
+                        <label>租赁单价</label>
+                        <text class="item">{{info.leaseRecord.price}}</text>
+                    </view>
+                </van-col>
+            </van-row>
+        </van-cell-group>
+        <van-cell-group title="租客信息" inset>
+            <van-row>
+                <van-col span="24">
+                    <view class="item-container">
+                        <label>姓名</label>
+                        <!-- <view class="item {{info.status==1?'green':'red'}}">
+                            {{info.status==1?'在职':'离职'}}
+                        </view> -->
+                        <view class="item">{{info.userName}}</view>
+                    </view>
+                </van-col>
+                <van-col span="24">
+                    <view class="item-container">
+                        <label>性别</label>
+                        <view class="item">{{info.sex==1?'女':'男'}}</view>
+                    </view>
+                </van-col>
+                <van-col span="24">
+                    <view class="item-container">
+                        <label>出生日期</label>
+                        <view class="item">{{info.birthTime}}</view>
+                    </view>
+                </van-col>
+                <van-col span="24">
+                    <view class="item-container">
+                        <label>手机号</label>
+                        <view class="item">{{info.phoneNumber}}</view>
+                    </view>
+                </van-col>
+                <van-col span="24">
+                    <view class="item-container">
+                        <label>微信号</label>
+                        <view class="item">{{info.wechatNo}}</view>
+                    </view>
+                </van-col>
+                <van-col span="24">
+                    <view class="item-container">
+                        <label>联系地址</label>
+                        <view class="item">{{info.displace}}</view>
+                    </view>
+                </van-col>
+                <van-col span="24">
+                    <view class="item-container">
+                        <label>证件号码</label>
+                        <view class="item">{{info.idNumber + info.idType==0?' 护照':' 身份证'}}</view>
+                    </view>
+                </van-col>
+                <van-col span="24">
+                    <view class="item-container">
+                        <label>证件图片</label>
+                        <view class="imgs" hover-class="none" hover-stop-propagation="false">
+                            <image vx:for="{{info.resourceList}}" wx:key="resourceId" class="img" src="{{item.url}}" alt=""></image>
+                        </view>
+                    </view>
+                </van-col>
+                <van-col span="24">
+                    <view class="item-container">
+                        <label>合同地址</label>
+                        <view class="item">
+                            <!-- <view wx:for="{{info.communities}}" wx:key="id" hover-class="none" hover-stop-propagation="false">
+                                {{item.province+ item.city+ item.country+ ' ' + item.name}}
+                            </view> -->
+                            <view style="color:#f00;" bindtap="downLoadFile">
+                                {{info.leaseRecord.contractUrl}}
+                            </view>
+                        </view>
+                    </view>
+                </van-col>
+            </van-row>
+        </van-cell-group>
+    </view>
+    <view class="results">
+        <van-button type="primary" round block size="normal" bind:click="goback">返回</van-button>
+    </view>
+</view>

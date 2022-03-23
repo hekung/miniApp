@@ -21,31 +21,38 @@
 }
 
 .tr {
-  line-height: 80rpx;
-  height: 80rpx;
+  /* line-height: 80rpx; */
+  /* height: 80rpx; */
+  display: flex;
+  flex-direction: row;
 }
 
 .th {
-  display: inline-block;
+  display: flex;
   padding: 3px;
   border-bottom: 1px solid #dadada;
   border-right: 1px solid #dadada;
   text-align: center;
   /*font-weight: 800;*/
   background-color: rgba(139, 182, 155, 0.12);
+  height: 80rpx;
+  justify-content: center;
+  align-items: center;
   font-size: 22rpx;
   color: rgba(23, 21, 23, 0.73);
 }
 
 .td {
-  display: inline-block;
-  padding: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-bottom: 1px solid #dadada;
   border-right: 1px solid #dadada;
   text-align: center;
   text-overflow: ellipsis;
   overflow: hidden;
   font-size: 22rpx;
+  height: 80rpx;
   color: #666666;
 }
 

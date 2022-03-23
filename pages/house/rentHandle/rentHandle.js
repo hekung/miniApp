@@ -6,111 +6,121 @@
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: \miniprogram-1\pages\repair\repairRecords\repairRecords.js
  */
+const { queryCommunityList, queryRenterList } = require('../../../utils/api')
 const app = getApp()
-const citys = {
-  浙江: ['杭州', '宁波', '温州', '嘉兴', '湖州'],
-  福建: ['福州', '厦门', '莆田', '三明', '泉州'],
-};
 Page({
   data: {
-    scopeType: 1,
-    selectedOptions:[],
-    selectedCommunity:'',
-    selectedResponser:'',
-    pickerType:1,
-    tableData: [
-      {id:1,no: '233',rate: '中',items:'dqw.dwq',scope:'是被',community:'dwq',createTime:'dasdadsadd',linkUrl:'/pages/repair/repairRecordOne/repairRecordOne?id='+ 1},
-      {id:2,no: '233',rate: '中',items:'dqw.dwq',scope:'是被',community:'dwq',createTime:'dasdadsadd',linkUrl:'/pages/repair/repairRecordOne/repairRecordOne?id='+ 2},
-      {id:3,no: '233',rate: '中',items:'dqw.dwq',scope:'是被',community:'dwq',createTime:'dasdadsadd',linkUrl:'/pages/repair/repairRecordOne/repairRecordOne?id='+ 3},
-      {id:4,no: '233',rate: '中',items:'dqw.dwq',scope:'是被',community:'dwq',createTime:'dasdadsadd',linkUrl:'/pages/repair/repairRecordOne/repairRecordOne?id='+ 4},
-      {id:5,no: '233',rate: '中',items:'dqw.dwq',scope:'是被',community:'dwq',createTime:'dasdadsadd',linkUrl:'/pages/repair/repairRecordOne/repairRecordOne?id='+ 5},
-      {id:6,no: '233',rate: '中',items:'dqw.dwq',scope:'是被',community:'dwq',createTime:'dasdadsadd',linkUrl:'/pages/repair/repairRecordOne/repairRecordOne?id='+ 5},
-    ],
-    columns:[
-      {title: '单号',attr: 'no'},
-      {title: '等级',attr: 'rate'},
-      {title: '报修事项',attr: 'items'},
-      {title: '范围类型',attr: 'scope'},
-      {title: '小区',attr: 'community'},
-      {title: '发起时间',attr: 'createTime'},
-    ],
-    pickList:[],
-    disList: [
-      {
-        values: Object.keys(citys),
-        className: 'column1',
+    showPicker: false,
+    selectDisplace: '',
+    selectedOptions: {
+      province: {
+        name: '',
+        code: '',
       },
-      {
-        values: citys['浙江'],
-        className: 'column2',
-        defaultIndex: 2,
+      city: {
+        name: '',
+        code: ''
       },
+      country: {
+        name: '',
+        code: ''
+      }
+    },
+    communityList: [],
+    communityNameList: [],
+    communityId: '', // 查询入参
+    selectedCommunity: '',
+    pickerType: 1,
+    tableData: [],
+    columns: [
+      { title: '栋', attr: 'buildNo', width: '140rpx' },
+      { title: '房间号', attr: 'roomNo', width: '160rpx' },
+      { title: '租客名', attr: 'userName', width: '180rpx' },
+      { title: '性别', attr: 'sexName', width: '120rpx' },
+      { title: '手机号', attr: 'phoneNumber', width: '220rpx' },
     ],
-    communityList:['1','2','23'],
-    responsorList:['A','B']
+    pickList: [],
+
   },
-  searchList(){},
-  clickToPick(e){
+  searchList() {
+    queryRenterList(this.data.communityId).then(res => {
+      if (res.state == 200) {
+        res.data = res.data ? res.data : []
+        res.data.forEach(element => {
+          element.sexName = element.sex == 1 ? '女' : '男'
+          element.linkUrl = '/pages/house/rentHandle/renterInfo/renterInfo?id=' + element.id
+        });
+        this.setData({
+          tableData: res.data
+        })
+      }
+    })
+  },
+  clickToPick(e) {
     const pickerType = e.currentTarget.dataset.type
     this.setData({
       pickerType,
       showPicker: true
     })
-    if(this.data.pickerType == 1){
+    if (this.data.pickerType == 2) {
       this.setData({
-        pickList: this.data.disList 
-      })
-    }else if(this.data.pickerType == 2){
-      this.setData({
-        pickList: this.data.communityList 
-      })
-    }else {
-      this.setData({
-        pickList: this.data.responsorList 
+        pickList: this.data.communityNameList
       })
     }
   },
-  onChangePickVal(e){
-    if(this.data.pickerType == 1){
-      const { picker, value, index } = e.detail;
-      picker.setColumnValues(1, citys[value[0]]);
-    }else if(this.data.pickerType == 2){
-
-    }else {
-
-    }
-  },
-  onClosePick(){
+  onClosePick() {
     this.setData({
-      showPicker:false
+      showPicker: false
     })
   },
-  onConfirmPick(){
+  onConfirmPick(e) {
     this.setData({
-      showPicker:false
+      showPicker: false
     })
-  },
-  onCancelPick(){
-    this.setData({
-      showPicker:false
-    })
-    if(this.data.pickType == 0){
+    if (this.data.pickerType == 1) {
+      const values = e.detail._values
       this.setData({
-        selectedOptions:[]
+        selectedOptions: values,
+        selectDisplace: values.province.name + values.city.name + values.country.name,
+        selectedCommunity: '',
+        communityId: ''
       })
-    }else  if(this.data.pickType == 1){
+      this.queryCommunitys(values)
+    } else if (this.data.pickerType == 2) {
+      const communityId = this.data.communityList.find(el => el.name === e.detail.value).id
       this.setData({
-        selectedCommunity: ''
-      })
-    }else {
-      this.setData({
-        selectedResponser: ''
+        selectedCommunity: e.detail.value,
+        communityId
       })
     }
   },
-  goAdd(){
+  async queryCommunitys(values) {
+    const params = {
+      provinceCode: values.province.code,
+      cityCode: values.city.code,
+      countryCode: values.country.code
+    }
+    const res = await queryCommunityList(params)
+    if (res.state == 200) {
+      // this.communityList = res.data
+      this.setData({
+        communityList: res.data ? res.data : [],
+        communityNameList: res.data ? res.data.map(e => e.name) : []
+      })
+    }
+  },
+  onCancelPick() {
+    this.setData({
+      showPicker: false
+    })
+  },
+  goAdd() {
     wx.navigateTo({
       url: '/pages/house/rentHandle/addRenter/addRenter'
     });
+  },
+  onShow() {
+    if (!this.data.communityId) return
+    this.searchList()
   }
 })

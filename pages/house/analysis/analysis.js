@@ -38,104 +38,104 @@ var option = {
     }]
   }]
 };
-function setOption(chart) {
-  const option = {
-    tooltip: {
-      trigger: 'axis',
-      axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-        type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-      }
-    },
-    legend: {
-      data: ['热度', '正面', '负面']
-    },
-    grid: {
-      left: 20,
-      right: 20,
-      bottom: 15,
-      top: 40,
-      containLabel: true
-    },
-    xAxis: [
-      {
-        type: 'value',
-        axisLine: {
-          lineStyle: {
-            color: '#999'
-          }
-        },
-        axisLabel: {
-          color: '#666'
-        }
-      }
-    ],
-    yAxis: [
-      {
-        type: 'category',
-        axisTick: { show: false },
-        data: ['汽车之家', '今日头条', '百度贴吧', '一点资讯', '微信', '微博', '知乎'],
-        axisLine: {
-          lineStyle: {
-            color: '#999'
-          }
-        },
-        axisLabel: {
-          color: '#666'
-        }
-      }
-    ],
-    series: [
-      {
-        name: '热度',
-        type: 'bar',
-        label: {
-          normal: {
-            show: true,
-            position: 'inside'
-          }
-        },
-        data: [300, 270, 340, 344, 300, 320, 310],
-        itemStyle: {
-          // emphasis: {
-          //   color: '#37a2da'
-          // }
-        }
-      },
-      {
-        name: '正面',
-        type: 'bar',
-        stack: '总量',
-        label: {
-          normal: {
-            show: true
-          }
-        },
-        data: [120, 102, 141, 174, 190, 250, 220],
-        itemStyle: {
-          // emphasis: {
-          //   color: '#32c5e9'
-          // }
-        }
-      },
-      {
-        name: '负面',
-        type: 'bar',
-        stack: '总量',
-        label: {
-          normal: {
-            show: true,
-            position: 'left'
-          }
-        },
-        data: [-20, -32, -21, -34, -90, -130, -110],
-        itemStyle: {
-          // emphasis: {
-          //   color: '#67e0e3'
-          // }
-        }
-      }
-    ]
-  };
+function setOption(chart, option) {
+  // const option = {
+  //   tooltip: {
+  //     trigger: 'axis',
+  //     axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+  //       type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+  //     }
+  //   },
+  //   legend: {
+  //     data: ['热度', '正面', '负面']
+  //   },
+  //   grid: {
+  //     left: 20,
+  //     right: 20,
+  //     bottom: 15,
+  //     top: 40,
+  //     containLabel: true
+  //   },
+  //   xAxis: [
+  //     {
+  //       type: 'value',
+  //       axisLine: {
+  //         lineStyle: {
+  //           color: '#999'
+  //         }
+  //       },
+  //       axisLabel: {
+  //         color: '#666'
+  //       }
+  //     }
+  //   ],
+  //   yAxis: [
+  //     {
+  //       type: 'category',
+  //       axisTick: { show: false },
+  //       data: ['汽车之家', '今日头条', '百度贴吧', '一点资讯', '微信', '微博', '知乎'],
+  //       axisLine: {
+  //         lineStyle: {
+  //           color: '#999'
+  //         }
+  //       },
+  //       axisLabel: {
+  //         color: '#666'
+  //       }
+  //     }
+  //   ],
+  //   series: [
+  //     {
+  //       name: '热度',
+  //       type: 'bar',
+  //       label: {
+  //         normal: {
+  //           show: true,
+  //           position: 'inside'
+  //         }
+  //       },
+  //       data: [300, 270, 340, 344, 300, 320, 310],
+  //       itemStyle: {
+  //         // emphasis: {
+  //         //   color: '#37a2da'
+  //         // }
+  //       }
+  //     },
+  //     {
+  //       name: '正面',
+  //       type: 'bar',
+  //       stack: '总量',
+  //       label: {
+  //         normal: {
+  //           show: true
+  //         }
+  //       },
+  //       data: [120, 102, 141, 174, 190, 250, 220],
+  //       itemStyle: {
+  //         // emphasis: {
+  //         //   color: '#32c5e9'
+  //         // }
+  //       }
+  //     },
+  //     {
+  //       name: '负面',
+  //       type: 'bar',
+  //       stack: '总量',
+  //       label: {
+  //         normal: {
+  //           show: true,
+  //           position: 'left'
+  //         }
+  //       },
+  //       data: [-20, -32, -21, -34, -90, -130, -110],
+  //       itemStyle: {
+  //         // emphasis: {
+  //         //   color: '#67e0e3'
+  //         // }
+  //       }
+  //     }
+  //   ]
+  // };
   chart.setOption(option);
 }
 Page({
@@ -177,6 +177,9 @@ Page({
       startDate: '',
       endDate: ''
     },
+    manZu: '',
+    bufenZu: '',
+    kongZu: '',
     tableData: [],
     columns: [
       { title: '层', attr: 'layerNo', width: '260rpx' },
@@ -256,8 +259,25 @@ Page({
     }
     queryRommsStatus(params).then(res => {
       if (res.state == 200) {
-        debugger
-        console.log(res.data);
+        let manZu = 0, bufenZu = 0, kongZu = 0
+        res.data.forEach(element => {
+          element.roomList.forEach(e => {
+            e.roomStatus.forEach(room => {
+              if (room.status == 0) {
+                manZu++
+              } else if (room.status == 1) {
+                bufenZu++
+              } else {
+                kongZu++
+              }
+            })
+          })
+        });
+        this.setData({
+          manZu,
+          bufenZu,
+          kongZu
+        })
         this.init()
       }
     })
@@ -275,10 +295,6 @@ Page({
     }
   },
   bindEndDateChange(e) {
-    console.log('picker发送选择改变，携带值为', e.detail.value)
-    this.setData({
-      'form1.endDate': e.detail.value
-    })
     if (this.data.active == 'a') {
       this.setData({
         'form1.endDate': e.detail.value
@@ -370,7 +386,6 @@ Page({
     //   title: `切换到标签 ${event.detail.name}`,
     //   icon: 'none',
     // });
-    debugger
     this.setData({
       active: e.detail.name
     })
@@ -382,7 +397,6 @@ Page({
   },
   // 点击按钮后初始化图表
   init: function () {
-    debugger
     this.ecComponent.init((canvas, width, height, dpr) => {
       // 获取组件的 canvas、width、height 后的回调函数
       // 在这里初始化图表
@@ -391,7 +405,30 @@ Page({
         height: height,
         devicePixelRatio: dpr // new
       });
-      setOption(chart);
+      const option = {
+        backgroundColor: "#ffffff",
+        series: [{
+          label: {
+            normal: {
+              fontSize: 14
+            }
+          },
+          type: 'pie',
+          center: ['50%', '50%'],
+          radius: ['20%', '40%'],
+          data: [{
+            value: this.data.manZu,
+            name: '满租'
+          }, {
+            value: this.data.bufenZu,
+            name: '部分租'
+          }, {
+            value: this.data.kongZu,
+            name: '空租'
+          }]
+        }]
+      };
+      setOption(chart, option);
 
       // 将图表实例绑定到 this 上，可以在其他成员函数（如 dispose）中访问
       this.chart = chart;

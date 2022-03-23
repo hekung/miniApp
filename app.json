@@ -3,6 +3,7 @@
 		"pages/home/home",
 		"pages/house/house",
 		"pages/house/rentHandle/addRenter/addRenter",
+		"pages/house/rentHandle/renterInfo/renterInfo",
 		"pages/wode/wode",
 		"pages/buy/buy",
 		"pages/buy/buyRecords/buyRecords",
