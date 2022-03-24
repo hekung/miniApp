@@ -5,25 +5,28 @@
     </van-tabs>
     <view class="searchs">
         <van-popup show="{{ showPicker }}" bind:close="onClosePick" position="bottom">
-            <van-picker show-toolbar bind:cancel="onCancelPick" bind:confirm="onConfirmPick" columns="{{ pickList }}" bind:change="onChangePickVal" />
+            <region-selector wx:if="{{pickerType==1 }}" bind:cancelPick="onCancelPick" bind:confirmPick="onConfirmPick"></region-selector>
+            <van-picker wx:else show-toolbar bind:cancel="onCancelPick" bind:confirm="onConfirmPick" columns="{{ pickList }}" />
         </van-popup>
         <van-cell-group wx:if="{{active=='a'}}">
-            <van-cell title="省市区" value="{{form1.selectedOptions}}" data-type="{{1}}" bind:click="clickToPick" is-link></van-cell>
-            <van-cell title="小区" value="{{form1.selectedCommunity}}" data-type="{{2}}" bind:click="clickToPick" is-link></van-cell>
+            <van-cell title="省市区" value="{{selectDisplace}}" data-type="{{1}}" bind:click="clickToPick" is-link></van-cell>
+            <van-cell title="小区" value="{{selectedCommunity}}" data-type="{{2}}" bind:click="clickToPick" is-link></van-cell>
             <van-cell title="栋号" value="{{form1.buildNo}}" data-type="{{3}}" bind:click="clickToPick" is-link></van-cell>
             <van-cell title="层号" value="{{form1.layerNo}}" data-type="{{4}}" bind:click="clickToPick" is-link></van-cell>
             <van-cell title="调价范围">
                 <view>
                     <van-radio-group value="{{  form1.scope }}" bind:change="onChangeScopeType" direction="horizontal">
-                        <van-radio name="{{1}}">小区</van-radio>
-                        <van-radio name="{{2}}">小区/栋</van-radio>
-                        <van-radio name="{{3}}">小区/栋/层</van-radio>
+                        <van-radio name="{{0}}">小区</van-radio>
+                        <van-radio name="{{1}}">小区/栋</van-radio>
+                        <van-radio name="{{2}}">小区/栋/层</van-radio>
                     </van-radio-group>
                 </view>
             </van-cell>
-            <van-field value="{{ form1.ratio }}" clearable label="调价比例%" placeholder="请输入数字" type="number"></van-field>
+            <van-field value="{{ form1.ratio }}" bind:input="rationChange" clearable label="调价比例%" placeholder="请输入数字" type="number"></van-field>
             <view class="btns" hover-class="none" hover-stop-propagation="false">
-                <van-button type="danger" size="small" round>调价</van-button>
+                <van-button type="danger" size="small" bind:click="batchChangePrice" round>
+                    调价
+                </van-button>
             </view>
         </van-cell-group>
         <block wx:else>

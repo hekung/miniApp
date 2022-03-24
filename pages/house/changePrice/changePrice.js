@@ -1,25 +1,41 @@
 /*
  * @Author: your name
  * @Date: 2022-02-23 19:55:12
- * @LastEditTime: 2022-03-08 18:06:29
+ * @LastEditTime: 2022-03-24 17:49:04
  * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: \miniprogram-1\pages\repair\repairRecords\repairRecords.js
  */
+const { queryBuildList, queryCommunityList, queryLayerList,addChangePrice } = require('../../../utils/api')
 const app = getApp()
-const citys = {
-  浙江: ['杭州', '宁波', '温州', '嘉兴', '湖州'],
-  福建: ['福州', '厦门', '莆田', '三明', '泉州'],
-};
 Page({
   data: {
     active: 'a',
+    selectDisplace:'',
+    selectedCommunity:'',
+    communityList: [],
+    communityNameList: [],
+    buildList: [],
+    layerList: [],
     form1:{
-      selectedOptions:[],
-      selectedCommunity:'',
+      selectedOptions:{
+        province: {
+          name: '',
+          code: '',
+        },
+        city: {
+          name: '',
+          code: ''
+        },
+        country: {
+          name: '',
+          code: ''
+        },
+      },
+      communityId: '',
       buildNo:'',
       layerNo:'',
-      scope:'',
+      scope:0,
       ratio:''
     },
     form2:{
@@ -31,14 +47,7 @@ Page({
       ratio:''
     },
     pickerType:1,
-    tableData: [
-      {id:1,no: '233',rate: '中',items:'dqw.dwq',scope:'是被',community:'dwq',createTime:'dasdadsadd',linkUrl:'/pages/repair/repairRecordOne/repairRecordOne?id='+ 1},
-      {id:2,no: '233',rate: '中',items:'dqw.dwq',scope:'是被',community:'dwq',createTime:'dasdadsadd',linkUrl:'/pages/repair/repairRecordOne/repairRecordOne?id='+ 2},
-      {id:3,no: '233',rate: '中',items:'dqw.dwq',scope:'是被',community:'dwq',createTime:'dasdadsadd',linkUrl:'/pages/repair/repairRecordOne/repairRecordOne?id='+ 3},
-      {id:4,no: '233',rate: '中',items:'dqw.dwq',scope:'是被',community:'dwq',createTime:'dasdadsadd',linkUrl:'/pages/repair/repairRecordOne/repairRecordOne?id='+ 4},
-      {id:5,no: '233',rate: '中',items:'dqw.dwq',scope:'是被',community:'dwq',createTime:'dasdadsadd',linkUrl:'/pages/repair/repairRecordOne/repairRecordOne?id='+ 5},
-      {id:6,no: '233',rate: '中',items:'dqw.dwq',scope:'是被',community:'dwq',createTime:'dasdadsadd',linkUrl:'/pages/repair/repairRecordOne/repairRecordOne?id='+ 5},
-    ],
+    tableData: [],
     columns:[
       {title: '单号',attr: 'no'},
       {title: '等级',attr: 'rate'},
@@ -48,19 +57,6 @@ Page({
       {title: '发起时间',attr: 'createTime'},
     ],
     pickList:[],
-    disList: [
-      {
-        values: Object.keys(citys),
-        className: 'column1',
-      },
-      {
-        values: citys['浙江'],
-        className: 'column2',
-        defaultIndex: 2,
-      },
-    ],
-    communityList:['1','2','23'],
-    responsorList:['A','B']
   },
   searchList(){},
   onChangeTab(e){
@@ -75,28 +71,18 @@ Page({
       pickerType,
       showPicker: true
     })
-    if(this.data.pickerType == 1){
+    if(this.data.pickerType == 2){
       this.setData({
-        pickList: this.data.disList 
+        pickList: this.data.communityNameList 
       })
-    }else if(this.data.pickerType == 2){
+    }else if(this.data.pickerType == 3) {
       this.setData({
-        pickList: this.data.communityList 
+        pickList: this.data.buildList 
       })
-    }else {
+    }else if(this.data.pickerType == 4) {
       this.setData({
-        pickList: this.data.responsorList 
+        pickList: this.data.layerList 
       })
-    }
-  },
-  onChangePickVal(e){
-    if(this.data.pickerType == 1){
-      const { picker, value, index } = e.detail;
-      picker.setColumnValues(1, citys[value[0]]);
-    }else if(this.data.pickerType == 2){
-
-    }else {
-
     }
   },
   onClosePick(){
@@ -104,32 +90,172 @@ Page({
       showPicker:false
     })
   },
-  onConfirmPick(){
+  onConfirmPick(e){
     this.setData({
       showPicker:false
+    })
+    switch (this.data.pickerType) {
+      case 1:
+        if (this.data.pickerType == 1) {
+          const values = e.detail._values
+          this.setData({
+            'form1.selectedOptions': values,
+            selectDisplace: values.province.name + values.city.name + values.country.name,
+            selectedCommunity: '',
+            'form1.communityId': '',
+            'form1.buildNo': '',
+            'form1.layerNo': '',
+            communityList: [],
+            communityNameList: [],
+            buildList: [],
+            layerList: [],
+          })
+          this.queryCommunitys(values)
+        }
+        break;
+      case 2:
+        const communityId = this.data.communityList.find(el => el.name === e.detail.value).id
+        this.setData({
+          selectedCommunity: e.detail.value,
+          'form1.communityId': communityId,
+          'form1.buildNo': '',
+          'form1.layerNo': '',
+          buildList: [],
+          layerList: [],
+        })
+        this.getBuildList(communityId)
+        break;
+      case 3:
+        this.setData({
+          'form1.buildNo': e.detail.value,
+          'form1.layerNo': '',
+          layerList: [],
+        })
+        this.getLayerList()
+        break;
+      case 4:
+        this.setData({
+          'form1.layerNo': e.detail.value,
+        })
+        break;
+      // case 6:
+      //   const values = e.detail._values
+      //   this.setData({
+      //     selectedOptions2: values,
+      //     selectDisplace2: values.province.name + values.city.name + values.country.name,
+      //   })
+      default: break;
+    }
+  },
+  async queryCommunitys(values) {
+    const params = {
+      provinceCode: values.province.code,
+      cityCode: values.city.code,
+      countryCode: values.country.code
+    }
+    const res = await queryCommunityList(params)
+    if (res.state == 200) {
+      // this.communityList = res.data
+      this.setData({
+        communityList: res.data ? res.data : [],
+        communityNameList: res.data ? res.data.map(e => e.name) : []
+      })
+    }
+  },
+  async getBuildList(id) {
+    queryBuildList(id).then(res => {
+      if (res.state == 200) {
+        this.setData({
+          buildList: res.data ? res.data : []
+        })
+      }
+    })
+  },
+  async getLayerList() {
+    queryLayerList({ communityId: this.data.form1.communityId, buildNo: this.data.form1.buildNo }).then(res => {
+      if (res.state == 200) {
+        this.setData({
+          layerList: res.data ? res.data : []
+        })
+      }
     })
   },
   onCancelPick(){
     this.setData({
       showPicker:false
     })
-    if(this.data.pickType == 0){
-      this.setData({
-        selectedOptions:[]
-      })
-    }else  if(this.data.pickType == 1){
-      this.setData({
-        selectedCommunity: ''
-      })
-    }else {
-      this.setData({
-        selectedResponser: ''
-      })
-    }
   },
   onChangeScopeType(e){
     this.setData({
       'form1.scope': e.detail
+    })
+  },
+  rationChange(e){
+    this.setData({
+      'form1.ratio': e.detail
+    })
+  },
+  batchChangePrice(){
+    if(!this.data.form1.communityId){
+      wx.showToast({
+        title: '请选择小区',
+        icon: 'none',
+      });
+      return
+    }
+    if(this.data.form1.scope==1 && !this.data.form1.buildNo){
+      wx.showToast({
+        title: '请选择栋',
+        icon: 'none',
+      });
+      return
+    }
+    if(this.data.form1.scope==2 && !this.data.form1.layerNo){
+      wx.showToast({
+        title: '请选择层',
+        icon: 'none',
+      });
+      return
+    }
+    if(!this.data.form1.ratio){
+      wx.showToast({
+        title: '请输入调价比例',
+        icon: 'none',
+      });
+      return
+    }
+    const params ={
+      "type": this.data.form1.scope,
+      "communityId":this.data.form1.communityId,
+      "communityName": this.data.selectedCommunity,
+      "buildNo": this.data.form1.buildNo,
+      
+      "layerNo": this.data.form1.layerNo,
+      "amplitude": this.data.form1.ratio,
+      "provinceCode": this.data.form1.selectedOptions.province.code,
+      "cityCode": this.data.form1.selectedOptions.city.code,
+      "countryCode": this.data.form1.selectedOptions.country.code,
+      "province": this.data.form1.selectedOptions.province.name,
+      "city": this.data.form1.selectedOptions.city.name,
+      "country":  this.data.form1.selectedOptions.country.name,
+    }
+    addChangePrice(params).then(res=>{
+      if(res.state == 200){
+        wx.showToast({
+          title: '调价成功',
+          icon: 'none',
+        });
+        setTimeout(() => {
+          wx.navigateBack({
+            delta: 1
+          });
+        }, 1000);
+      }else {
+        wx.showToast({
+          title: '调价失败',
+          icon: 'none',
+        });
+      }
     })
   }
 })

@@ -119,7 +119,6 @@ Page({
     })
   },
   onConfirmPick(e) {
-    console.log(e);
     this.setData({
       showPicker: false
     })

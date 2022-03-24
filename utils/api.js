@@ -114,6 +114,11 @@ export const addRenter = async(params)=>{
     const url = '/api/propertyTenant/createEntity'
     return await post(url,params)
 }
+// 新增调价
+export const addChangePrice = async(params)=>{
+    const url = '/api/propertyAdjustPriceRecord/createEntity'
+    return await post(url,params)
+}
 //上传文件
 // const upload = async (files) => {
 //     const skey = getFromStorage('skey')
