@@ -23,7 +23,7 @@
         </van-cell-group>
         <block wx:elif="{{step==1}}">
             <van-cell-group title="租客基本信息">
-                <van-field value="{{ userName }}" center clearable label="名称" placeholder="请输入"></van-field>
+                <van-field value="{{ userName }}" data-type="userName" bind:input="bindInput" clearable label="名称" placeholder="请输入"></van-field>
                 <van-cell title="性别">
                     <view>
                         <van-radio-group value="{{  sex }}" bind:change="onChangeSexType" direction="horizontal">
@@ -32,7 +32,7 @@
                         </van-radio-group>
                     </view>
                 </van-cell>
-                <van-field mode:value="{{  appletOpenId }}" data-type="appletOpenId" bind:input="bindInput" clearable label="小程序ID" placeholder="请输入"></van-field>
+                <van-field value="{{  appletOpenId }}" data-type="appletOpenId" bind:input="bindInput" clearable label="小程序ID" placeholder="请输入"></van-field>
                 <van-field value="{{  phoneNumber }}" data-type="phoneNumber" bind:input="bindInput" clearable label="手机号" placeholder="请输入" type="number"></van-field>
                 <van-field value="{{ wechatNo }}" data-type="wechatNo" bind:input="bindInput" clearable label="微信号" placeholder="请输入"></van-field>
                 <picker mode="date" value="{{birthTime}}" start="2000-01-01" end="2099-12-31" bindchange="bindbirthTimeChange">
@@ -52,7 +52,7 @@
             </van-cell-group>
             <van-cell-group inset title="上传证件图片">
                 <view class="items" hover-class="none" hover-stop-propagation="false">
-                    <van-uploader deletable="{{ true }}" bind:after-read="afterReadImg" max-count="3" file-list="{{  imageUrls }}" class="up">
+                    <van-uploader deletable="{{ true }}" bind:after-read="afterReadImg" bind:delete="deleteImg" max-count="3" file-list="{{  imageUrls }}" class="up">
                         <van-cell title="点击上传" is-link />
                     </van-uploader>
                 </view>
@@ -67,33 +67,35 @@
         </block>
         <block wx:elif="{{step==2}}">
             <van-cell-group title="租赁信息">
-                <van-field value="{{ price }}" center clearable label="租赁单价" placeholder="请输入单价/元" border="{{ false }}" use-button-slot>
-                    <!-- <van-button size="small" type="primary">发送验证码</van-button> -->
-                    <van-dropdown-menu slot="button">
-                        <van-dropdown-item title="结算周期" value="{{ dateType }}" options="{{ dateTypeOptions }}" />
-                    </van-dropdown-menu>
-                </van-field>
-                <van-cell title="租赁状态">
-                    <van-radio-group value="{{  statusType }}" bind:change="onChangeStatusType" direction="horizontal">
-                        <van-radio name="{{1}}">新租</van-radio>
-                        <van-radio name="{{2}}">已在租</van-radio>
+                <van-field value="{{ price }}" type="number" data-type="price" bind:input="bindInput" clearable label="租赁单价" placeholder="请输入单价/元" border="{{ true }}" use-button-slot></van-field>
+                <van-cell title="结算周期">
+                    <van-radio-group value="{{  priceType }}" bind:change="onChangePriceType" direction="horizontal">
+                        <van-radio wx:for="{{priceTypeOptions}}" wx:key="index" name="{{item.value}}">
+                            {{item.text}}
+                        </van-radio>
                     </van-radio-group>
                 </van-cell>
-                <block wx:if="{{statusType==2}}">
-                    <van-field value="{{ lastMonthWater }}" center clearable label="上月水表底数" placeholder="请输入"></van-field>
+                <van-cell title="租赁状态">
+                    <van-radio-group value="{{  type }}" bind:change="onChangeStatusType" direction="horizontal">
+                        <van-radio name="{{0}}">新租</van-radio>
+                        <van-radio name="{{1}}">已在租</van-radio>
+                    </van-radio-group>
+                </van-cell>
+                <block wx:if="{{type==1}}">
+                    <van-field value="{{ lastMonthWater }}" type="number" data-type="lastMonthWater" bind:input="bindInput" clearable label="上月水表底数" placeholder="请输入"></van-field>
                     <picker mode="date" value="{{lastMonthWaterDate}}" start="2000-01-01" end="2999-12-31" bindchange="bindLastWaterDateChange">
                         <van-cell title="上月水表日期" value="{{lastMonthWaterDate}}" is-link />
                     </picker>
-                    <van-field value="{{ lastMonthElec }}" center clearable label="上月电表底数" placeholder="请输入"></van-field>
+                    <van-field value="{{ lastMonthElec }}" type="number" data-type="lastMonthElec" bind:input="bindInput" clearable label="上月电表底数" placeholder="请输入"></van-field>
                     <picker mode="date" value="{{lastMonthElecDate}}" start="2000-01-01" end="2999-12-31" bindchange="bindLastElecDateChange">
-                        <van-cell title="上月水表日期" value="{{lastMonthElecDate}}" is-link />
+                        <van-cell title="上月电表日期" value="{{lastMonthElecDate}}" is-link />
                     </picker>
                 </block>
-                <van-field value="{{ yajin }}" center clearable label="押金" placeholder="请输入"></van-field>
+                <van-field value="{{ deposit }}" type="number" data-type="deposit" bind:input="bindInput" center clearable label="押金" placeholder="请输入"></van-field>
             </van-cell-group>
             <van-cell-group inset title="上传租赁合同">
                 <view class="items" hover-class="none" hover-stop-propagation="false">
-                    <van-uploader deletable="{{ true }}" bind:after-read="afterRead" max-count="1" file-list="{{ fileList }}" class="up" accept="file">
+                    <van-uploader deletable="{{ true }}" bind:after-read="afterRead" bind:delete="deleteCon" max-count="1" file-list="{{ contractUrl }}" class="up" accept="file">
                         <van-button icon="plus" block type="primary ">上传合同</van-button>
                     </van-uploader>
                 </view>

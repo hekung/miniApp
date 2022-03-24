@@ -1,37 +1,5 @@
-const { queryBuildList, queryCommunityList, queryLayerList, queryRooms } = require('../../../../utils/api')
-const a = {
-  "userName": "名称",
-  "sex": "性别（0：男；1：女）",
-  "phoneNumberNumber": "性别（0：男；1：女）",
-  "wechatNo": "微信号",
-  "birthTime": "出生日期",
-  "provinceCode": "省份code",
-  "cityCode": "城市code",
-  "countryCode": "县城code",
-  "province": "省份名称",
-  "city": "城市名称",
-  "country": "县城信息",
-  "address": "详细地址",
-  "idType": "证件类型（0：护照；1：身份证）",
-  "haveAppletId": "是否有小程序id(0：没有；1：有)",
-  "appletOpenId": "小程序id",
-  "idNumber": "身份证号",
-  "imageUrls": "证件照片",
-  "roomId": "房屋id",
-  "beginTime": "租赁开始时间",
-  "endTime": "租赁结束时间",
-  "tenantRoomDTO": {
-    "deposit": "押金",
-    "priceType": "租金类型",
-    "contractUrl": "合同地址",
-    "price": "租金价格",
-    "type": "类型（0：新租；1：已在租）",
-    "waterNumber": "水表数",
-    "electricNumber": "电表数",
-    "waterTime": "水表抄表时间",
-    "electricTime": "电表抄表时间"
-  }
-}
+const { queryBuildList, queryCommunityList, queryLayerList, queryRooms,addRenter } = require('../../../../utils/api')
+
 Page({
 
   /**
@@ -74,7 +42,7 @@ Page({
     sex: '',
     phoneNumber: '',
     appletOpenId: '',
-    wechat: '',
+    wechatNo: '',
     birthTime: '',
     idType: '',
     idNumber: '',
@@ -97,20 +65,20 @@ Page({
     imageUrls: [],
 
     price: '',
-    dateTypeOptions: [
-      { text: '日', value: 0 },
-      { text: '月', value: 1 },
-      { text: '季', value: 2 },
+    priceTypeOptions: [
+      { text: '月', value: 0 },
+      { text: '季', value: 1 },
+      { text: '半年', value: 2 },
       { text: '年', value: 3 },
     ],
-    dateType: '',
-    statusType: '',
+    priceType: '',
+    type: '',
     lastMonthWater: '',
     lastMonthWaterDate: '',
     lastMonthElec: '',
     lastMonthElecDate: '',
-    yajin: '',
-    fileList: []
+    deposit: '',
+    contractUrl: []
   },
 
   /**
@@ -223,6 +191,7 @@ Page({
         })
         break
       case 6:
+        const values = e.detail._values
         this.setData({
           selectedOptions2: values,
           selectDisplace2: values.province.name + values.city.name + values.country.name,
@@ -302,7 +271,7 @@ Page({
   },
   onChangeStatusType(e) {
     this.setData({
-      statusType: e.detail,
+      type: e.detail,
     });
   },
   onChangeIdType(e) {
@@ -328,12 +297,22 @@ Page({
         return
       }
     }
+    if(step==1){
+      if(!this.data.userName || !this.data.phoneNumber){
+        wx.showToast({
+          title: '信息请填写完整',
+          icon: 'none'
+        })
+        return
+      }
+    }
     this.setData({
       step: step + 1
     })
   },
   afterRead(event) {
     const { file } = event.detail;
+    const _this = this
     // 当设置 mutiple 为 true 时, file 为数组格式，否则为对象格式
     wx.uploadFile({
       url: 'http://119.91.25.208/api/propertyResources/uploadResource', // 仅为示例，非真实的接口地址
@@ -342,11 +321,16 @@ Page({
       formData: { user: 'test' },
       success(res) {
         // 上传完成需要更新 fileList
-        const { fileList = [] } = this.data;
-        fileList.push({ ...file, url: res.data });
-        this.setData({ fileList });
+        const { contractUrl = [] } = _this.data;
+        contractUrl.push({ url: JSON.parse(res.data).data, name: file.name })
+        _this.setData({ contractUrl });
       },
     });
+  },
+  deleteCon() {
+    this.setData({
+      contractUrl: []
+    })
   },
   bindInput(e) {
     const type = e.currentTarget.dataset.type
@@ -354,8 +338,17 @@ Page({
       [type]: e.detail
     })
   },
+  deleteImg(e) {
+    const index = e.detail.index
+    const { imageUrls } = this.data
+    imageUrls.splice(index, 1)
+    this.setData({
+      imageUrls
+    })
+  },
   afterReadImg(event) {
     const { file } = event.detail;
+    const _this = this
     // 当设置 mutiple 为 true 时, file 为数组格式，否则为对象格式
     wx.uploadFile({
       url: 'http://119.91.25.208/api/propertyResources/uploadResource', // 仅为示例，非真实的接口地址
@@ -364,13 +357,74 @@ Page({
       formData: { user: 'test' },
       success(res) {
         // 上传完成需要更新 fileList
-        const { imageUrls = [] } = this.data;
-        imageUrls.push({ ...file, url: res.data });
-        this.setData({ imageUrls });
+        const { imageUrls = [] } = _this.data;
+        imageUrls.push({ url: JSON.parse(res.data).data });
+        _this.setData({ imageUrls });
       },
     });
   },
-  save() { },
+  save() {
+    if(!this.data.price){
+      wx.showToast({
+        title: '信息请填写完整',
+        icon: 'none'
+      })
+      return
+    }
+    const params = {
+      "userName": this.data.userName,
+      "sex": this.data.sex,
+      "phoneNumber": this.data.phoneNumber,
+      "wechatNo": this.data.wechatNo,
+      "birthTime": this.data.birthTime?this.data.birthTime+' 00:00:00':'',
+      "provinceCode": this.data.selectedOptions2.province.code,
+      "cityCode": this.data.selectedOptions2.city.code,
+      "countryCode": this.data.selectedOptions2.country.code,
+      "province": this.data.selectedOptions2.province.name,
+      "city": this.data.selectedOptions2.city.name,
+      "country":  this.data.selectedOptions2.country.name,
+      "address": this.data.address,
+      "idType": this.data.idType,
+      "haveAppletId": this.data.appletOpenId?1:0,
+      "appletOpenId": this.data.appletOpenId,
+      "idNumber": this.data.idNumber,
+      "imageUrls": this.data.imageUrls.length?this.data.imageUrls.map(e=> e.url):[],
+      "roomId": this.data.roomId,
+      "beginTime": this.data.startDate?this.data.startDate+' 00:00:00':'',
+      "endTime": this.data.endDate?this.data.endDate+' 23:59:59':'',
+      communityId: this.data.communityId,
+      communityName: this.data.selectedCommunity,
+      "tenantRoomDTO": {
+        "deposit": this.data.deposit,
+        "priceType": this.data.priceType,
+        "contractUrl": this.data.contractUrl.length?this.data.contractUrl[0].url:'',
+        "price": this.data.price,
+        "type": this.data.type,
+        "waterNumber": this.data.lastMonthWater,
+        "electricNumber": this.data.lastMonthElec,
+        "waterTime": this.data.lastMonthWaterDate?this.data.lastMonthWaterDate+' 00:00:00':'',
+        "electricTime": this.data.lastMonthElecDate?this.data.lastMonthElecDate+ ' 00:00:00':''
+      }
+    }
+    addRenter(params).then(res=>{
+      if(res.state == 200){
+        wx.showToast({
+          title: '新增租客成功',
+          icon: 'none',
+        });
+        setTimeout(() => {
+          wx.navigateBack({
+            delta: 1
+          });
+        }, 1000);
+      }else {
+        wx.showToast({
+          title: '新增租客失败',
+          icon: 'none',
+        });
+      }
+    })
+   },
   goLast() {
     const step = this.data.step
     this.setData({
@@ -390,6 +444,11 @@ Page({
   bindbirthTimeChange(e) {
     this.setData({
       birthTime: e.detail.value
+    })
+  },
+  onChangePriceType(e) {
+    this.setData({
+      priceType: e.detail
     })
   },
   /**

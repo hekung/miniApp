@@ -109,6 +109,11 @@ export const queryRooms = async (params) => {
     const url = '/api/propertyRoom/queryRooms'
     return await get(url, params)
 }
+// 新增租客信息
+export const addRenter = async(params)=>{
+    const url = '/api/propertyTenant/createEntity'
+    return await post(url,params)
+}
 //上传文件
 // const upload = async (files) => {
 //     const skey = getFromStorage('skey')
