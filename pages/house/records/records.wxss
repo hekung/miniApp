@@ -1,1 +1,7 @@
-/* pages/house/records/records.wxss */
+/* pages/management/employManage/employManage.wxss */
+.btns {
+    display: flex;
+    justify-content: space-around;
+    background-color: #fff;
+    padding: 20rpx 40rpx;
+}

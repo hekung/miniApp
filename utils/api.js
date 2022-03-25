@@ -119,6 +119,11 @@ export const addChangePrice = async(params)=>{
     const url = '/api/propertyAdjustPriceRecord/createEntity'
     return await post(url,params)
 }
+// 查询房屋租赁记录
+export const queryHouseRentRecords = async(params)=>{
+    const url = '/api/propertyLeaseRecord/queryList'
+    return await get(url,params)
+}
 //上传文件
 // const upload = async (files) => {
 //     const skey = getFromStorage('skey')
