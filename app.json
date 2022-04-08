@@ -7,6 +7,7 @@
 		"pages/wode/wode",
 		"pages/buy/buy",
 		"pages/buy/buyRecords/buyRecords",
+		"pages/buy/buyDetail/buyDetail",
 		"pages/buy/review/review",
 		"pages/buy/executeBuy/executeBuy",
 		"pages/house/analysis/analysis",

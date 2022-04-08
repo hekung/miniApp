@@ -1,21 +1,22 @@
 <view class="page" hover-class="none" hover-stop-propagation="false">
     <van-tabs active="{{ active }}" type="card" bind:change="onChangeTab">
-        <van-tab title="我的" name="a"></van-tab>
-        <van-tab title="所有" name="b"></van-tab>
+        <van-tab title="我的" name="{{0}}"></van-tab>
+        <van-tab title="所有" name="{{1}}"></van-tab>
     </van-tabs>
     <view class="searchs">
         <van-cell-group>
             <van-cell title="任务状态">
                 <view>
-                    <van-radio-group value="{{  scopeType }}" bind:change="onChangeScopeType" direction="horizontal">
-                        <van-radio name="{{1}}">公共区域</van-radio>
-                        <van-radio name="{{2}}">室内</van-radio>
+                    <van-radio-group value="{{  status }}" bind:change="onChangestatus" direction="horizontal">
+                        <van-radio name="{{0}}">进行中</van-radio>
+                        <van-radio name="{{1}}">已完成</van-radio>
                     </van-radio-group>
                 </view>
             </van-cell>
-            <van-cell title="省市区" value="{{selectedOptions}}" data-type="{{1}}" bind:click="clickToPick" is-link></van-cell>
+            <van-cell title="省市区" value="{{selectDisplace}}" data-type="{{1}}" bind:click="clickToPick" is-link></van-cell>
             <van-popup show="{{ showPicker }}" bind:close="onClosePick" position="bottom">
-                <van-picker show-toolbar bind:cancel="onCancelPick" bind:confirm="onConfirmPick" columns="{{ pickList }}" bind:change="onChangePickVal" />
+                <region-selector wx:if="{{pickerType==1}}" bind:cancelPick="onCancelPick" bind:confirmPick="onConfirmPick"></region-selector>
+                <van-picker wx:else show-toolbar bind:cancel="onCancelPick" bind:confirm="onConfirmPick" columns="{{ pickList }}" />
             </van-popup>
             <van-cell title="小区" value="{{selectedCommunity}}" data-type="{{2}}" bind:click="clickToPick" is-link></van-cell>
             <van-cell title="负责人" value="{{selectedResponser}}" data-type="{{3}}" bind:click="clickToPick" is-link></van-cell>

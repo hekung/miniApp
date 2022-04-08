@@ -1,0 +1,77 @@
+<view class="page" hover-class="none" hover-stop-propagation="false">
+    <view class="searchs">
+        <van-cell-group inset class="top-info">
+            <van-row>
+                <van-col span="24">
+                    <view class="item-container">
+                        <label>仓库</label>
+                        <view>{{productInfo.wareHouse.name}}</view>
+                    </view>
+                </van-col>
+            </van-row>
+            <van-row>
+                <van-col span="8">
+                    <view class="item-container">
+                        <label>产品名</label>
+                        <view>{{productInfo.name}}</view>
+                    </view>
+                </van-col>
+                <van-col span="8">
+                    <view class="item-container">
+                        <label>规格</label>
+                        <view>{{productInfo.specification}}</view>
+                    </view>
+                </van-col>
+                <van-col span="8">
+                    <view class="item-container">
+                        <label>类型</label>
+                        <view>{{productInfo.type==1?'生活类':'工程类'}}</view>
+                    </view>
+                </van-col>
+            </van-row>
+            <van-row>
+                <van-col span="8">
+                    <view class="item-container">
+                        <label>实际库存总量</label>
+                        <view>{{productInfo.total}}</view>
+                    </view>
+                </van-col>
+                <van-col span="8">
+                    <view class="item-container">
+                        <label>锁定量</label>
+                        <view>{{productInfo.lockNum}}</view>
+                    </view>
+                </van-col>
+                <van-col span="8">
+                    <view c class="item-container">
+                        <label>库存可用量</label>
+                        <view>{{productInfo.availableNum}}</view>
+                    </view>
+                </van-col>
+            </van-row>
+        </van-cell-group>
+        <van-cell-group>
+            <picker mode="date" value="{{beginTime}}" start="2000-01-01" end="2099-12-31" bindchange="bindBeginTimeChange">
+                <van-cell title="起始日期" value="{{beginTime}}" is-link border />
+            </picker>
+            <picker mode="date" value="{{endTime}}" start="{{beginTime}}" end="2099-12-31" bindchange="bindEndTimeChange">
+                <van-cell title="结束日期" value="{{endTime}}" is-link border />
+            </picker>
+            <van-cell title="记录类型">
+                <view>
+                    <van-radio-group value="{{type }}" bind:change="onChangeType" direction="horizontal">
+                        <van-radio name="{{0}}">出库</van-radio>
+                        <van-radio name="{{1}}">入库</van-radio>
+                    </van-radio-group>
+                </view>
+            </van-cell>
+            <view class="btns" hover-class="none" hover-stop-propagation="false">
+                <van-button type="danger" size="small" bind:click="searchList" round>查询</van-button>
+                <van-button type="default" size="small" bind:click="reset" round>重置</van-button>
+            </view>
+        </van-cell-group>
+    </view>
+    <view class="results">
+        <cus-table columns="{{columns}}" contentArray="{{tableData}}" hasLink="{{false}}"></cus-table>
+    </view>
+</view>

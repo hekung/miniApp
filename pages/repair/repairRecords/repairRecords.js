@@ -6,113 +6,146 @@
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: \miniprogram-1\pages\repair\repairRecords\repairRecords.js
  */
-const app = getApp()
-const citys = {
-  浙江: ['杭州', '宁波', '温州', '嘉兴', '湖州'],
-  福建: ['福州', '厦门', '莆田', '三明', '泉州'],
-};
+const { queryRepairRecords, queryCommunityList } = require('../../../utils/api')
 Page({
   data: {
-    active: 'a',
-    scopeType: 1,
-    selectedOptions:[],
-    selectedCommunity:'',
-    selectedResponser:'',
-    pickerType:1,
+    active: 0,
+    status: 0,
+    no: "",
+    selectedOptions: {
+      province: {
+        name: '',
+        code: '',
+      },
+      city: {
+        name: '',
+        code: ''
+      },
+      country: {
+        name: '',
+        code: ''
+      }
+    },
+    selectDisplace: '',
+    selectedCommunity: '',
+    selectedResponser: '',
+    principal: '',
+    communityId: '',
+    pickerType: 1,
     tableData: [
-      {id:1,no: '233',rate: '中',items:'dqw.dwq',scope:'是被',community:'dwq',createTime:'dasdadsadd',linkUrl:'/pages/repair/repairRecordOne/repairRecordOne?id='+ 1},
-      {id:2,no: '233',rate: '中',items:'dqw.dwq',scope:'是被',community:'dwq',createTime:'dasdadsadd',linkUrl:'/pages/repair/repairRecordOne/repairRecordOne?id='+ 2},
-      {id:3,no: '233',rate: '中',items:'dqw.dwq',scope:'是被',community:'dwq',createTime:'dasdadsadd',linkUrl:'/pages/repair/repairRecordOne/repairRecordOne?id='+ 3},
-      {id:4,no: '233',rate: '中',items:'dqw.dwq',scope:'是被',community:'dwq',createTime:'dasdadsadd',linkUrl:'/pages/repair/repairRecordOne/repairRecordOne?id='+ 4},
-      {id:5,no: '233',rate: '中',items:'dqw.dwq',scope:'是被',community:'dwq',createTime:'dasdadsadd',linkUrl:'/pages/repair/repairRecordOne/repairRecordOne?id='+ 5},
-      {id:6,no: '233',rate: '中',items:'dqw.dwq',scope:'是被',community:'dwq',createTime:'dasdadsadd',linkUrl:'/pages/repair/repairRecordOne/repairRecordOne?id='+ 5},
+      { id: 1, no: '233', rate: '中', items: 'dqw.dwq', scope: '是被', community: 'dwq', createTime: 'dasdadsadd', linkUrl: '/pages/repair/repairRecordOne/repairRecordOne?id=' + 1 },
+      { id: 2, no: '233', rate: '中', items: 'dqw.dwq', scope: '是被', community: 'dwq', createTime: 'dasdadsadd', linkUrl: '/pages/repair/repairRecordOne/repairRecordOne?id=' + 2 },
+      { id: 3, no: '233', rate: '中', items: 'dqw.dwq', scope: '是被', community: 'dwq', createTime: 'dasdadsadd', linkUrl: '/pages/repair/repairRecordOne/repairRecordOne?id=' + 3 },
+      { id: 4, no: '233', rate: '中', items: 'dqw.dwq', scope: '是被', community: 'dwq', createTime: 'dasdadsadd', linkUrl: '/pages/repair/repairRecordOne/repairRecordOne?id=' + 4 },
+      { id: 5, no: '233', rate: '中', items: 'dqw.dwq', scope: '是被', community: 'dwq', createTime: 'dasdadsadd', linkUrl: '/pages/repair/repairRecordOne/repairRecordOne?id=' + 5 },
+      { id: 6, no: '233', rate: '中', items: 'dqw.dwq', scope: '是被', community: 'dwq', createTime: 'dasdadsadd', linkUrl: '/pages/repair/repairRecordOne/repairRecordOne?id=' + 5 },
     ],
-    columns:[
-      {title: '单号',attr: 'no'},
-      {title: '等级',attr: 'rate'},
-      {title: '报修事项',attr: 'items'},
-      {title: '范围类型',attr: 'scope'},
-      {title: '小区',attr: 'community'},
-      {title: '发起时间',attr: 'createTime'},
+    columns: [
+      { title: '单号', attr: 'no', width: '200rpx' },
+      { title: '等级', attr: 'level', width: '160rpx' },
+      { title: '报修事项', attr: 'repairItemName', width: '200rpx' },
+      { title: '范围类型', attr: 'type', width: '200rpx' },
+      { title: '小区', attr: 'communityName', width: '200rpx' },
+      { title: '发起时间', attr: 'createTime', width: '200rpx' },
     ],
-    pickList:[],
-    disList: [
-      {
-        values: Object.keys(citys),
-        className: 'column1',
-      },
-      {
-        values: citys['浙江'],
-        className: 'column2',
-        defaultIndex: 2,
-      },
-    ],
-    communityList:['1','2','23'],
-    responsorList:['A','B']
+    pickList: [],
+    communityList: [],
+    communityNameList: [],
+    principalList: []
   },
-  searchList(){},
-  onChangeTab(e){
+  searchList() {
+    const params = {
+      communityId: this.data.communityId,
+      status: this.data.status,
+      principle: this.data.principle,
+      no: this.data.no,
+      type: this.data.active
+    }
+    queryRepairRecords(params).then(res => {
+      if (res.state == 200) {
+        res.forEach(e => {
+          e.communityName = e.community.name
+        });
+        this.setData({
+          tableData: res.data
+        })
+      }
+    })
+  },
+  onChangeTab(e) {
     this.setData({
-     active: e.detail.name
+      active: e.detail.name
     })
     this.searchList()
   },
-  clickToPick(e){
+  onChangestatus(e) {
+    this.setData({
+      status: e.detail
+    })
+  },
+  clickToPick(e) {
     const pickerType = e.currentTarget.dataset.type
     this.setData({
       pickerType,
       showPicker: true
     })
-    if(this.data.pickerType == 1){
+    if (this.data.pickerType == 2) {
       this.setData({
-        pickList: this.data.disList 
+        pickList: this.data.communityList
       })
-    }else if(this.data.pickerType == 2){
+    } else if (this.data.pickerType == 3) {
       this.setData({
-        pickList: this.data.communityList 
-      })
-    }else {
-      this.setData({
-        pickList: this.data.responsorList 
+        pickList: this.data.principalList
       })
     }
   },
-  onChangePickVal(e){
-    if(this.data.pickerType == 1){
-      const { picker, value, index } = e.detail;
-      picker.setColumnValues(1, citys[value[0]]);
-    }else if(this.data.pickerType == 2){
-
-    }else {
-
-    }
-  },
-  onClosePick(){
+  onClosePick() {
     this.setData({
-      showPicker:false
+      showPicker: false
     })
   },
-  onConfirmPick(){
+  onConfirmPick() {
     this.setData({
-      showPicker:false
+      showPicker: false
     })
-  },
-  onCancelPick(){
-    this.setData({
-      showPicker:false
-    })
-    if(this.data.pickType == 0){
+    if (this.data.pickerType == 1) {
+      const values = e.detail._values
       this.setData({
-        selectedOptions:[]
+        selectedOptions: values,
+        selectDisplace: values.province.name + values.city.name + values.country.name
       })
-    }else  if(this.data.pickType == 1){
+      this.queryCommunitys(values)
+    } else if (this.data.pickerType == 2) {
+      const communityId = this.data.communityList.find(el => el.name === e.detail.value).id
       this.setData({
-        selectedCommunity: ''
+        selectedCommunity: e.detail.value,
+        communityId
       })
-    }else {
+    } else if (this.data.pickerType == 3) {
       this.setData({
-        selectedResponser: ''
+        selectedResponser: e.detail.value,
+        principal: this.data.principalList.find(el => el.name === e.detail.value).id
       })
     }
+  },
+  async queryCommunitys(values) {
+    const params = {
+      provinceCode: values.province.code,
+      cityCode: values.city.code,
+      countryCode: values.country.code
+    }
+    const res = await queryCommunityList(params)
+    if (res.state == 200) {
+      // this.communityList = res.data
+      this.setData({
+        communityList: res.data,
+        communityNameList: res.data.map(e => e.name)
+      })
+    }
+  },
+  onCancelPick() {
+    this.setData({
+      showPicker: false
+    })
   }
 })

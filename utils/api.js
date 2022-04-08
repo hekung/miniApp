@@ -110,20 +110,33 @@ export const queryRooms = async (params) => {
     return await get(url, params)
 }
 // 新增租客信息
-export const addRenter = async(params)=>{
+export const addRenter = async (params) => {
     const url = '/api/propertyTenant/createEntity'
-    return await post(url,params)
+    return await post(url, params)
 }
 // 新增调价
-export const addChangePrice = async(params)=>{
+export const addChangePrice = async (params) => {
     const url = '/api/propertyAdjustPriceRecord/createEntity'
-    return await post(url,params)
+    return await post(url, params)
 }
 // 查询房屋租赁记录
-export const queryHouseRentRecords = async(params)=>{
+export const queryHouseRentRecords = async (params) => {
     const url = '/api/propertyLeaseRecord/queryList'
-    return await get(url,params)
+    return await get(url, params)
 }
+//--------------------------采购-----------------------------
+
+export const queryBuyRecords = async (params) => {
+    const url = '/api/propertyProcurementRecord/queryPage'
+    return await get(url, params)
+}
+//--------------------------报修-------------------------------------
+// 查询报修记录
+export const queryRepairRecords = async (params) => {
+    const url = '/api/propertyRepairRecord/queryList'
+    return await get(url, params)
+}
+
 //上传文件
 // const upload = async (files) => {
 //     const skey = getFromStorage('skey')
