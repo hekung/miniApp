@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2022-02-23 19:55:12
- * @LastEditTime: 2022-03-01 18:23:01
+ * @LastEditTime: 2022-04-11 14:36:02
  * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: \miniprogram-1\pages\repair\repairRecords\repairRecords.js
@@ -57,7 +57,7 @@ Page({
     const params = {
       communityId: this.data.communityId,
       status: this.data.status,
-      principle: this.data.principle,
+      principal: this.data.principal,
       no: this.data.no,
       type: this.data.active
     }
@@ -91,7 +91,7 @@ Page({
     })
     if (this.data.pickerType == 2) {
       this.setData({
-        pickList: this.data.communityList
+        pickList: this.data.communityNameList
       })
     } else if (this.data.pickerType == 3) {
       this.setData({
@@ -104,7 +104,7 @@ Page({
       showPicker: false
     })
   },
-  onConfirmPick() {
+  onConfirmPick(e) {
     this.setData({
       showPicker: false
     })
@@ -147,5 +147,34 @@ Page({
     this.setData({
       showPicker: false
     })
+  },
+  onShow() {
+    this.searchList()
+  },
+  reset(){
+    this.setData({
+      selectedOptions: {
+        province: {
+          name: '',
+          code: '',
+        },
+        city: {
+          name: '',
+          code: ''
+        },
+        country: {
+          name: '',
+          code: ''
+        }
+      },
+      selectDisplace: '',
+      selectedCommunity: '', // 小区中文
+      communityId: '',
+      communityList: [],
+      communityNameList: [],
+      selectedResponser:'',
+      principal:''
+    })
+    this.searchList()
   }
 })

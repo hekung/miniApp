@@ -136,8 +136,17 @@ export const queryRepairRecords = async (params) => {
     const url = '/api/propertyRepairRecord/queryList'
     return await get(url, params)
 }
-
-//上传文件
+// 创建报修
+export const createRepair = async (params)=>{
+    const url = '/api/propertyRepairRecord/createRepairRecord'
+    return await post(url,params)
+}
+// chaxunbaoxiushixiang
+export const queryRepaireItems = async()=>{
+    const url ='/api/propertyRepairItem/no-page'
+    return await get(url)
+}
+//上传文件ba
 // const upload = async (files) => {
 //     const skey = getFromStorage('skey')
 //     const promiseArr = []

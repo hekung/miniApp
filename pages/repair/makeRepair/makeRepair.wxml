@@ -1,61 +1,32 @@
 <view class="page">
+    <van-popup show="{{ showPicker }}" bind:close="onClosePick" position="bottom">
+        <region-selector wx:if="{{pickerType==1}}" bind:cancelPick="onCancelPick" bind:confirmPick="onConfirmPick"></region-selector>
+        <van-picker wx:else show-toolbar bind:cancel="onCancelPick" bind:confirm="onConfirmPick" columns="{{ pickList }}" />
+    </van-popup>
     <view class="con" wx:if="{{contentType === 1}}">
         <van-cell-group inset title="选择维修范围类型">
             <van-cell>
                 <view slot="title">
-                    <van-radio-group value="{{  scopeType }}" bind:change="onChangeScopeType" direction="horizontal">
-                        <van-radio name="1">公共区域</van-radio>
-                        <van-radio name="2">室内</van-radio>
+                    <van-radio-group value="{{  type }}" bind:change="onChangeScopeType" direction="horizontal">
+                        <van-radio name="{{1}}">公共区域</van-radio>
+                        <van-radio name="{{0}}">室内</van-radio>
                     </van-radio-group>
                 </view>
             </van-cell>
         </van-cell-group>
         <van-cell-group inset title="选择地区范围">
-            <van-cell title="省市区" value="{{selectedOptions}}" data-type="{{1}}" bind:click="clickToPick" is-link></van-cell>
-            <van-popup show="{{ showPicker }}" bind:close="onClosePick" position="bottom">
-                <van-picker columns="{{ columns }}" bind:change="onChangePickVal" />
-            </van-popup>
+            <van-cell title="省市区" value="{{selectDisplace}}" data-type="{{1}}" bind:click="clickToPick" is-link></van-cell>
             <van-cell title="小区" value="{{selectedCommunity}}" data-type="{{2}}" bind:click="clickToPick" is-link></van-cell>
         </van-cell-group>
-        <van-cell-group inset title="选择房间">
-            <view class="box-card" wx:for="{{houses}}" wx:for-item="item" wx:key="buildNo">
-                <view class="card-header clearfix">
-                    <view>
-                        <text>栋：</text>
-                        <text>{{item.buildNo}}</text>
-                    </view>
-                    <van-checkbox value="{{ item.selectAll }}" data-buildNo="{{item}}" bind:change="houseChangeSelectAll">
-                        选择整栋
-                    </van-checkbox>
-                </view>
-                <view class="rooms">
-                    <view class="floor-card" wx:for="{{item.layerList}}" wx:for-item="layer" wx:key="layerNo">
-                        <view class="card-header clearfix">
-                            <view>
-                                <text>层：</text>
-                                <text>{{layer.layerNo}}</text>
-                            </view>
-                            <van-checkbox value="{{ layer.selectAll }}" data-buildNo="{{item}}" data-layerNo="{{layer}}" bind:change="floorChangeSelectAll">
-                                选择整层
-                            </van-checkbox>
-                        </view>
-                        <view>
-                            <van-checkbox-group direction="horizontal" value="{{ checkedRooms }}" bind:change="roomChangeSelect">
-                                <van-checkbox wx:for="{{layer.roomList}}" wx:for-item="room" wx:key="roomNo" name="{{room.roomNo}}" data-buildNo="{{item}}" data-layerNo="{{layer}}">
-                                    {{ room.roomNo }}
-                                </van-checkbox>
-                            </van-checkbox-group>
-                        </view>
-                    </view>
-                </view>
-            </view>
-        </van-cell-group>
+        <van-cell title="栋号" value="{{buildNo}}" data-type="{{3}}" bind:click="clickToPick" is-link></van-cell>
+        <van-cell title="层号" value="{{layerNo}}" data-type="{{4}}" bind:click="clickToPick" is-link></van-cell>
+        <van-cell title="户号" value="{{roomNo}}" data-type="{{5}}" bind:click="clickToPick" is-link></van-cell>
     </view>
     <view class="con" wx:else>
         <van-cell-group inset title="选择报修事项">
             <view class="items" hover-class="none" hover-stop-propagation="false">
                 <view class="tags" hover-class="none" hover-stop-propagation="false">
-                    <van-tag bindtap="clickTag" data-item="{{item.name}}" wx:for="{{form2.tags}}" wx:key="name" size="large" plain="{{!item.check}}" round type="danger" class="tag">
+                    <van-tag bindtap="clickTag" data-item="{{item.name}}" wx:for="{{form2.tags}}" wx:key="id" size="large" plain="{{!item.check}}" round type="danger" class="tag">
                         {{item.name}}
                     </van-tag>
                 </view>
@@ -63,24 +34,24 @@
                     <van-checkbox value="{{ form2.isOtherItem }}" bind:change="onChangeIsOtherItem">
                         其他
                     </van-checkbox>
-                    <van-field model:value="{{ form2.messageItem }}" class="input" type="textarea" placeholder="请输入事项" autosize />
+                    <van-field model:value="{{ form2.messageItem }}" class="input" type="textarea" bind:input="onOtherInput" placeholder="请输入事项" autosize />
                 </view>
             </view>
-            <van-cell title="维修等级" value="{{selectedCommunity}}" data-type="{{2}}" bind:click="clickToPick" is-link>
-                <picker bindchange="bindRatePickerChange" value="{{form2.rate}}" range="{{rangeList}}">
-                    <view class="picker">{{form2.rate}}</view>
-                </picker>
+            <van-cell title="维修等级" value="{{form2.level}}" data-type="{{6}}" bind:click="clickToPick" is-link>
+                <!-- <picker bindchange="bindRatePickerChange" value="{{form2.level}}" range="{{rangeList}}">
+                    <view class="picker">{{form2.level}}</view>
+                </picker> -->
             </van-cell>
         </van-cell-group>
         <van-cell-group inset title="图片">
             <view class="items" hover-class="none" hover-stop-propagation="false">
-                <van-uploader deletable="{{ true }}" bind:after-read="afterRead" max-count="3" file-list="{{ fileList }}" class="up">
+                <van-uploader deletable="{{ true }}" bind:delete="deleteCon" bind:after-read="afterRead" max-count="3" file-list="{{ form2.imageUrls }}" class="up">
                     <van-button icon="photo" block size="small" plain>上传图片</van-button>
                 </van-uploader>
             </view>
         </van-cell-group>
         <van-cell-group inset title="备注">
-            <van-field model:value="{{ form2.remark }}" class="input" type="textarea" placeholder="请输入备注" autosize />
+            <van-field model:value="{{ form2.remark }}" class="input" bind:input="onInput" type="textarea" placeholder="请输入备注" autosize />
         </van-cell-group>
     </view>
     <view class="btn-row">

@@ -41,7 +41,7 @@ const get = async (url, params, header) => {
   if (!header) {
     header = {}
   }
-  header.Authorization = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6ImFkbWluIiwidHlwZSI6NiwidXNlcklkIjoidzIzNDM1MzUzNSIsImlhdCI6MTY0NzYwNjExOCwiZXhwIjoxNjQ4MjEwOTE4fQ.nmmNtzDhnVXod5k7kYiw20UnLovE9G20FZWt8YY5IMk'
+  header.Authorization = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6ImFkbWluIiwidHlwZSI6NiwidXNlcklkIjoidzIzNDM1MzUzNSIsImlhdCI6MTY0OTY1Njc2OSwiZXhwIjoxNjUwMjYxNTY5fQ.2d0Fib6v_E58m4kL5GVBrOqqMYiXLsMhaYMBywt2x3k'
   const result = await new Promise((resolve, reject) => {
     wx.request({
       url: baseUrl + url, header,
@@ -68,7 +68,7 @@ const post = async (url, params, header) => {
   if (!header) {
     header = {}
   }
-  header.Authorization = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6ImFkbWluIiwidHlwZSI6NiwidXNlcklkIjoidzIzNDM1MzUzNSIsImlhdCI6MTY0NzYwNjExOCwiZXhwIjoxNjQ4MjEwOTE4fQ.nmmNtzDhnVXod5k7kYiw20UnLovE9G20FZWt8YY5IMk'
+  header.Authorization = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6ImFkbWluIiwidHlwZSI6NiwidXNlcklkIjoidzIzNDM1MzUzNSIsImlhdCI6MTY0OTY1Njc2OSwiZXhwIjoxNjUwMjYxNTY5fQ.2d0Fib6v_E58m4kL5GVBrOqqMYiXLsMhaYMBywt2x3k'
   const result = await new Promise((resolve, reject) => {
     if (!header) {
       header = {}
@@ -98,7 +98,7 @@ const postForm = async (url, params = {}) => {
       method: 'POST',
       header: {
         'content-type': data.contentType,
-        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6ImFkbWluIiwidHlwZSI6NiwidXNlcklkIjoidzIzNDM1MzUzNSIsImlhdCI6MTY0NzYwNjExOCwiZXhwIjoxNjQ4MjEwOTE4fQ.nmmNtzDhnVXod5k7kYiw20UnLovE9G20FZWt8YY5IMk'
+        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6ImFkbWluIiwidHlwZSI6NiwidXNlcklkIjoidzIzNDM1MzUzNSIsImlhdCI6MTY0OTY1Njc2OSwiZXhwIjoxNjUwMjYxNTY5fQ.2d0Fib6v_E58m4kL5GVBrOqqMYiXLsMhaYMBywt2x3k'
       },
       data: data.buffer,
       success: function (res) {
@@ -115,7 +115,7 @@ const requestDelete = async (url, params, header) => {
   if (!header) {
     header = {}
   }
-  header.Authorization = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6ImFkbWluIiwidHlwZSI6NiwidXNlcklkIjoidzIzNDM1MzUzNSIsImlhdCI6MTY0NzYwNjExOCwiZXhwIjoxNjQ4MjEwOTE4fQ.nmmNtzDhnVXod5k7kYiw20UnLovE9G20FZWt8YY5IMk'
+  header.Authorization = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6ImFkbWluIiwidHlwZSI6NiwidXNlcklkIjoidzIzNDM1MzUzNSIsImlhdCI6MTY0OTY1Njc2OSwiZXhwIjoxNjUwMjYxNTY5fQ.2d0Fib6v_E58m4kL5GVBrOqqMYiXLsMhaYMBywt2x3k'
   const result = await new Promise((resolve, reject) => {
     wx.request({
       url: baseUrl + url, method: 'DELETE', header, data: params, success(res) {
