@@ -7,36 +7,36 @@
             </van-col>
             <van-col span="12">
                 <label>等级</label>
-                <text class="item">{{info.rate}}</text>
+                <text class="item">{{info.level}}</text>
             </van-col>
             <van-col span="12">
                 <label>报修事项</label>
-                <text class="item">{{info.item}}</text>
+                <text class="item">{{info.repairItem.name}}</text>
             </van-col>
             <van-col span="12">
                 <label>范围类型</label>
-                <text class="item">{{info.scope}}</text>
+                <text class="item">{{info.type==1?'公共区域':'室内'}}</text>
             </van-col>
             <van-col span="12">
                 <label>小区</label>
-                <text class="item">{{info.community}}</text>
+                <text class="item">{{info.community.name}}</text>
             </van-col>
             <van-col span="12">
                 <label>发起时间</label>
-                <text class="item">{{info.createTime}}</text>
+                <text class="item">{{info.beginTime}}</text>
             </van-col>
             <van-col span="12">
                 <label>发起人</label>
-                <text class="item">{{info.creator}}</text>
+                <text class="item">{{info.repairWorkflowList.principal}}</text>
             </van-col>
             <van-col span="12">
                 <label>备注</label>
-                <text class="item">{{info.remark}}</text>
+                <text class="item">{{info.repairWorkflowList.remark}}</text>
             </van-col>
             <van-col span="24">
                 <label>图片</label>
                 <view class="imgs" hover-class="none" hover-stop-propagation="false">
-                    <image class="img" wx:for="{{info.imgs}}" src="{{item}}" wx:key="index" alt=""></image>
+                    <image class="img" wx:for="{{info.resourcesList}}" src="{{item.url}}" wx:key="resourceId" alt=""></image>
                 </view>
             </van-col>
         </van-row>

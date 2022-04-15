@@ -1,7 +1,7 @@
 <view class="page" hover-class="none" hover-stop-propagation="false">
     <van-tabs active="{{ active }}" type="card" bind:change="onChangeTab">
-        <van-tab title="我的" name="{{0}}"></van-tab>
-        <van-tab title="所有" name="{{1}}"></van-tab>
+        <van-tab title="我发起的" name="{{0}}"></van-tab>
+        <van-tab title="我管理的" name="{{1}}"></van-tab>
     </van-tabs>
     <view class="searchs">
         <van-cell-group>

@@ -274,9 +274,16 @@ Page({
   //   this.radio = allchecked
   // },
   tapToNext(){
-    if(!this.data.roomId){
+    if(!this.data.roomId&& this.data.type ==0){
       wx.showToast({
         title: '请选择房间',
+        icon: 'none'
+      });
+      return
+    }
+    if(this.data.type==1 && !this.data.layerNo){
+      wx.showToast({
+        title: '请选择楼层',
         icon: 'none'
       });
       return
@@ -322,9 +329,12 @@ Page({
       },
     });
   },
-  deleteCon() {
+  deleteCon(e) {
+    const index = e.detail.index
+    const imageUrls = this.data.form2.imageUrls
+    imageUrls.splice(index,1)
     this.setData({
-      contractUrl: []
+      'form2.imageUrls': imageUrls
     })
   },
   onInput(e) {
@@ -349,6 +359,15 @@ Page({
     "remark": this.data.form2.remark,
     "itemIds": this.data.form2.tags.filter(e=> e.check).map(e=> e.id),
     "imageUrls":  this.data.form2.imageUrls.length?this.data.form2.imageUrls.map(e=> e.url):[]
+    }
+    if(this.data.type == 0){
+      params.roomCommunityS= [
+        {"communityId": this.data.communityId, "roomId": this.data.roomId} // 当类型为室内
+    ]
+    }else {
+      params.layerCommunityS = [
+        {"communityId": this.data.communityId, "roomId": this.data.roomId} // 当类型为公共
+      ]
     }
     createRepair(params).then(res=>{
       if(res.state == 200){

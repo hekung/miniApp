@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2022-02-23 19:55:12
- * @LastEditTime: 2022-04-11 14:36:02
+ * @LastEditTime: 2022-04-15 15:17:04
  * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: \miniprogram-1\pages\repair\repairRecords\repairRecords.js
@@ -33,18 +33,12 @@ Page({
     communityId: '',
     pickerType: 1,
     tableData: [
-      { id: 1, no: '233', rate: '中', items: 'dqw.dwq', scope: '是被', community: 'dwq', createTime: 'dasdadsadd', linkUrl: '/pages/repair/repairRecordOne/repairRecordOne?id=' + 1 },
-      { id: 2, no: '233', rate: '中', items: 'dqw.dwq', scope: '是被', community: 'dwq', createTime: 'dasdadsadd', linkUrl: '/pages/repair/repairRecordOne/repairRecordOne?id=' + 2 },
-      { id: 3, no: '233', rate: '中', items: 'dqw.dwq', scope: '是被', community: 'dwq', createTime: 'dasdadsadd', linkUrl: '/pages/repair/repairRecordOne/repairRecordOne?id=' + 3 },
-      { id: 4, no: '233', rate: '中', items: 'dqw.dwq', scope: '是被', community: 'dwq', createTime: 'dasdadsadd', linkUrl: '/pages/repair/repairRecordOne/repairRecordOne?id=' + 4 },
-      { id: 5, no: '233', rate: '中', items: 'dqw.dwq', scope: '是被', community: 'dwq', createTime: 'dasdadsadd', linkUrl: '/pages/repair/repairRecordOne/repairRecordOne?id=' + 5 },
-      { id: 6, no: '233', rate: '中', items: 'dqw.dwq', scope: '是被', community: 'dwq', createTime: 'dasdadsadd', linkUrl: '/pages/repair/repairRecordOne/repairRecordOne?id=' + 5 },
     ],
     columns: [
       { title: '单号', attr: 'no', width: '200rpx' },
       { title: '等级', attr: 'level', width: '160rpx' },
       { title: '报修事项', attr: 'repairItemName', width: '200rpx' },
-      { title: '范围类型', attr: 'type', width: '200rpx' },
+      { title: '范围类型', attr: 'scopeType', width: '200rpx' },
       { title: '小区', attr: 'communityName', width: '200rpx' },
       { title: '发起时间', attr: 'createTime', width: '200rpx' },
     ],
@@ -63,8 +57,10 @@ Page({
     }
     queryRepairRecords(params).then(res => {
       if (res.state == 200) {
-        res.forEach(e => {
+        res.data.forEach(e => {
           e.communityName = e.community.name
+          e.scopeType = e.type == 1?'公共区域':'室内'
+          e.linkUrl = '/pages/repair/repairRecordOne/repairRecordOne?id='+e.id
         });
         this.setData({
           tableData: res.data

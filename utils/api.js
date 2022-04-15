@@ -146,6 +146,16 @@ export const queryRepaireItems = async()=>{
     const url ='/api/propertyRepairItem/no-page'
     return await get(url)
 }
+// 查询报修详情
+export const queryRepairInfo = async(id)=>{
+    const url = `/api/propertyRepairRecord/queryInfo/${id}`
+    return await get(url)
+}
+// 查询报修详情列表
+export const queryRepairDetailList = async(id,status)=>{
+    const url = `/api/propertyRepairRecord/queryDetailList/${id}?status=${status}`
+    return await get(url)
+}
 //上传文件ba
 // const upload = async (files) => {
 //     const skey = getFromStorage('skey')
