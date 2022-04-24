@@ -7,29 +7,43 @@
  * @FilePath: \miniprogram-1\pages\repair\repairRecordOne\repairRecordOne.js
  */
 // pages/repair/repairRecordOne/repairRecordOne.js
-const { queryInfo } = require('../../../utils/api')
+const { queryRepairInfo, changeRepairStatus } = require('../../../utils/api')
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    id: '',
     info: {
-      no: 'dwq',
-      status: 'dwq',
-      childNo: '',
-      rate: 'dqw',
-      item: 'dq',
-      scope: 'dq',
-      community: 'dwwq',
-      createTime: 'qwdwq',
+      id: null,
+      no: null,
+      level: null,
+      repairItem: {
+        name: ''
+      },
+      type: null,
+      type: null,
+      community: {
+        name: ''
+      },
+      createTime: '',
+      beginTime: '',
+      repairWorkflowList: {
+        status: '',
+        principal: '',
+        remark: '',
+        principalName: ''
+      },
       creator: 'dwqdq',
       remark: 'd',
-      imgs: [
-        "https://images.unsplash.com/photo-1565699894576-1710004524ba?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1832&q=80",
-        "https://images.unsplash.com/photo-1565699894576-1710004524ba?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1832&q=80",
-        "https://images.unsplash.com/photo-1565699894576-1710004524ba?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1832&q=80"
-      ]
+      resourcesList: [
+        {
+          resourceId: '',
+          url: ''
+        }
+      ],
+      status: ''
     },
     rangeList: [
       '全部',
@@ -63,11 +77,45 @@ Page({
       delta: 1
     });
   },
+  confirmFinish() {
+    this.changeStatus(4)
+  },
+  zhongzhi() {
+    this.changeStatus(7)
+  },
+  // jixu(){
+  //   this.changeStatus
+  // },
+  changeStatus(status) {
+    changeRepairStatus({ id: this.data.id, status }).then(res => {
+      if (res.state == 200) {
+        wx.showToast({
+          title: '操作成功',
+          icon: 'none',
+        });
+        setTimeout(() => {
+          wx.navigateBack({
+            delta: 1
+          });
+        }, 1000);
+      }
+    })
+  },
+  getInfo() {
+    queryRepairInfo(this.data.id).then(res => {
+      this.setData({
+        info: res.data
+      })
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    const id = options.id
+    this.setData({
+      id
+    })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -80,7 +128,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.getInfo()
   },
 
   /**

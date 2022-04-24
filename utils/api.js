@@ -137,24 +137,29 @@ export const queryRepairRecords = async (params) => {
     return await get(url, params)
 }
 // 创建报修
-export const createRepair = async (params)=>{
+export const createRepair = async (params) => {
     const url = '/api/propertyRepairRecord/createRepairRecord'
-    return await post(url,params)
+    return await post(url, params)
 }
 // chaxunbaoxiushixiang
-export const queryRepaireItems = async()=>{
-    const url ='/api/propertyRepairItem/no-page'
+export const queryRepaireItems = async () => {
+    const url = '/api/propertyRepairItem/no-page'
     return await get(url)
 }
 // 查询报修详情
-export const queryRepairInfo = async(id)=>{
+export const queryRepairInfo = async (id) => {
     const url = `/api/propertyRepairRecord/queryInfo/${id}`
     return await get(url)
 }
 // 查询报修详情列表
-export const queryRepairDetailList = async(id,status)=>{
+export const queryRepairDetailList = async (id, status) => {
     const url = `/api/propertyRepairRecord/queryDetailList/${id}?status=${status}`
     return await get(url)
+}
+// 修改报修状态
+export const changeRepairStatus = async (params) => {
+    const url = '/api/propertyRepairRecord/updateStatus'
+    return await get(url, params)
 }
 //上传文件ba
 // const upload = async (files) => {

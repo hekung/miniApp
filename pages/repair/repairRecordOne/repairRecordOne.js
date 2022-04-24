@@ -13,37 +13,37 @@ Page({
    * 页面的初始数据
    */
   data: {
-    info:{
-      id:null,
+    info: {
+      id: null,
       no: null,
       level: null,
-      repairItem:{
-        name:''
+      repairItem: {
+        name: ''
       },
-      type:null,
-      type:null,
+      type: null,
+      type: null,
       community: {
-        name:''
+        name: ''
       },
-      createTime:'',
-      beginTime:'',
-      repairWorkflowList:{
-        status:'',
-        principal:'',
-        remark:'',
-        principalName:''
+      createTime: '',
+      beginTime: '',
+      repairWorkflowList: {
+        status: '',
+        principal: '',
+        remark: '',
+        principalName: ''
       },
-      creator:'dwqdq',
-      remark:'d',
-      resourcesList:[
+      creator: 'dwqdq',
+      remark: 'd',
+      resourcesList: [
         {
-          resourceId:'',
-          url:''
+          resourceId: '',
+          url: ''
         }
       ],
       status: ''
     },
-    rangeList:[
+    rangeList: [
       '全部',
       '发起报修',
       '已派单',
@@ -54,20 +54,14 @@ Page({
       '维修中止',
     ],
     tableData: [
-      {id:1,no: '233',level: '中',items:'dqw.dwq',scope:'是被',community:'dwq',createTime:'dasdadsadd',linkUrl: '/pages/repair/repairInfo/repairInfo?id='+ 1},
-      {id:2,no: '233',level: '中',items:'dqw.dwq',scope:'是被',community:'dwq',createTime:'dasdadsadd',linkUrl: '/pages/repair/repairInfo/repairInfo?id='+ 1},
-      {id:3,no: '233',level: '中',items:'dqw.dwq',scope:'是被',community:'dwq',createTime:'dasdadsadd',linkUrl: '/pages/repair/repairInfo/repairInfo?id='+ 1},
-      {id:4,no: '233',level: '中',items:'dqw.dwq',scope:'是被',community:'dwq',createTime:'dasdadsadd',linkUrl: '/pages/repair/repairInfo/repairInfo?id='+ 1},
-      {id:5,no: '233',level: '中',items:'dqw.dwq',scope:'是被',community:'dwq',createTime:'dasdadsadd',linkUrl: '/pages/repair/repairInfo/repairInfo?id='+ 1},
-      {id:6,no: '233',level: '中',items:'dqw.dwq',scope:'是被',community:'dwq',createTime:'dasdadsadd',linkUrl: '/pages/repair/repairInfo/repairInfo?id='+ 1},
     ],
 
-    columns:[
-      {title: '子单号',attr: 'no'},
-      {title: '位置',attr: 'position'},
-      {title: '状态',attr: 'items'},
-      {title: '负责人',attr: 'scope'},
-      {title: '操作',attr: 'community'},
+    columns: [
+      { title: '子单号', attr: 'childNo', width: '200rpx' },
+      { title: '位置', attr: 'position', width: '160rpx' },
+      { title: '状态', attr: 'statusName', width: '160rpx' },
+      { title: '负责人', attr: 'principal', width: '160rpx' },
+      { title: '操作', attr: 'operate', width: "200rpx" },
     ],
   },
 
@@ -80,7 +74,7 @@ Page({
       id
     })
   },
-  bindStatusPickerChange(e){
+  bindStatusPickerChange(e) {
     this.setData({
       'info.status': e.detail.value
     })
@@ -97,12 +91,31 @@ Page({
    */
   onShow: function () {
     this.getInfo()
+    this.getList()
   },
-  getInfo(){
-    queryRepairInfo(this.data.id).then(res=>{
+  getInfo() {
+    queryRepairInfo(this.data.id).then(res => {
       this.setData({
         info: res.data
       })
+    })
+  },
+  getList() {
+    let status = this.data.info.status == 0 ? '' : this.data.info.status - 1
+    queryRepairDetailList(this.data.id, status).then(res => {
+      if (res.state == 200) {
+        if (!res.data) {
+          res.data = []
+        }
+        res.data.forEach(e => {
+          e.statusName = this.data.rangeList[e.status]
+          e.operate = '详情'
+          e.linkUrl = '/pages/repair/repairInfo/repairInfo?id=' + e.id
+        });
+        this.setData({
+          tableData: res.data
+        })
+      }
     })
   },
   /**
