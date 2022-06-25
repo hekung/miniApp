@@ -1,5 +1,6 @@
 {
 	"pages": [
+		"pages/stock/stockImport/stockImport",
 		"pages/home/home",
 		"pages/house/house",
 		"pages/house/rentHandle/addRenter/addRenter",
@@ -31,7 +32,6 @@
 		"pages/stock/stock",
 		"pages/stock/stockQuery/stockQuery",
 		"pages/stock/stockQuery/stockDetail/stockDetail",
-		"pages/stock/stockImport/stockImport",
 		"pages/stock/stockOutport/stockOutport",
 		"pages/stock/stockTask/stockTask"
 	],
