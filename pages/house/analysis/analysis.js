@@ -138,6 +138,7 @@ function setOption(chart, option) {
   // };
   chart.setOption(option);
 }
+
 Page({
 
   /**
@@ -192,7 +193,55 @@ Page({
     isLoaded: false,
     isDisposed: false
   },
-
+  reset() {
+    if (this.active == 'a') {
+      this.setData({
+        'form1.startDate': '',
+        'form1.endDate': '',
+        selectDisplace: '',
+        selectedOptions: {
+          province: {
+            name: '',
+            code: '',
+          },
+          city: {
+            name: '',
+            code: ''
+          },
+          country: {
+            name: '',
+            code: ''
+          }
+        },
+        selectedCommunity: '',
+        communityId: '',
+        buildNo: ''
+      })
+    } else {
+      this.setData({
+        'form2.startDate': '',
+        'form2.endDate': '',
+        selectDisplace: '',
+        selectedOptions: {
+          province: {
+            name: '',
+            code: '',
+          },
+          city: {
+            name: '',
+            code: ''
+          },
+          country: {
+            name: '',
+            code: ''
+          }
+        },
+        selectedCommunity: '',
+        communityId: '',
+        buildNo: ''
+      })
+    }
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -206,20 +255,20 @@ Page({
     this.ecComponent = this.selectComponent('#mychart-dom-bar');
   },
   getRoomList() {
-    if (!this.data.form1.startDate || !this.data.form1.endDate) {
-      wx.showToast({
-        title: '请选择日期',
-        icon: 'none'
-      })
-      return
-    }
-    if (!this.data.communityId || !this.data.buildNo) {
-      wx.showToast({
-        title: '请选择小区及栋号',
-        icon: 'none'
-      })
-      return
-    }
+    // if (!this.data.form1.startDate || !this.data.form1.endDate) {
+    //   wx.showToast({
+    //     title: '请选择日期',
+    //     icon: 'none'
+    //   })
+    //   return
+    // }
+    // if (!this.data.communityId || !this.data.buildNo) {
+    //   wx.showToast({
+    //     title: '请选择小区及栋号',
+    //     icon: 'none'
+    //   })
+    //   return
+    // }
     const params = {
       provinceCode: this.data.selectedOptions.province.code,
       cityCode: this.data.selectedOptions.city.code,
@@ -339,14 +388,18 @@ Page({
       const values = e.detail._values
       this.setData({
         selectedOptions: values,
-        selectDisplace: values.province.name + values.city.name + values.country.name
+        selectDisplace: values.province.name + values.city.name + values.country.name,
+        selectedCommunity: e.detail.value,
+        communityId,
+        buildNo: ''
       })
       this.queryCommunitys(values)
     } else if (this.data.pickerType == 2) {
       const communityId = this.data.communityList.find(el => el.name === e.detail.value).id
       this.setData({
         selectedCommunity: e.detail.value,
-        communityId
+        communityId,
+        buildNo: ''
       })
       // 查询小区下的栋
       this.getBuildList(communityId)

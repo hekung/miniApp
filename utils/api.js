@@ -161,6 +161,29 @@ export const changeRepairStatus = async (params) => {
     const url = '/api/propertyRepairRecord/updateStatus'
     return await get(url, params)
 }
+//-----------------------库存------------
+// 查询出入库记录
+export const queryInOutList = async (params) => {
+    const url = '/api/propertyPutWarehouseRecord/queryMyList'
+    return await get(url, params)
+}
+// 查询产品列表
+export const queryProductList = async () => {
+    const url = '/api/propertyInventory/queryList'
+    return await get(url)
+}
+// 创建出入库
+export const createInOut = async (params) => {
+    const url = '/api/propertyPutWarehouseRecord/createRecord'
+    return await post(url, params)
+}
+// //  查询管理小区下的仓库列表
+// export const queryWarehouseList = async () => {
+//     const url = '/api/propertyWarehouse/queryWarehouseList'
+//     return await get(url)
+// }
+
+
 //上传文件ba
 // const upload = async (files) => {
 //     const skey = getFromStorage('skey')
