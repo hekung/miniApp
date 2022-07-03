@@ -7,7 +7,6 @@
  * @FilePath: \miniprogram-1\pages\repair\repairRecords\repairRecords.js
  */
 const { queryEmpList } = require('../../../utils/api')
-const app = getApp()
 Page({
   data: {
     active: 0,

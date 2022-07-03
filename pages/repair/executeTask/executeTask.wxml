@@ -1,77 +1,152 @@
 <view class="page" hover-class="none" hover-stop-propagation="false">
     <van-tabs active="{{ active }}" type="card" bind:change="onChangeTab">
-        <van-tab title="管理员" name="{{0}}"></van-tab>
-        <van-tab title="租客" name="{{1}}"></van-tab>
-    </van-tabs>
-    <view class="searchs">
-        <van-cell-group>
-            <van-cell title="任务状态" value="{{status}}" bind:click="clickToPickStatus" is-link></van-cell>
-            <van-cell title="等级" value="{{level}}" bind:click="clickToPick" is-link></van-cell>
-            <van-popup show="{{ showPicker }}" bind:close="onClosePick" position="bottom">
-                <van-picker columns="{{ columns }}" show-toolbar bind:change="onChangePickVal" bind:confirm="confirmDis" bind:cancel="cancelPick" />
-            </van-popup>
-        </van-cell-group>
-        <view class="header-row" wx:for="{{taskList}}" wx:key="id">
-            <van-row>
-                <van-col span="12">
-                    <label>单号</label>
-                    <text class="item">{{info.no}}</text>
-                </van-col>
-                <van-col span="12">
-                    <label>状态</label>
-                    <text class="item">{{info.status}}</text>
-                </van-col>
-                <van-col span="12">
-                    <label>子单号</label>
-                    <text class="item">{{info.childNo}}</text>
-                </van-col>
-                <van-col span="12">
-                    <label>等级</label>
-                    <text class="item">{{info.level}}</text>
-                </van-col>
-                <van-col span="12">
-                    <label>报修事项</label>
-                    <text class="item">{{info.repairItemName}}</text>
-                </van-col>
-                <van-col span="12">
-                    <label>范围类型</label>
-                    <text class="item">{{info.type}}</text>
-                </van-col>
-                <van-col span="12">
-                    <label>小区</label>
-                    <text class="item">{{info.community.name}}</text>
-                </van-col>
-                <van-col span="12">
-                    <label>发起时间</label>
-                    <text class="item">{{info.createTime}}</text>
-                </van-col>
-                <van-col span="12">
-                    <label>责任人</label>
-                    <text class="item">{{info.creatorName}}</text>
-                </van-col>
-                <van-col span="12">
-                    <label>备注</label>
-                    <text class="item">{{info.remark}}</text>
-                </van-col>
-                <van-col span="24">
-                    <label>图片</label>
-                    <view class="imgs" hover-class="none" hover-stop-propagation="false">
-                        <image class="img" wx:for="{{info.imgs}}" src="{{item}}" wx:key="index" alt=""></image>
+        <van-tab title="管理员" name="{{0}}">
+            <view class="searchs">
+                <van-cell-group>
+                    <van-cell title="任务状态" value="{{status}}" bind:click="clickToPickStatus" is-link></van-cell>
+                    <van-cell title="等级" value="{{level}}" bind:click="clickToPick" is-link></van-cell>
+                    <van-popup show="{{ showPicker }}" bind:close="onClosePick" position="bottom">
+                        <van-picker columns="{{ columns }}" show-toolbar bind:change="onChangePickVal" bind:confirm="confirmDis" bind:cancel="cancelPick" />
+                    </van-popup>
+                </van-cell-group>
+                <view class="header-row" wx:for="{{taskList}}" wx:key="id">
+                    <van-row>
+                        <van-col span="12">
+                            <label>单号</label>
+                            <text class="item">{{info.no}}</text>
+                        </van-col>
+                        <van-col span="12">
+                            <label>状态</label>
+                            <text class="item">{{info.status}}</text>
+                        </van-col>
+                        <van-col span="12">
+                            <label>子单号</label>
+                            <text class="item">{{info.childNo}}</text>
+                        </van-col>
+                        <van-col span="12">
+                            <label>等级</label>
+                            <text class="item">{{info.level}}</text>
+                        </van-col>
+                        <van-col span="12">
+                            <label>报修事项</label>
+                            <text class="item">{{info.repairItemName}}</text>
+                        </van-col>
+                        <van-col span="12">
+                            <label>范围类型</label>
+                            <text class="item">{{info.type}}</text>
+                        </van-col>
+                        <van-col span="12">
+                            <label>小区</label>
+                            <text class="item">{{info.community.name}}</text>
+                        </van-col>
+                        <van-col span="12">
+                            <label>发起时间</label>
+                            <text class="item">{{info.createTime}}</text>
+                        </van-col>
+                        <van-col span="12">
+                            <label>责任人</label>
+                            <text class="item">{{info.creatorName}}</text>
+                        </van-col>
+                        <van-col span="12">
+                            <label>备注</label>
+                            <text class="item">{{info.remark}}</text>
+                        </van-col>
+                        <van-col span="24">
+                            <label>图片</label>
+                            <view class="imgs" hover-class="none" hover-stop-propagation="false">
+                                <image class="img" wx:for="{{info.imgs}}" src="{{item}}" wx:key="index" alt=""></image>
+                            </view>
+                        </van-col>
+                        <van-col span="24">
+                            <label>关联项目</label>
+                            <view class="" hover-class="none" hover-stop-propagation="false">
+                                {{info.associatedNo}}
+                            </view>
+                        </van-col>
+                    </van-row>
+                    <view class="btns" hover-class="none" hover-stop-propagation="false">
+                        <van-button type="primary" size="small" bind:click="toDis" round>
+                            派单
+                        </van-button>
+                        <van-button type="danger" size="small" round>中止任务</van-button>
                     </view>
-                </van-col>
-                <van-col span="24">
-                    <label>关联项目</label>
-                    <view class="" hover-class="none" hover-stop-propagation="false">
-                        {{info.associatedNo}}
-                    </view>
-                </van-col>
-            </van-row>
-            <view class="btns" hover-class="none" hover-stop-propagation="false">
-                <van-button type="primary" size="small" bind:click="toDis" round>派单</van-button>
-                <van-button type="danger" size="small" round>中止任务</van-button>
+                </view>
             </view>
-        </view>
-    </view>
+        </van-tab>
+        <van-tab title="租客" name="{{1}}">
+            <view class="searchs">
+                <van-cell-group>
+                    <van-cell title="任务状态" value="{{status}}" bind:click="clickToPickStatus" is-link></van-cell>
+                    <van-cell title="等级" value="{{level}}" bind:click="clickToPick" is-link></van-cell>
+                    <van-popup show="{{ showPicker }}" bind:close="onClosePick" position="bottom">
+                        <van-picker columns="{{ columns }}" show-toolbar bind:change="onChangePickVal" bind:confirm="confirmDis" bind:cancel="cancelPick" />
+                    </van-popup>
+                </van-cell-group>
+                <view class="header-row" wx:for="{{taskList}}" wx:key="id">
+                    <van-row>
+                        <van-col span="12">
+                            <label>单号</label>
+                            <text class="item">{{info.no}}</text>
+                        </van-col>
+                        <van-col span="12">
+                            <label>状态</label>
+                            <text class="item">{{info.status}}</text>
+                        </van-col>
+                        <van-col span="12">
+                            <label>子单号</label>
+                            <text class="item">{{info.childNo}}</text>
+                        </van-col>
+                        <van-col span="12">
+                            <label>等级</label>
+                            <text class="item">{{info.level}}</text>
+                        </van-col>
+                        <van-col span="12">
+                            <label>报修事项</label>
+                            <text class="item">{{info.repairItemName}}</text>
+                        </van-col>
+                        <van-col span="12">
+                            <label>范围类型</label>
+                            <text class="item">{{info.type}}</text>
+                        </van-col>
+                        <van-col span="12">
+                            <label>小区</label>
+                            <text class="item">{{info.community.name}}</text>
+                        </van-col>
+                        <van-col span="12">
+                            <label>发起时间</label>
+                            <text class="item">{{info.createTime}}</text>
+                        </van-col>
+                        <van-col span="12">
+                            <label>责任人</label>
+                            <text class="item">{{info.creatorName}}</text>
+                        </van-col>
+                        <van-col span="12">
+                            <label>备注</label>
+                            <text class="item">{{info.remark}}</text>
+                        </van-col>
+                        <van-col span="24">
+                            <label>图片</label>
+                            <view class="imgs" hover-class="none" hover-stop-propagation="false">
+                                <image class="img" wx:for="{{info.imgs}}" src="{{item}}" wx:key="index" alt=""></image>
+                            </view>
+                        </van-col>
+                        <van-col span="24">
+                            <label>关联项目</label>
+                            <view class="" hover-class="none" hover-stop-propagation="false">
+                                {{info.associatedNo}}
+                            </view>
+                        </van-col>
+                    </van-row>
+                    <view class="btns" hover-class="none" hover-stop-propagation="false">
+                        <van-button type="primary" size="small" bind:click="toDis" round>
+                            派单
+                        </van-button>
+                        <van-button type="danger" size="small" round>中止任务</van-button>
+                    </view>
+                </view>
+            </view>
+        </van-tab>
+    </van-tabs>
     <view class="results">
         <van-button type="primary" size="normal" bind:click="goback" block round>返回</van-button>
     </view>

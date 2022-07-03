@@ -135,6 +135,11 @@ export const queryBuyRecords = async (params) => {
     const url = '/api/propertyProcurementRecord/queryPage'
     return await get(url, params)
 }
+// 查询采购记录详情
+export const queryBuyDetail = async (params) => {
+    const url = '/api/propertyProcurementRecord/queryInfo'
+    return await get(url, params)
+}
 //--------------------------报修-------------------------------------
 // 查询报修记录
 export const queryRepairRecords = async (params) => {

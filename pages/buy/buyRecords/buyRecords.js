@@ -62,7 +62,7 @@ Page({
       res.data.forEach(e => {
         e.statusName = this.statusList[e.status]
         e.commmunityName = e.community.name
-        e.linkUrl = '/pages/management/employManage/employeeInfo/employeeInfo?id=' + e.id
+        e.linkUrl = '/pages/buy/buyDetail/buyDetail?id=' + e.id
       });
       this.setData({
         tableData: res.data
