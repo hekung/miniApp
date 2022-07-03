@@ -13,7 +13,7 @@
                         <button class="click-get-tel" open-type="getPhoneNumber" bindtap="getUserProfile" bindgetphonenumber="getPhoneNumber" wx:if="{{!userInfo.mobile}}">
                             手机号一键登录
                         </button>
-                        <button bindtap="getUserProfile">获取头像昵称</button>
+                        <!-- <button bindtap="getUserProfile">获取头像昵称</button> -->
                     </view>
                 </view>
             </view>

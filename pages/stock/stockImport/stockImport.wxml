@@ -10,30 +10,38 @@
                 <van-cell-group>
                     <van-cell title="任务状态" value="{{statusName}}" data-type="{{2}}" bind:click="clickToPick" is-link></van-cell>
                     <view class="btns" hover-class="none" hover-stop-propagation="false">
-                        <van-button type="danger" size="small" bind:click="getRoomList" round>
+                        <van-button type="danger" size="small" bind:click="getImportList" round>
                             查询
                         </van-button>
                         <van-button type="default" size="small" bind:click="reset" round>
                             重置
                         </van-button>
+                        <van-button type="default" size="small" bind:click="goback" round>
+                            返回
+                        </van-button>
                     </view>
                 </van-cell-group>
             </view>
             <view class="results">
-                <cus-table columns="{{columns}}" contentArray="{{tableData}}" hasLink="{{false}}"></cus-table>
+                <cus-table columns="{{columns}}" contentArray="{{tableData}}" hasLink="{{true}}"></cus-table>
             </view>
         </van-tab>
         <van-tab title="发起入库" name="b">
             <van-cell-group>
                 <van-cell title="产品" value="{{selectProductName}}" data-type="{{3}}" bind:click="clickToPick" is-link></van-cell>
                 <van-cell title="类型" value="{{productTypeName}}" data-type="{{4}}" bind:click="clickToPick" is-link></van-cell>
-                <van-field label="规格" model:value="{{ form2.specification }}" placeholder="输入规格" border="{{ false }}" />
+                <van-field label="规格" bind:input="onInput" data-type="specification" model:value="{{ form2.specification }}" placeholder="输入规格" border="{{ false }}" />
                 <van-cell title="仓库名称" value="{{selectHouseName}}" data-type="{{5}}" bind:click="clickToPick" is-link></van-cell>
+                <van-field label="数量" bind:input="onInput" data-type="count" type="number" model:value="{{ form2.count }}" placeholder="输入数量" border="{{ false }}" />
+                <van-field label="单价" bind:input="onInput" data-type="price" type="number" model:value="{{ form2.price }}" placeholder="输入单价（元）" border="{{ false }}" />
+                <van-field label="关联项目单号" bind:input="onInput" data-type="associatedNo" type="number" model:value="{{ form2.associatedNo }}" placeholder="输入关联项目单号" border="{{ false }}" />
                 <view class="btns" hover-class="none" hover-stop-propagation="false">
-                    <van-button type="danger" size="small" bind:click="getRommsStatus" round>
-                        查询
+                    <van-button type="danger" size="small" bind:click="confirmSubmit" round>
+                        确认
                     </van-button>
-                    <van-button type="default" size="small" bind:click="reset" round>重置</van-button>
+                    <van-button type="default" size="small" bind:click="goback" round>
+                        返回
+                    </van-button>
                 </view>
             </van-cell-group>
             <view class="pie-charts">

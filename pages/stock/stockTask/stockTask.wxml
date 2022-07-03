@@ -1,2 +1,49 @@
-<!--pages/stock/stockTask/stockTask.wxml-->
-<text>pages/stock/stockTask/stockTask.wxml</text>
+<view class="page" hover-class="none" hover-stop-propagation="false">
+    <van-popup show="{{ showPicker }}" bind:close="onClosePick" position="bottom">
+        <van-picker show-toolbar bind:cancel="onCancelPick" bind:confirm="onConfirmPick" columns="{{ pickList }}" />
+    </van-popup>
+    <van-tabs active="{{ type }}" type="card" bind:change="onChange">
+        <van-tab title="出库" name="{{0}}">
+            <view class="searchs">
+                <van-cell-group>
+                    <van-cell title="仓库" value="{{selectHouseName}}" data-type="{{2}}" bind:click="clickToPick" is-link></van-cell>
+                    <view class="btns" hover-class="none" hover-stop-propagation="false">
+                        <van-button type="danger" size="small" bind:click="getStockTaskList" round>
+                            查询
+                        </van-button>
+                        <van-button type="default" size="small" bind:click="reset" round>
+                            重置
+                        </van-button>
+                        <van-button type="default" size="small" bind:click="goback" round>
+                            返回
+                        </van-button>
+                    </view>
+                </van-cell-group>
+            </view>
+            <view class="results">
+                <cus-table columns="{{columns}}" contentArray="{{tableData}}" hasLink="{{true}}"></cus-table>
+            </view>
+        </van-tab>
+        <van-tab title="入库" name="{{1}}">
+            <view class="searchs">
+                <van-cell-group>
+                    <van-cell title="仓库" value="{{selectHouseName}}" data-type="{{2}}" bind:click="clickToPick" is-link></van-cell>
+                    <view class="btns" hover-class="none" hover-stop-propagation="false">
+                        <van-button type="danger" size="small" bind:click="getStockTaskList" round>
+                            查询
+                        </van-button>
+                        <van-button type="default" size="small" bind:click="reset" round>
+                            重置
+                        </van-button>
+                        <van-button type="default" size="small" bind:click="goback" round>
+                            返回
+                        </van-button>
+                    </view>
+                </van-cell-group>
+            </view>
+            <view class="results">
+                <cus-table columns="{{columns}}" contentArray="{{tableData}}" hasLink="{{true}}"></cus-table>
+            </view>
+        </van-tab>
+    </van-tabs>
+</view>

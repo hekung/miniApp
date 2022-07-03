@@ -6,95 +6,108 @@
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: \miniprogram-1\pages\repair\repairRecords\repairRecords.js
  */
+const { queryEmpList } = require('../../../utils/api')
 const app = getApp()
 Page({
   data: {
-    active: 'a',
+    active: 0,
     scopeType: 1,
-    taskList:[{
-      id:'',
+    taskList: [{
+      id: '',
       no: 'dwq',
-      status:'dwq',
-      childNo:'',
-      rate: 'dqw',
-      item:'dq',
-      scope:'dq',
-      community: 'dwwq',
-      createTime:'qwdwq',
-      creator:'dwqdq',
-      remark:'d',
-      imgs:[
-        "https://images.unsplash.com/photo-1565699894576-1710004524ba?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1832&q=80",
-        "https://images.unsplash.com/photo-1565699894576-1710004524ba?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1832&q=80",
-        "https://images.unsplash.com/photo-1565699894576-1710004524ba?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1832&q=80"
+      status: 'dwq',
+      childNo: '',
+      level: 'dqw',
+      repairItemName: 'dq',
+      type: 'dq',
+      community: {},
+      createTime: 'qwdwq',
+      creatorName: 'dwqdq',
+      remark: 'd',
+      imgs: [
       ]
     }],
-    columns:[],
-    rangeList:[
+    columns: [],
+    rangeList: [
       '低',
       '中',
       '高'
     ],
-    statusList:[
+    statusList: [
       '全部',
       '执行中',
       '已完成'
     ],
-    status:'',
-    rate:'',
-    responser:"",
+    status: '',
+    level: '',
+    responser: "",
     currentPage: 1
   },
-  searchList(){},
-  onChangeTab(e){
+  onShow() {
+    this.searchList()
+    this.searchEmps()
+  },
+  searchList() {
+    // queryDelegateList({ level: this.data.level, type: this.data.active }).then(res => {
+    //   if (res.state = 200) {
+    //     this.setData({
+    //       // taskList: res.data
+    //     })
+    //   }
+    // })
+  },
+  searchEmps() {
+    queryEmpList()
+  },
+  onChangeTab(e) {
     this.setData({
-     active: e.detail.name
+      active: e.detail.name
     })
     this.searchList()
   },
-  clickToPickStatus(){
+  clickToPickStatus() {
     this.setData({
       showPicker: true,
-      pickType:0,
-      columns: this.data.statusList 
+      pickType: 0,
+      columns: this.data.statusList
     })
   },
-  clickToPick(){
+  clickToPick() {
     this.setData({
       showPicker: true,
-      pickType:1,
-      columns: this.data.rangeList 
+      pickType: 1,
+      columns: this.data.rangeList
     })
   },
-  onClosePick(){
+  onClosePick() {
     this.setData({
       showPicker: false
     })
   },
-  onChangePickVal(e){
-    if(this.data.pickType == 1){
+  onChangePickVal(e) {
+    if (this.data.pickType == 1) {
       this.setData({
-        rate: e.detail.value
+        level: e.detail.value
       })
-    }else {
+    } else {
       this.setData({
         responser: e.detail.value
       })
     }
   },
-  
-  onReachBottom(){
+
+  onReachBottom() {
     this.setData({
-      currentPage: this.data.currentPage+1
+      currentPage: this.data.currentPage + 1
     })
-    const tasks =  this.data.taskList.concat([this.data.taskList[0]])
+    const tasks = this.data.taskList.concat([this.data.taskList[0]])
     this.setData({
       taskList: tasks
     })
   },
-  toDis(){
+  toDis() {
     this.setData({
-      showPicker:true,
+      showPicker: true,
       pickType: 2
     })
     this.setData({
@@ -105,9 +118,9 @@ Page({
       ]
     })
   },
-  confirmDis(){
+  confirmDis() {
     this.setData({
-      showPicker:false
+      showPicker: false
     })
     wx.showToast({
       title: '提交派单',
@@ -115,28 +128,28 @@ Page({
     })
     // 查询
   },
-  cancelPick(){
+  cancelPick() {
     this.setData({
-      showPicker:false
+      showPicker: false
     })
-    if(this.data.pickType == 0){
+    if (this.data.pickType == 0) {
       this.setData({
         status: ''
       })
-    }else  if(this.data.pickType == 1){
+    } else if (this.data.pickType == 1) {
       this.setData({
-        rate: ''
+        level: ''
       })
-    }else {
+    } else {
       this.setData({
         responser: ''
       })
     }
   },
-  goback(){
+  goback() {
     wx.navigateBack({
       delta: 1
     });
-      
+
   }
 })

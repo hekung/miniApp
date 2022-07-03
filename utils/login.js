@@ -75,7 +75,7 @@ function onLogin() {
         wx.login({
             success: function (res) {
                 if (res.code) {
-                    console.log(res.code);
+                    console.log('code:' + res.code);
                     // postForm('/api/applet/login', { code: res.code }).then(res => {
                     //     console.log(res);
                     // }).catch(err => {

@@ -7,7 +7,7 @@
  * @FilePath: \miniprogram-1\pages\house\analysis\analysis.js
  */
 // pages/house/analysis/analysis.js
-const { queryInOutList, queryCommunityList, queryWarehouseList, queryProductList } = require('../../../utils/api')
+const { queryInOutList, queryCommunityList, queryWarehouseList, queryProductList, createInOut } = require('../../../utils/api')
 
 Page({
 
@@ -73,9 +73,35 @@ Page({
     ],
   },
   reset() {
-    this.data.form1.status = ''
-    this.data.statusName = ''
+    this.setData({
+      'form1.status': '',
+      statusName: ''
+    })
     this.getImportList()
+  },
+  goback() {
+    wx.navigateBack({
+      delta: 1
+    });
+  },
+  onInput(e) {
+    if (e.currentTarget.dataset.type === 'specification') {
+      this.setData({
+        'form2.specification': e.detail
+      })
+    } else if (e.currentTarget.dataset.type === 'count') {
+      this.setData({
+        'form2.count': e.detail
+      })
+    } else if (e.currentTarget.dataset.type === 'price') {
+      this.setData({
+        'form2.price': e.detail
+      })
+    } else if (e.currentTarget.dataset.type === 'associatedNo') {
+      this.setData({
+        'form2.associatedNo': e.detail
+      })
+    }
   },
   /**
    * 生命周期函数--监听页面加载
@@ -94,6 +120,7 @@ Page({
       if (res.state == 200) {
         res.data.forEach(e => {
           e.statusName = this.data.statusList[e.status]
+          e.linkUrl = `/pages/stock/stockInOutDetailHistory/stockInOutDetailHistory?createTime=${e.createTime}type=1&no=+${e.no}`
         })
         this.setData({
           tableData: res.data
@@ -158,17 +185,18 @@ Page({
     } else if (this.data.pickerType == 3) {
       this.setData({
         selectProductName: e.detail.value,
-        'form2.inventoryId': this.data.productList.find(el => el.name == e.detail.value).id
+        'form2.inventoryId': this.data.productList.find(el => el.name == e.detail.value).id,
+        'form2.communityId': this.data.productList.find(el => el.name == e.detail.value).communityId
       })
     } else if (this.data.pickerType == 4) {
       this.setData({
-        selectProductName: e.detail.value,
+        productTypeName: e.detail.value,
         'form2.productType': this.data.productTypeList.findIndex(el => el == e.detail.value)
       })
     } else if (this.data.pickerType == 5) {
-      this.setDate({
-        selectHouseName: e.detai.value,
-        'form2.warehouseId': this.data.houseList.find(el => el.name === e.detail.value)
+      this.setData({
+        selectHouseName: e.detail.value,
+        'form2.warehouseId': this.data.houseList.find(el => el.name === e.detail.value).id
       })
     }
   },
@@ -218,6 +246,21 @@ Page({
         this.setData({
           houseList: res.data,
           houseNameList: res.data.map(e => e.name)
+        })
+      }
+    })
+  },
+  confirmSubmit() {
+    const param = {
+      ...this.data.form2,
+      productName: this.data.selectProductName,
+      type: 1
+    }
+    createInOut(param).then(res => {
+      if (res.state == 200) {
+        wx.showToast({ title: '预览图片失败', icon: 'success' });
+        this.setData({
+          'active': 'a'
         })
       }
     })

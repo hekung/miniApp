@@ -1,9 +1,9 @@
 <view class="page" hover-class="none" hover-stop-propagation="false">
     <view class="searchs">
         <van-cell-group>
-            <van-cell title="等级" value="{{rate}}" bind:click="clickToPick" is-link></van-cell>
+            <van-cell title="等级" value="{{level}}" data-type="{{1}}" bind:click="clickToPick" is-link></van-cell>
             <van-popup show="{{ showPicker }}" bind:close="onClosePick" position="bottom">
-                <van-picker columns="{{ columns }}" show-toolbar bind:change="onChangePickVal" bind:confirm="confirmDis" />
+                <van-picker columns="{{ columns }}" show-toolbar bind:change="onChangePickVal" bind:confirm="confirmClick" />
             </van-popup>
         </van-cell-group>
         <view class="header-row" wx:for="{{taskList}}" wx:key="id">
@@ -22,19 +22,19 @@
                 </van-col>
                 <van-col span="12">
                     <label>等级</label>
-                    <text class="item">{{item.rate}}</text>
+                    <text class="item">{{item.level}}</text>
                 </van-col>
                 <van-col span="12">
                     <label>报修事项</label>
-                    <text class="item">{{item.item}}</text>
+                    <text class="item">{{item.repairItemName}}</text>
                 </van-col>
                 <van-col span="12">
                     <label>范围类型</label>
-                    <text class="item">{{item.scope}}</text>
+                    <text class="item">{{item.type}}</text>
                 </van-col>
                 <van-col span="12">
                     <label>小区</label>
-                    <text class="item">{{item.community}}</text>
+                    <text class="item">{{item.community.name}}</text>
                 </van-col>
                 <van-col span="12">
                     <label>发起时间</label>
@@ -42,7 +42,7 @@
                 </van-col>
                 <van-col span="12">
                     <label>责任人</label>
-                    <text class="item">{{item.creator}}</text>
+                    <text class="item">{{item.creatorName}}</text>
                 </van-col>
                 <van-col span="12">
                     <label>备注</label>
@@ -56,12 +56,18 @@
                 </van-col>
                 <van-col span="24">
                     <label>关联项目</label>
-                    <view class="" hover-class="none" hover-stop-propagation="false"></view>
+                    <view class="" hover-class="none" hover-stop-propagation="false">
+                        {{item.associatedNo}}
+                    </view>
                 </van-col>
             </van-row>
             <view class="btns" hover-class="none" hover-stop-propagation="false">
-                <van-button type="primary" size="small" bind:click="toDis" round>派单</van-button>
-                <van-button type="danger" size="small" round>中止任务</van-button>
+                <van-button type="primary" data-id="{{item.id}}" data-community="{{item.community.id}}" size="small" bind:click="toDis" round>
+                    派单
+                </van-button>
+                <van-button type="danger" data-no="{{item.no}}" size="small" round bind:click="stopTask">
+                    中止任务
+                </van-button>
             </view>
         </view>
     </view>

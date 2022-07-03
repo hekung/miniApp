@@ -2,6 +2,8 @@
 // const { getUserInfo } = require('../../utils/api.js')
 const { getFromStorage, postForm } = require('../../utils/util.js')
 const { onLogin, catchPhoneNumber } = require('../../utils/login.js')
+const { login } = require('../../utils/api.js')
+
 const app = getApp()
 Page({
   /**
@@ -14,7 +16,9 @@ Page({
     userInfo: {},
     hasUserInfo: false,
     hasTel: false,
-    tel: ""
+    tel: "",
+    loginInfo: {},
+    phoneNumberCode: ""
   },
 
   /**
@@ -63,12 +67,18 @@ Page({
         //   userInfo: res.userInfo,
         //   hasUserInfo: true
         // })
-
+        console.log(res);
+        this.setData({
+          loginInfo: {
+            encryptedData,
+            iv
+          }
+        })
+        this.toLogin()
       }
     })
   },
-  getPhoneNumber: async function (e) {
-    let that = this;
+  async getPhoneNumber(e) {
     console.log('手机号信息：', e);
     if (e.detail.errMsg == "getPhoneNumber:ok") {
       // const skey = await getFromStorage('skey')
@@ -81,10 +91,37 @@ Page({
       //     this.queryPhone({ ...e, skey })
       //   }
       // }
+      this.setData({
+        phoneNumberCode: e.detail.code
+      })
+      this.toLogin()
     }
     // 这里要先获取登陆时保存的seeion_key
     // if (e.detail.errMsg == "getPhoneNumber:ok") {
     // }
+
+  },
+  toLogin() {
+    if (this.data.phoneNumberCode && this.data.loginInfo.iv) {
+      let _this = this
+      wx.login({
+        success: function (res) {
+          if (res.code) {
+            const params = {
+              ..._this.data.loginInfo,
+              code: res.code,
+              phoneNumberCode: _this.data.phoneNumberCode
+            }
+            console.log(params);
+            login(params).then(res => {
+              if (res.state == 200) {
+                console.log('一键登录成功')
+              }
+            })
+          }
+        }
+      })
+    }
   },
   async queryPhone({ encryptedData, skey, iv }) {
     let tel = await catchPhoneNumber({ ...e, skey })

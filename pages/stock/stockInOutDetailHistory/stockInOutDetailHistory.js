@@ -7,7 +7,7 @@
  * @FilePath: \miniprogram-1\pages\house\analysis\analysis.js
  */
 // pages/house/analysis/analysis.js
-const { needInOutTaskList, queryWarehouseList } = require('../../../utils/api')
+const { queryInOutDetailList } = require('../../../utils/api')
 
 Page({
 
@@ -15,37 +15,40 @@ Page({
    * 页面的初始数据
    */
   data: {
-    type: 0,
-    typeName: '出库',
-    pickerType: 1,
-    pickList: [],
-    showPicker: false,
-    statusList: [
+    no: '',
+    createTime: '',
+    type: '',
+    pickList: [
       "发起申请",
       '完成',
       '中止'
     ],
+    statusName: '',
+    showPicker: false,
+    productList: [],
+    productNameList: [],
+    selectProductName: '',
+    productTypeName: '',
     productTypeList: ['工程类', '生活类'],
-    selectHouseName: '', //仓库名称
-    houseId: '',
-    houseList: [],
-    houseNameList: [],
+    status: '',
     tableData: [],
     columns: [
+      { title: '子单号', attr: 'childNo', width: '300rpx' },
       { title: '仓库', attr: 'createTime', width: '300rpx' },
       { title: '产品', attr: 'productName', width: '300rpx' },
       { title: '产品类型', attr: 'productType', width: '300rpx' },
       { title: '规格', attr: 'specsification', width: '300rpx' },
+      { title: '单价', attr: 'price', width: '300rpx' },
       { title: '数量', attr: 'count', width: '300rpx' },
       { title: '状态', attr: 'status', width: '300rpx' },
     ],
   },
   reset() {
     this.setData({
-      houseId: '',
-      selectHouseName: ''
+      status: '',
+      statusName: ''
     })
-    this.getStockTaskList()
+    this.getHistoryDetailList()
   },
   goback() {
     wx.navigateBack({
@@ -55,20 +58,23 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onShow: function (options) {
-    this.getStockTaskList()
-    this.getHouseList()
+  onLoad: function (options) {
+    this.setData({
+      no: options.no,
+      createTime: options.createTime
+    })
+    this.getHistoryDetailList()
   },
-  getStockTaskList() {
+  getHistoryDetailList() {
     const params = {
-      warehouseId: this.data.houseId,
-      type: this.data.type
+      status: this.data.tatus,
+      type: 1
     }
-    needInOutTaskList(params).then(res => {
+    queryInOutDetailList(params).then(res => {
       if (res.state == 200) {
         res.data.forEach(e => {
           e.statusName = this.data.statusList[e.status]
-          e.linkUrl = e.linkUrl = `/pages/stock/stockTaskDetail/stockTaskDetail?inventoryId=${e.inventoryId}type=0&no=+${e.no}`
+          e.linkUrl = "/pages/stock/stockInOutDetailHistory/stockInOutDetailHistory?type=1&no=" + e.no
         })
         this.setData({
           tableData: res.data
@@ -87,11 +93,6 @@ Page({
       pickerType,
       showPicker: true
     })
-    if (this.data.pickerType == 2) {
-      this.setData({
-        pickList: this.data.houseNameList
-      })
-    }
   },
   onCancelPick() {
     this.setData({
@@ -100,32 +101,12 @@ Page({
   },
   onConfirmPick(e) {
     this.setData({
-      showPicker: false
-    })
-    if (this.data.pickerType == 2) {
-      this.setData({
-        selectHouseName: e.detail.value,
-        houseId: this.data.houseList.find(el => el.name === e.detail.value).id
-      })
-    }
-  },
-  onChange(e) {
-    this.setData({
-      type: e.detail.name,
-      typeName: e.detail.name == 0 ? '出库' : '入库'
-    })
-    this.getStockTaskList()
-  },
-  getHouseList() {
-    queryWarehouseList().then(res => {
-      if (res.state == 200) {
-        this.setData({
-          houseList: res.data,
-          houseNameList: res.data.map(e => e.name)
-        })
-      }
+      showPicker: false,
+      status: e.detail.index,
+      statusName: e.detail.value
     })
   },
+
   /**
    * 生命周期函数--监听页面显示
    */

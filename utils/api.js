@@ -1,5 +1,10 @@
-const { baseUrl, get, post, requestDelete, getFromStorage } = require('./util')
+const { baseUrl, get, post, postForm, requestDelete, getFromStorage } = require('./util')
 // const cityData = require('./city.data-3')
+//登录接口
+export const login = async (params) => {
+    const url = '/api/applet/login'
+    return await postForm(url, params)
+}
 //-------------------------------------------------员工管理
 // 获取员工列表
 export const queryEmplyeeList = async (params) => {
@@ -161,6 +166,37 @@ export const changeRepairStatus = async (params) => {
     const url = '/api/propertyRepairRecord/updateStatus'
     return await get(url, params)
 }
+// 查询派单列表
+export const queryDelegateList = async (params) => {
+    const url = '/api/propertyRepairRecord/queryDelegateList'
+    return await get(url, params)
+}
+// 查询员工列表
+export const queryEmpList = async (params) => {
+    const url = '/api/propertyEmployee/no-page'
+    return await get(url, params)
+}
+// 委派任务
+export const dispatchTask = async (params) => {
+    const url = '/api/propertyRepairRecord/delegateTasks'
+    return await get(url, params)
+}
+// 中止任务
+export const stopRepairTask = async (params) => {
+    const url = '/api/propertyRepairRecord/stopRepair'
+    return await get(url, params)
+}
+//api/propertyWaterElectricityTask/queryList  查询抄水电任务列表
+export const queryWaterElecTaskList = async (params) => {
+    const url = '/api/propertyWaterElectricityTask/queryList'
+    return await get(url, params)
+}
+///api/propertyWaterElectricityTask/delegateTasks 委派抄水电任务
+export const dispatchWaterElecTask = async (params) => {
+    const url = '/api/propertyWaterElectricityTask/delegateTasks'
+    return await get(url, params)
+}
+
 //-----------------------库存------------
 // 查询出入库记录
 export const queryInOutList = async (params) => {
@@ -176,6 +212,37 @@ export const queryProductList = async () => {
 export const createInOut = async (params) => {
     const url = '/api/propertyPutWarehouseRecord/createRecord'
     return await post(url, params)
+}
+// 查询待出入库列表
+export const queryInOrOutList = async (params) => {
+    const url = '/api/propertyPutWarehouseRecord/queryList'
+    return await get(url, params)
+}
+
+// 根据出入库单号查询子单号列表
+export const queryInOutDetailList = async (params) => {
+    const url = '/api/propertyPutWarehouseRecord/queryByNo'
+    return await get(url, params)
+}
+///api/propertyPutWarehouseRecord/queryList 查询需要执行出入库记录
+export const needInOutTaskList = async (params) => {
+    const url = '/api/propertyPutWarehouseRecord/queryList'
+    return await get(url, params)
+}
+///api/propertyPutWarehouseRecord/queryDetail 查看需要出入库详情
+export const queryTaskDetail = async (params) => {
+    const url = '/api/propertyPutWarehouseRecord/queryDetail'
+    return await get(url, params)
+}
+//api/propertyWarehouse/queryAreaList/ 查看仓库的区域列表
+export const queryAreaListByHouse = async (params) => {
+    const url = '/api/propertyWarehouse/queryAreaList'
+    return await get(url, params)
+}
+///api/propertyPutWarehouseRecord/perform 执行出入库
+export const handleInOut = async (params) => {
+    const url = '/api/propertyPutWarehouseRecord/perform'
+    return await get(url, params)
 }
 // //  查询管理小区下的仓库列表
 // export const queryWarehouseList = async () => {

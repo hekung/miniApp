@@ -1,0 +1,29 @@
+<view class="page" hover-class="none" hover-stop-propagation="false">
+    <van-popup show="{{ showPicker }}" bind:close="onClosePick" position="bottom">
+        <van-picker show-toolbar bind:cancel="onCancelPick" bind:confirm="onConfirmPick" columns="{{ pickList }}"></van-picker>
+    </van-popup>
+    <view class="searchs">
+        <!-- <view class="title" hover-class="none" hover-stop-propagation="false">可租房查询</view> -->
+        <van-cell-group>
+            <van-cell title="单号" value="{{no}}"></van-cell>
+            <van-cell title="申请时间" value="{{createTime}}"></van-cell>
+            <van-cell title="申请人" value="{{creatorName}}"></van-cell>
+            <van-cell title="子单号" value="{{childNo}}"></van-cell>
+            <van-cell title="产品" value="{{productName}}"></van-cell>
+            <van-cell title="规格" value="{{spec}}"></van-cell>
+            <van-cell title="单价" value="{{price}}"></van-cell>
+            <van-cell title="数量" value="{{count}}"></van-cell>
+            <van-cell title="区域选择" value="{{area}}" bind:click="clickToPick" is-link></van-cell>
+            <view class="btns" hover-class="none" hover-stop-propagation="false">
+                <van-button type="danger" size="small" bind:click="handle" round>
+                    执行{{typeName}}
+                </van-button>
+                >
+                <van-button type="default" size="small" bind:click="goback" round>返回</van-button>
+            </view>
+        </van-cell-group>
+    </view>
+    <!-- <view class="results">
+        <cus-table columns="{{columns}}" contentArray="{{tableData}}" hasLink="{{true}}"></cus-table>
+    </view> -->
+</view>
